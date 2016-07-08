@@ -1,0 +1,23 @@
+{
+  "name": "unnbtg/db_parser",
+  "description": "Enables a way to connect in 2 specifics databases and parses it into a single format.",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Marco augusto",
+      "email": "marco.augusto@microsistec.com.br"
+    }
+  ],
+  "autoload": {
+    "psr-0": {
+      "Microsistec": "src/"
+    }
+  },
+  "require" : {
+    "illuminate/database" : "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "*"
+  }
+}
