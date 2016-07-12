@@ -11,14 +11,6 @@
 
     use Microsistec\DbParser\Definition\DefinitionAbstract;
 
-    abstract class DisponibilityAbstract extends DefinitionAbstract
+    abstract class DisponibilityAbstract
     {
-
-        protected abstract function getPaymentOptions();
-
-        protected function getPaymentWays($options)
-        {
-            $this->massAssignment($this->getActiveDefinitions($options), $this->getPaymentOptions());
-        }
-
     }

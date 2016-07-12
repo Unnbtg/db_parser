@@ -126,7 +126,8 @@ class SellTest extends PHPUnit_Framework_TestCase
         $std->pagto_mensais_valor = 150000.50;
         $std->valor_venda = 65400000.00;
 
-        return new \Microsistec\DbParser\Definition\Disponibility\Sell($std);
+        $sell = new \Microsistec\DbParser\Parser\Old\SellParser();
+        return $sell->parse($std, new \Microsistec\DbParser\Definition\OldMasSAssignment());
     }
 
 }

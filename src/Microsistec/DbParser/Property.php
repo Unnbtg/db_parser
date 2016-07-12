@@ -38,9 +38,9 @@
      * @property string         $city
      * @property string         $state
      * @property array          $characteristics
-     * @property int            $dorms
      * @property int            $suites
      * @property int            $bathroom
+     * @property int            $bedroom
      * @property int            $room
      * @property int            $kitchen
      * @property int            $parking_lot

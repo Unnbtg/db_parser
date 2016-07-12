@@ -20,32 +20,6 @@
      * @property float $value
      *
      */
-    class Rent extends DisponibilityAbstract
+    class Rent
     {
-        /**
-         * Seguro Fiança
-         * Fiador
-         * Depósito
-         * Depositos Quantidade Minimo
-         * Exige Escritura
-         */
-
-
-        public function __construct($model)
-        {
-            $this->getPaymentWays($model->pagto_opcoes);
-            $this->value = $model->valor_locacao;
-        }
-
-        protected function getPaymentOptions()
-        {
-            return [
-                4 => 'secureBail',
-                'guarantor',
-                'deposit',
-                'requiresDeed',
-            ];
-        }
-
-
     }

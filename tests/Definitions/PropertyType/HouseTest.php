@@ -340,7 +340,7 @@
             $this->assertEquals(3, $house->bathroom);
             $this->assertEquals(1, $house->room);
             $this->assertEquals(5, $house->kitchen);
-            $this->assertEquals(6, $house->garage_lots);
+            $this->assertEquals(6, $house->garage_lot);
             $this->assertEquals(9, $house->housekeeper_room);
             $this->assertEquals(7, $house->lavatory);
 

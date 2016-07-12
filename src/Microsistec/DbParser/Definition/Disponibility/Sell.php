@@ -29,35 +29,4 @@
      */
     class Sell extends DisponibilityAbstract
     {
-        protected $model;
-
-        public function __construct($model)
-        {
-            $this->getActiveDefinitions($model->pagto_opcoes);
-            $this->financing_fee_qtd = $model->pagto_mensais_qtd;
-            $this->financing_fee_value = $model->pagto_mensais_valor;
-            $this->value = $model->valor_venda;
-
-            $this->getPaymentWays($model->pagto_opcoes);
-
-        }
-
-        protected function getPaymentOptions()
-        {
-            return [
-                'fgts',
-                'letterCredit',
-                'inCash',
-                4 => 'Seguro Fiança',
-                'Fiador',
-                'Depósito',
-                'Exige Escritura Fiador',
-                'exchange',
-                'exchange',
-                'exchange',
-                'exchange',
-                'financingDirect',
-                'financingBank',
-            ];
-        }
     }

@@ -15,6 +15,17 @@
     {
 
 
+        public $bedroom;
+        public $suite;
+        public $bathroom;
+        public $room;
+        public $kitchen;
+        public $garage_lots;
+        public $housekeeper_room;
+        public $service_area;
+        public $lavatory;
+
+
         protected abstract function getSubtypesOptions();
         protected abstract function getCharacteristics($options);
         public abstract function getTypeName();

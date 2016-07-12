@@ -77,6 +77,7 @@
             $std->valor_locacao = 90;
             $std->pagto_opcoes = $opcoes;
 
-            return new \Microsistec\DbParser\Definition\Disponibility\Rent($std);
+            $rent = new \Microsistec\DbParser\Parser\Old\RentParser;
+            return $rent->parse($std, new \Microsistec\DbParser\Definition\OldMasSAssignment());
         }
     }

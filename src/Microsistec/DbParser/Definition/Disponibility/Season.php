@@ -16,10 +16,4 @@
      */
     class Season extends Rent
     {
-        public function __construct($model)
-        {
-            parent::__construct($model);
-            $this->highSeason = $model->valor_locacao_alta_temporada;
-            $this->lowSeason = $model->valor_locacao_baixa_temporada;
-        }
     }

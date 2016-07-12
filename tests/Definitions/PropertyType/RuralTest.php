@@ -97,7 +97,7 @@
             $this->assertEquals(3, $rural->bathroom);
             $this->assertEquals(1, $rural->room);
             $this->assertEquals(5, $rural->kitchen);
-            $this->assertEquals(6, $rural->garage_lots);
+            $this->assertEquals(6, $rural->garage_lot);
             $this->assertEquals(9, $rural->housekeeper_room);
             $this->assertEquals(7, $rural->lavatory);
 

@@ -20,7 +20,7 @@
      * @property int    $bedroom
      * @property int    $room
      * @property int    $kitchen
-     * @property int    $garage_lots
+     * @property int    $garage_lot
      * @property int    $housekeeper_room
      * @property int    $service_area
      * @property int    $lavatory
@@ -64,7 +64,7 @@
             $this->bathroom = $model->banheiros;
             $this->room = $model->salas;
             $this->kitchen = $model->cozinhas;
-            $this->garage_lots = $model->vagas_garagem;
+            $this->garage_lot = $model->vagas_garagem;
             $this->housekeeper_room = $model->dep_empregada;
             $this->service_area = $model->area_servico;
             $this->lavatory = $model->lavabos;

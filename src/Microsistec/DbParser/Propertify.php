@@ -1,6 +1,7 @@
 <?php
 namespace Microsistec\DbParser;
 
+use Microsistec\DbParser\Parser\NewParser;
 use Microsistec\DbParser\Parser\OldParser;
 
 /**
@@ -27,5 +28,7 @@ trait Propertify
         if (isset($this->cod_filial)) {
             return new OldParser();
         }
+
+        return new NewParser();
     }
 }

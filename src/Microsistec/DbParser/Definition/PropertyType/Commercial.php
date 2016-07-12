@@ -18,8 +18,8 @@
      * @property int    $right_foot
      * @property int    $rooms
      * @property int    $bathroom
-     * @property int    $parking_lots
-     * @property int    $garage_lots
+     * @property int    $parking_lot
+     * @property int    $garage_lot
      * @property int    $refectory
      * @property int    $docks
      * @property int    $windows
@@ -337,7 +337,7 @@
 
                 $this->rooms = $model->vagas_garagem;
                 $this->bathroom = $model->vagas_garagem;
-                $this->parking_lots = $model->vagas_estacionamento;
+                $this->parking_lot = $model->vagas_estacionamento;
 
                 $this->characteristics['structure'] = [
                     'docks' => $model->portas_fachadas,
@@ -349,8 +349,8 @@
 
             $this->rooms = $model->salas;
             $this->bathroom = $model->banheiros;
-            $this->garage_lots = $model->vagas_garagem;
-            $this->parking_lots = $model->vagas_estacionamento;
+            $this->garage_lot = $model->vagas_garagem;
+            $this->parking_lot = $model->vagas_estacionamento;
             $this->front_doors = $model->portas_fachadas;
 
             $this->characteristics['structure'] = [

@@ -72,7 +72,10 @@
             $std->valor_locacao = 4554;
             $std->valor_locacao_alta_temporada = 45454;
             $std->valor_locacao_baixa_temporada = 45454;
-            return new \Microsistec\DbParser\Definition\Disponibility\Season($std);
+
+            $season = new \Microsistec\DbParser\Parser\Old\SeasonParser;
+            return $season->parse($std, new \Microsistec\DbParser\Definition\OldMasSAssignment);
+
         }
 
 

@@ -33,6 +33,7 @@
         /** @test */
         public function it_must_detect_the_correct_transactions()
         {
+
             $property = $this->oldParser->parse($this->getApartamentStd());
 
             $this->assertCount(3, $property->disponibility);
@@ -70,6 +71,21 @@
             $this->assertEquals(11, $property->total_area);
         }
 
+        /** @test */
+        public function it_must_have_a_composition()
+        {
+            $property = $this->oldParser->parse($this->getApartamentStd());
+
+            $this->assertEquals(1, $property->bedroom);
+            $this->assertEquals(2, $property->suites);
+            $this->assertEquals(3, $property->bathroom);
+            $this->assertEquals(4, $property->room);
+            $this->assertEquals(5, $property->kitchen);
+            $this->assertEquals(6, $property->garage_lot);
+            $this->assertEquals(7, $property->housekeeper_room);
+            $this->assertEquals(9, $property->lavatory);
+
+        }
 
         public function getApartamentStd()
         {
@@ -100,6 +116,7 @@
             $std->definicao_04 = '0';
             $std->definicao_05 = '0';
             $std->definicao_master = '0';
+
             $std->dorms = 1;
             $std->suites = 2;
             $std->banheiros = 3;
@@ -107,8 +124,8 @@
             $std->cozinhas = 5;
             $std->vagas_garagem = 6;
             $std->dep_empregada = 7;
-            $std->area_servico = 7;
-            $std->lavabos = 7;
+            $std->area_servico = 8;
+            $std->lavabos = 9;
 
             $std->disponibilidade = '111';
             $std->pagto_opcoes = '11111111111111';

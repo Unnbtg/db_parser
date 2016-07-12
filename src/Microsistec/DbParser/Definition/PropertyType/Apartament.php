@@ -16,7 +16,7 @@
      * @property int    $bedroom
      * @property int    $room
      * @property int    $kitchen
-     * @property int    $garage_lots
+     * @property int    $garage_lot
      * @property int    $housekeeper_room
      * @property int    $service_area
      * @property int    $lavatory
@@ -25,32 +25,32 @@
     class Apartament extends PropertyTypeAbstract
     {
 
-        const PADRAO = 'padrao';
-        const KITCHINETE = 'kitchinete';
-        const COBERTURA = 'cobertura';
-        const DUPLEX = 'duplex';
-        const TRIPLEX = 'triplex';
-        const ALTO_PADRAO = 'alto_Padrao';
-        const UM_POR_ANDAR = '1_por_andar';
-        const FLAT = 'flat';
-        const SALA_LIVING = 'sala_living';
-        const MEDIO = 'medio';
-        const GRANDE = 'grande';
-        const TERREO = 'terreo';
-        const LOFT = 'loft';
-        const VISTA_MAR = 'vista_Mar';
-        const REFORMADO = 'reformado';
-        const FINANCIAMENTO_DIRETO = 'financiamento_direto';
+        const PADRAO                 = 'padrao';
+        const KITCHINETE             = 'kitchinete';
+        const COBERTURA              = 'cobertura';
+        const DUPLEX                 = 'duplex';
+        const TRIPLEX                = 'triplex';
+        const ALTO_PADRAO            = 'alto_Padrao';
+        const UM_POR_ANDAR           = '1_por_andar';
+        const FLAT                   = 'flat';
+        const SALA_LIVING            = 'sala_living';
+        const MEDIO                  = 'medio';
+        const GRANDE                 = 'grande';
+        const TERREO                 = 'terreo';
+        const LOFT                   = 'loft';
+        const VISTA_MAR              = 'vista_Mar';
+        const REFORMADO              = 'reformado';
+        const FINANCIAMENTO_DIRETO   = 'financiamento_direto';
         const FINANCIAMENTO_BANCARIO = 'financiamento_bancário';
-        const SEM_CONDOMINIO = 'sem_condomínio';
-        const FRENTE_MAR = 'frente_mar';
-        const STUDIO = 'studio';
-        const TIPO_CASA = 'tipo_casa';
-        const CAMPO = 'campo';
-        const PENTHOUSE = 'penthouse';
-        const GARDEN = 'garden';
-        const GARDEN_ELEVADO = 'garden_elevado';
-        const SEM_SUBTIPO = 'sem_subtipo';
+        const SEM_CONDOMINIO         = 'sem_condomínio';
+        const FRENTE_MAR             = 'frente_mar';
+        const STUDIO                 = 'studio';
+        const TIPO_CASA              = 'tipo_casa';
+        const CAMPO                  = 'campo';
+        const PENTHOUSE              = 'penthouse';
+        const GARDEN                 = 'garden';
+        const GARDEN_ELEVADO         = 'garden_elevado';
+        const SEM_SUBTIPO            = 'sem_subtipo';
 
         public function __construct($model)
         {
@@ -67,7 +67,7 @@
             $this->bathroom = $model->banheiros;
             $this->room = $model->salas;
             $this->kitchen = $model->cozinhas;
-            $this->garage_lots = $model->vagas_garagem;
+            $this->garage_lot = $model->vagas_garagem;
             $this->housekeeper_room = $model->dep_empregada;
             $this->service_area = $model->area_servico;
             $this->lavatory = $model->lavabos;
@@ -117,7 +117,7 @@
             $characteristcs['service_area'] = $this->extractLabelsFlagsSci(substr($definition, 136, 34), $options);
             $characteristcs['front'] = $this->extractLabelsFlagsSci(substr($definition, 170, 34), $options);
             $characteristcs['more_itens'] = $this->extractLabelsFlagsSci(substr($definition, 204, 34),
-                $this->getMoreCharacteristicsOptions());
+                                                                         $this->getMoreCharacteristicsOptions());
 
             return $characteristcs;
         }
