@@ -56,7 +56,17 @@
      * @property string         $subtype
      * @property array          $photos
      * @property ParserAbstract $parser
+     * @property int            $valor_iptu
+     * @property string         $area_util
+     * @property string         $gyn
+     * @property string         $condominium_price
+     * @property string         $iptu_price
+     * @property int            $vacation_max
+     * @property int            $vacation_parkingLots
+     * @property string         $type
+     * @property  string        $cinema
      */
+
     class Property
     {
 

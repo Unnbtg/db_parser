@@ -38,8 +38,6 @@
             $property->garage_lot = $rooms[RoomParser::PARKING_GARAGE];
             $property->room = $rooms[RoomParser::ROOM];
             $property->kitchen = $rooms[RoomParser::KITCHEN];
-
-
             $property->city = $model->city->name;
             $property->neighborhood = $model->neighborhood->name;
             $property->number = $model->street_number;
@@ -48,12 +46,16 @@
             $property->zone = $model->zone;
             $property->address = $model->street;
             $property->complement = $model->complementary;
-
             $property->age = $model->age;
-
             $property->characteristics = $this->getFeatures($model);
-
-
+            $property->condominium_price = $model->condominium_price;
+            $property->iptu_price = $model->iptu_price;
+            $property->vacation_max = $model->vacation_max;
+            $property->vacation_parkingLots = $model->vacation_parkingLots;
+            $property->type = $model->type;
+            $property->sell_price = $model->sell_price;
+            $property->rent_price = $model->rent_price;
+            $property->total_area = $model->total_area;
 
             return $property;
 
@@ -61,7 +63,30 @@
 
         public function getFeatures($model)
         {
-            $characteristics = [];
+            $characteristics = [
+                'cinema',
+                'barbecue_grill',
+                'scullery', //copa
+                'gym',
+                'pool',
+                'party_room',
+                'interfone',
+                'lan_house',
+                'sauna',
+                'cold_floor',
+                'artesian_well',
+                'skate_lane',
+                'kids_pool',
+                'heated_poll',
+                'games_room',
+                'balcony',
+                'security_cabin',
+                'toys_room',
+                'lake',
+                'river',
+                'office_space',
+                'carpet',
+                ];
             foreach ($model->features as $feature) {
                 $characteristics[] = $feature->name;
             }

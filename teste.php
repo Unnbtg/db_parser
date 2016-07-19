@@ -20,10 +20,10 @@
 
     $capsule->addConnection([
         'driver'    => 'mysql',
-        'host'      => 'homestead.app',
+        'host'      => 'localhost',
         'database'  => 'betasci_db',
-        'username'  => 'homestead',
-        'password'  => 'secret',
+        'username'  => 'root',
+        'password'  => '',
         'charset'   => 'utf8',
         'collation' => 'utf8_unicode_ci',
         'prefix'    => '',

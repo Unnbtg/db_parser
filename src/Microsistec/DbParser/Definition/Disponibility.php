@@ -29,7 +29,6 @@ class Disponibility
      */
     public function __construct($type = null, $value = null)
     {
-
         $this->type = $type;
         $this->value = $value;
     }

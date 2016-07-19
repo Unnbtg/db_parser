@@ -37,13 +37,10 @@
             $property = new Property();
 
             $type = $this->getPropertyType($model);
-
             $property->reference = $model->ref_alternativa;
-
             $property->type = $type->getTypeName();
             $property->subtype = $type->subtype;
             $property->disponibility = $this->getDisponibility($model);
-
             $property->address = $model->endereco;
             $property->number = $model->numero;
             $property->complement = $model->complemento;
@@ -52,12 +49,9 @@
             $property->neighborhood = $model->bairro;
             $property->state = $model->uf;
             $property->zone = $model->zona;
-
             $property->age = $model->idade_imovel;
-
             $property->useful_area = $model->area_util;
             $property->total_area = $model->area_total;
-
             $property->room = isset($type->room) ? $type->room : 0;
             $property->bedroom = isset($type->bedroom) ? $type->bedroom : 0;
             $property->bathroom = isset($type->bathroom) ? $type->bathroom : 0;
@@ -67,7 +61,8 @@
             $property->suites = isset($type->suite) ? $type->suite : 0;
             $property->garage_lot = isset($type->garage_lot) ? $type->garage_lot : 0;
             $property->housekeeper_room = isset($type->housekeeper_room) ? $type->housekeeper_room : 0;
-
+            $property->valor_iptu = $model->valor_iptu;
+            
 
             $property->parser = $this;
             $this->model = $model;

@@ -136,6 +136,7 @@
             $std->pagto_pacote_diaria = 44.00;
             $std->valor_locacao_baixa_temporada = 44.00;
             $std->valor_locacao_alta_temporada = 94.00;
+            $std->valor_iptu = 00.00;
 
             return $std;
         }

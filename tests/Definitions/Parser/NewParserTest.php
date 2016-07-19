@@ -70,13 +70,34 @@
 
             $property = $tempProperty->toProperty();
 
-            $this->assertCount(5, $property->characteristics);
 
-            $this->assertEquals('Abacate', $property->characteristics[0]);
-            $this->assertEquals('Sacola', $property->characteristics[1]);
-            $this->assertEquals('Abobrinha', $property->characteristics[2]);
-            $this->assertEquals('Beterraba', $property->characteristics[3]);
-            $this->assertEquals('Reformado', $property->characteristics[4]);
+
+            $this->assertCount(27, $property->characteristics);
+
+
+            $this->assertEquals('cinema', $property->characteristics[0]);
+            $this->assertEquals('barbecue_grill', $property->characteristics[1]);
+            $this->assertEquals('scullery', $property->characteristics[2]);
+            $this->assertEquals('gym', $property->characteristics[3]);
+            $this->assertEquals('pool', $property->characteristics[4]);
+            $this->assertEquals('party_room', $property->characteristics[5]);
+            $this->assertEquals('interfone', $property->characteristics[6]);
+            $this->assertEquals('lan_house', $property->characteristics[7]);
+            $this->assertEquals('sauna', $property->characteristics[8]);
+            $this->assertEquals('cold_floor', $property->characteristics[9]);
+            $this->assertEquals('artesian_well', $property->characteristics[10]);
+            $this->assertEquals('skate_lane', $property->characteristics[11]);
+            $this->assertEquals('kids_pool', $property->characteristics[12]);
+            $this->assertEquals('heated_poll', $property->characteristics[13]);
+            $this->assertEquals('games_room', $property->characteristics[14]);
+            $this->assertEquals('balcony', $property->characteristics[15]);
+            $this->assertEquals('security_cabin', $property->characteristics[16]);
+            $this->assertEquals('toys_room', $property->characteristics[17]);
+            $this->assertEquals('lake', $property->characteristics[18]);
+            $this->assertEquals('river', $property->characteristics[19]);
+            $this->assertEquals('office_space', $property->characteristics[20]);
+            $this->assertEquals('carpet', $property->characteristics[21]);
+
         }
 
         /** @test */

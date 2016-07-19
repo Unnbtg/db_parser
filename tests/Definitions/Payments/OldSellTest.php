@@ -121,6 +121,7 @@ class SellTest extends PHPUnit_Framework_TestCase
     protected function getSellDisponibility($pagto)
     {
         $std = new stdClass();
+
         $std->pagto_opcoes = $pagto;
         $std->pagto_mensais_qtd = 10;
         $std->pagto_mensais_valor = 150000.50;
