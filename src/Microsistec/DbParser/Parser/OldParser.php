@@ -62,7 +62,17 @@
             $property->garage_lot = isset($type->garage_lot) ? $type->garage_lot : 0;
             $property->housekeeper_room = isset($type->housekeeper_room) ? $type->housekeeper_room : 0;
             $property->valor_iptu = $model->valor_iptu;
-            
+            $property->package_mercadoLivre = $model->tipo_pacote_mercadolivre;
+            $property->announcement_title = $model->titulo_anuncio;
+            $property->video_url = $model->url_video;
+            $property->sell_price = $model->valor_venda;
+            $property->rent_price = $model->valor_locacao;
+            $property->total_area = $model->area_total;
+            $property->web_obs = $model->web_obs;
+            $property->featured_picture = $model->web_destaque_foto;
+            $property->page_description = $model->descricao_pagina;
+
+
 
             $property->parser = $this;
             $this->model = $model;
