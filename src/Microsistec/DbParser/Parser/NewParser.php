@@ -69,10 +69,22 @@ class NewParser extends ParserAbstract
         $property->for_sale = $model->for_sale;
         $property->for_rent = $model->for_rent;
         $property->for_vacation = $model->for_vacation;
-
+        $property->seller_contact = $this->getContact($model->owners);
 
         return $property;
 
+    }
+
+    public function getContact($model)
+    {
+        foreach($model as $user){
+            $owner = [
+                'name' => $user->name,
+                'email' => $user->email,
+                'phone' => $user->phone,
+            ];
+        }
+        return $owner;
     }
 
     public function getPicture($model)
