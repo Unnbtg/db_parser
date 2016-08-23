@@ -17,7 +17,6 @@ use Microsistec\DbParser\Parser\SciOnline\RoomParser;
 use Microsistec\DbParser\Parser\SciOnline\SeasonParser;
 use Microsistec\DbParser\Parser\SciOnline\SellParser;
 use Microsistec\DbParser\Property;
-use PublicadorXml\Models\Feature;
 
 class NewParser extends ParserAbstract
 {
@@ -25,7 +24,7 @@ class NewParser extends ParserAbstract
     {
         $property = new Property();
 
-        $property->reference = $model->alternative_code;
+        $property->reference = $model->code;
         $property->disponibility = $this->getDisponibility($model);
         $rooms = $this->getRooms($model);
         $property->bathroom = $rooms[RoomParser::BATHROOM];
