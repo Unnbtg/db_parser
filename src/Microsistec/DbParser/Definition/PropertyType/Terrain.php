@@ -137,7 +137,7 @@
 
         public function getTypeName()
         {
-            return "terrain";
+            return "Terreno";
         }
 
 

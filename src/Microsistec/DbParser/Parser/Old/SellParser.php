@@ -29,8 +29,10 @@
             $sell->financing_fee_value = $model->pagto_mensais_valor;
             $sell->value = $model->valor_venda;
 
-            $massAssignmentable->massAssignment($sell, $model->pagto_opcoes, $this->getPaymentOptions());
-
+            if($model->pagto_opcoes != null)
+            {
+                $massAssignmentable->massAssignment($sell, $model->pagto_opcoes, $this->getPaymentOptions());
+            }
             return $sell;
         }
 
