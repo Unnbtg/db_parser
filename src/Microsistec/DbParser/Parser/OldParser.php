@@ -69,6 +69,7 @@
             $property->for_rent = 0;
             $property->for_sale = 0;
             $property->for_vacation = 0 ;
+            $property->photos = null;
             $property->website_title = $model->titulo_pagina;
             $characteristics = $this->getCharacteristics($type->characteristics);
             $property->characteristics = $this->parseCharacteristics($characteristics);
