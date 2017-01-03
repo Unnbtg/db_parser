@@ -18,10 +18,11 @@
             if (is_null($object)) {
                 $object = new \Microsistec\DbParser\Definition\Disponibility\Rent;
             }
-
-            $massAssignmentable->massAssignment($object , $model->pagto_opcoes, $this->getPaymentOptions());
-            $object ->value = $model->valor_locacao;
-
+            if($model->pagto_opcoes != null)
+            {
+                $massAssignmentable->massAssignment($object , $model->pagto_opcoes, $this->getPaymentOptions());
+                $object->value = $model->valor_locacao;
+            }
             return $object ;
         }
 

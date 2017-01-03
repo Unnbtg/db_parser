@@ -168,7 +168,7 @@
 
         public function getTypeName()
         {
-            return 'rural';
+            return 'Rural';
         }
 
 

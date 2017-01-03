@@ -1,11 +1,4 @@
 <?php
-    /**
-     * Created by PhpStorm.
-     * User: marco
-     * Date: 01/07/16
-     * Time: 14:24
-     */
-
     namespace Microsistec\DbParser\Parser;
 
     use Microsistec\DbParser\Definition\Disponibility\Rent;
@@ -35,9 +28,10 @@
         public function parse($model, $domain = "", $account = "")
         {
             $property = new Property();
-
+            $property->id = $model->id;
+            $property->ml_id = $model->id_mercadolivre;
+            $property->reference = $model->codigo;
             $type = $this->getPropertyType($model);
-            $property->reference = $model->ref_alternativa;
             $property->type = $type->getTypeName();
             $property->subtype = $type->subtype;
             $property->disponibility = $this->getDisponibility($model);
@@ -64,19 +58,23 @@
             $property->valor_iptu = $model->valor_iptu;
             $property->package_mercadoLivre = $model->tipo_pacote_mercadolivre;
             $property->announcement_title = $model->titulo_anuncio;
-            $property->video_url = $model->url_video;
+            $property->video_url = isset($model->url_video) ? $model->url_video : '';
             $property->sell_price = $model->valor_venda;
             $property->rent_price = $model->valor_locacao;
             $property->total_area = $model->area_total;
             $property->web_obs = $model->web_obs;
             $property->featured_picture = $model->web_destaque_foto;
             $property->page_description = $model->descricao_pagina;
-
-
-
-            $property->parser = $this;
-            $this->model = $model;
-
+            $property->characteristics = array_filter($type->characteristics);
+            $property->for_rent = 0;
+            $property->for_sale = 0;
+            $property->for_vacation = 0 ;
+            $property->photos = null;
+            $property->website_title = $model->titulo_pagina;
+            $characteristics = $this->getCharacteristics($type->characteristics);
+            $property->characteristics = $this->parseCharacteristics($characteristics);
+            $seller_contact = $this->getContact($model->getBroker());
+            $property->seller_contact = $this->parseContact($seller_contact);
             return $property;
         }
 
@@ -140,6 +138,42 @@
                 case '5':
                     return new Rural($model);
             }
+        }
+
+        public function getCharacteristics($array) {
+            $return = array();
+            array_walk_recursive($array, function($a) use (&$return) { $return[] = $a; });
+            return $return;
+        }
+
+        public function parseCharacteristics($array)
+        {
+            $var = [];
+            foreach($array as $characteristic)
+            {
+                $var[] = ucfirst(str_replace('_', ' ', $characteristic));
+            }
+            return $var;
+
+        }
+
+        public function getContact($contact)
+        {
+            if(isset($contact))
+            {
+                return $contact->getInfo();
+            }
+        }
+
+        public function parseContact($contact)
+        {
+            $array = [];
+            $array['email'] = $contact['email'];
+            $array['phone'] = preg_replace("/[^0-9]/", '',$contact['telefone']);
+            $array['name'] = $contact['nome'];
+
+            return $array;
+
         }
 
     }

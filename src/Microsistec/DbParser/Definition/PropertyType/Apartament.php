@@ -333,6 +333,6 @@
 
         public function getTypeName()
         {
-            return 'apartament';
+            return 'Apartamento';
         }
     }

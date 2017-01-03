@@ -269,6 +269,6 @@
 
         public function getTypeName()
         {
-            return 'house';
+            return 'Casa';
         }
     }
