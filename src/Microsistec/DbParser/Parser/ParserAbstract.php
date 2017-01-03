@@ -16,7 +16,7 @@ abstract class ParserAbstract
 {
 
     /**
-     * @param Model $model
+     * @param $model
      * @return Property
      */
     public abstract function parse($model, $domain ="", $account = "");

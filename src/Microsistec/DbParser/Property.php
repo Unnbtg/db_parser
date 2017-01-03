@@ -20,6 +20,7 @@ use phpDocumentor\Reflection\Type;
  *
  *
  * @property string         $reference
+ * @property string         $finality
  * @property bool           $saleAvailable
  * @property float          $saleValue
  * @property boolean        $rentAvailable
@@ -27,15 +28,22 @@ use phpDocumentor\Reflection\Type;
  * @property boolean        $seasonAvailable
  * @property float          $seasonValue
  * @property bool           $acceptFinancing
+ * @property bool           $acceptFgts
+ * @property bool           $has_board
  * @property bool           $exchange
  * @property bool           $letterOfCredit
  * @property string         $cep
+ * @property int            $floor
  * @property string         $address
- * @property string         $number
+ * @property string         $street_number
  * @property string         $complement
- * @property string         $neighborhood
+ * @property mixed          $neighborhood
+ * @property string         $neighborhood_id
+ * @property string         $city_id
+ * @property string         $zipcode
+ * @property string         $condominium_name
  * @property string         $zone
- * @property string         $city
+ * @property mixed          $city
  * @property string         $state
  * @property array          $characteristics
  * @property int            $suites
@@ -57,7 +65,6 @@ use phpDocumentor\Reflection\Type;
  * @property array          $photos
  * @property ParserAbstract $parser
  * @property int            $valor_iptu
- * @property string         $area_util
  * @property string         $gyn
  * @property string         $condominium_price
  * @property string         $iptu_price
@@ -74,22 +81,26 @@ use phpDocumentor\Reflection\Type;
  * @property string         $page_description
  * @property string         $build_name
  * @property string         $balcony
+ * @property string         $area_width
+ * @property string         $area_height
  * @property string         $iw_featured
  * @property string         $build_age
  * @property string         $furnished
  * @property string         $olx_token
  * @property string         $website_title
  * @property string         $latitude
- * @property string         $longitude
+ * @property string         $longaddressitude
  * @property string         $for_sale
  * @property string         $for_rent
  * @property string         $for_vacation
  * @property array          $portals
  * @property string         $updated_at
  * @property string         $deleted_at
+ * @property string         $created_at
+ * @property string         $maintence_id
  */
 
-class Property
+class Property extends AbstractParsedType
 {
 
 }
