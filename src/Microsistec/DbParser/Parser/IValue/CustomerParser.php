@@ -95,12 +95,19 @@ class CustomerParser extends AbstractParser
             return [];
         }
 
+        $email = array_map('trim',explode(',', $email));
+        $email = is_array($email) ? $email : [$email];
+
+        return array_map([$this,'createEmail'], $email);
+    }
+
+    private function createEmail($email)
+    {
         $cEmail = new CustomerEmail();
         $cEmail->default = 1;
         $cEmail->name = "Padrão";
         $cEmail->email = trim($email);
-
-        return [$cEmail];
+        return $cEmail;
     }
 
     private function parsePhone($phones) {
