@@ -41,7 +41,7 @@ class CustomerParser extends AbstractParser
     {
         $customer = new Customer();
 
-        $this->id = $customer->mainetence_id = $customer->id = $model['id cliente'];
+        $this->id = $customer->maintence_id = $customer->id = $model['id cliente'];
         $customer->name = $model['nome'];
         $customer->email = $this->parseEmail($model['emails']);
         $customer->phone = $this->parsePhone($model['telefones']);
