@@ -70,7 +70,7 @@ use phpDocumentor\Reflection\Type;
  * @property string         $iptu_price
  * @property int            $vacation_max
  * @property int            $vacation_parkingLots
- * @property  string        $cinema
+ * @property string         $cinema
  * @property string         $package_mercadoLivre
  * @property string         $announcement_title
  * @property string         $video_url
@@ -98,6 +98,7 @@ use phpDocumentor\Reflection\Type;
  * @property string         $deleted_at
  * @property string         $created_at
  * @property string         $maintence_id
+ * @property int            $user_id
  */
 
 class Property extends AbstractParsedType

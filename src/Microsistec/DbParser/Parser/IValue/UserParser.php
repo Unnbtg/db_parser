@@ -19,7 +19,7 @@ class UserParser extends AbstractParser
     {
         $user = new User();
 
-        $this->id = $user->id = $model['id'];
+        $this->id = $user->maintence_id = $user->id = $model['id'];
         $user->admission = $this->formatDate($model['data inicio']);
         $user->email = $model['e-mail'];
         $user->name = $model['nome'];

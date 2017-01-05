@@ -122,12 +122,8 @@ class PropertyParser extends AbstractParser
         $property->acceptFgts = $this->simNaoToBool($model['fgts']);
         $property->floor = $model['andar'];
 
-
         $property->has_board = $this->booleanValue($model['placa']);
         $property->fgts = $this->booleanValue($model['fgts']);
-
-
-
 
         $property->age = date('Y') - $model['ano construcao'];
         $property->characteristics = $this->processCharacteristics($model);
@@ -146,6 +142,8 @@ class PropertyParser extends AbstractParser
         $property->kitchen = $this->addRoom('kitchen', (int)$this->booleanValue($model['cozinha']));
         $property->bathroom = $this->addRoom('bathroom', $model['banheiros']);
         $property->lavatory = $this->addRoom('lavatory', (int)$this->booleanValue($model['lavabo']));
+
+        $property->user_id = $model['usuario cadastro'];
 
         return $property;
     }

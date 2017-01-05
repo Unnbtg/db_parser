@@ -49,7 +49,7 @@ class UnityTypeParser extends AbstractParser
     public function parse($model, $domain = "", $account = "")
     {
         $unity = new BuildingUnityType();
-        $this->id = $unity->maintence_id= $model['id unidade'];
+        $this->id = $unity->maintence_id = $model['id unidade'];
         $unity->building_id = $model['id empreendimento'];
         $unity->type = $this->parseType($model['tipo']);
         $unity->bedroom =$model['dormitorios'];
