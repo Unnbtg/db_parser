@@ -13,10 +13,11 @@ namespace Microsistec\DbParser;
  * Class Forms
  * @package Microsistec\DbParser
  *
- * @property int user_id
  * @property int id
+ * @property string $maintence_id
+ * @property int user_id
  * @property int customer_id
- * @property int status
+ * @property int situation
  * @property date created_at
  * @property date updated_at
  * @property date treated_at
@@ -24,7 +25,5 @@ namespace Microsistec\DbParser;
  */
 class Forms extends AbstractParsedType
 {
-
-
-
+    //
 }

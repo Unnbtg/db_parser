@@ -20,7 +20,6 @@ class FormProfileParser extends AbstractParser
         $profile->customer_id = $model['id cliente'];
         $profile->bedroom = $model['dormitorios'];
         $profile->parking_lots = $model['garagens'];
-        $profile->parking_lots = $model['garagens'];
         $profile->max_price = $model['valor venda'];
 
         return $profile;

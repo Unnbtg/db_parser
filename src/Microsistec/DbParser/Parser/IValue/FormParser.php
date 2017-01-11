@@ -8,28 +8,28 @@
 
 namespace Microsistec\DbParser\Parser\IValue;
 
-
 use Microsistec\DbParser\Forms;
-use Microsistec\DbParser\Property;
 
 class FormParser extends AbstractParser
 {
+    protected $status = [
+        ['id' => 1, 'name' => 'em atendimento'],
+        ['id' => 2, 'name' => 'finalizado'],
+
+    ];
+
     public function parse($model, $domain = "", $account = "")
     {
         $form = new Forms();
-        $form->user_id = $model['id usuario'];
+        $form->maintence_id = $model['id atendimento'];
         $form->created_at = $model['data cadastro'];
         $form->updated_at = $model['data atualizacao'];
         $form->treated_at = $model['data atendimento'];
         $form->comment = $model['comentario'];
-        $form->status = $model['status'];
+        $form->situation = $this->getFromComplexConfig(strtolower($model['status']), $this->status);
         $form->customer_id = $model['id cliente'];
-        $form->id = $model['id atendimento'];
+        $form->user_id = $model['id usuario'];
 
         return $form;
-
-
     }
-
-
 }

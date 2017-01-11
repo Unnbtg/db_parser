@@ -55,6 +55,7 @@ class UnityTypeParser extends AbstractParser
         $unity->suite = $model['suites'];
         $unity->area_total = $model['area total'];
         $unity->area_private = $model['area privativa'];
+        $unity->area_common = $model['area comum'];
         $unity->room = $model['salas'];
         $unity->bathroom = $model['banheiros'];
         $unity->description = $model['descricao'];
