@@ -11,7 +11,6 @@ namespace Microsistec\DbParser\Parser\IValue;
 
 use Microsistec\DbParser\BuildingUnityType;
 use Microsistec\DbParser\Exceptions\ParserException;
-use Microsistec\DbParser\Property;
 
 class UnityTypeParser extends AbstractParser
 {
@@ -52,7 +51,7 @@ class UnityTypeParser extends AbstractParser
         $this->id = $unity->maintence_id = $model['id unidade'];
         $unity->building_id = $model['id empreendimento'];
         $unity->type = $this->parseType($model['tipo']);
-        $unity->bedroom =$model['dormitorios'];
+        $unity->bedroom = $model['dormitorios'];
         $unity->suite = $model['suites'];
         $unity->area_total = $model['area total'];
         $unity->area_private = $model['area privativa'];
@@ -62,7 +61,6 @@ class UnityTypeParser extends AbstractParser
         $unity->characteristics = $this->parseCharacteristics($model);
 
         return $unity;
-
     }
 
     public function parseCharacteristics($model)

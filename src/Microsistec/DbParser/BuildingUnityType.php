@@ -41,6 +41,7 @@ namespace Microsistec\DbParser;
  * @property int paviment_end
  * @property int type
  * @property int building_id
+ * @property int building_tower_id
  * @property int maintence_id
  * @property float area_common
  * @property float area_private

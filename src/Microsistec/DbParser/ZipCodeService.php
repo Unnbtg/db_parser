@@ -17,9 +17,15 @@ class ZipCodeService
 
     public function getAddress($zipcode)
     {
-        $content = json_decode(file_get_contents($this->url. $zipcode.'?token='.$this->token), true);
-        $zipAddress = $content['endereco'];
+        try {
+            $fileContent = file_get_contents($this->url. $zipcode.'?token='.$this->token);
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+            return false;
+        }
 
+        $content = json_decode($fileContent, true);
+        $zipAddress = $content['endereco'];
 
         if (empty($zipAddress)) {
             return false;

@@ -84,14 +84,16 @@ class PropertyParser extends AbstractParser
         $adressService = new ZipCodeService();
         $result = $adressService->getAddress($property->zipcode);
 
-        if (!$result) {
+        /*if (!$result) {
             throw new ParserException("Imóvel de Id {$property->maintence_id} Endereço não foi localizado, e portanto excluido da publicação.", ParserException::CODE_EXCLUDED);
-        }
+        }*/
 
         $property->created_at = $this->formatDate($model['data cadastro']);
         $property->updated_at = $this->formatDate($model['data atualizacao']);
-        $property->reference = $model['referencia'];
+        //$property->reference = $model['referencia'];
+        $property->alternative_code = $model['referencia'];
         $property->acceptFinancing = $this->simNaoToBool($model['aceita financiamento']);
+        $property->exchange = $this->simNaoToBool($model['aceita permuta']);
         $property->type = $this->getFromComplexConfig($model['tipo'], $this->types);
         $property->finality = $this->getFromComplexConfig($model['finalidade'], $this->finalities);
 
@@ -109,41 +111,46 @@ class PropertyParser extends AbstractParser
 
         $property->street_number = $model['numero'];
         $property->street = $model['tipo logradouro'] . " " . $model['logradouro'];
-        $property->complementary = $model['complemento'];
-        $property->condominium_price = $model['valor condominio'];
-        $property->notes = $model['descricao geral'];
-        $property->total_area = $model['area total'];
-        $property->total_built_area = $model['area util construida'];
-        $property->website_home_highlight = $this->simNaoToBool($model['destaque']);
-        $property->website_title = $model['titulo'];
-        $property->website_notes = $model['descricao site'];
-        $property = $this->parseArea($property, $model['dimensao terreno']);
-        $property->acceptFgts = $this->simNaoToBool($model['fgts']);
-        $property->acceptFgts = $this->simNaoToBool($model['fgts']);
-        $property->floor = $model['andar'];
-
-        $property->has_board = $this->booleanValue($model['placa']);
-        $property->fgts = $this->booleanValue($model['fgts']);
-
-        $property->age = date('Y') - $model['ano construcao'];
-        $property->characteristics = $this->processCharacteristics($model);
-        $property->iptu_price = $model['valor iptu'];
         $property->neighborhood_id = $result['id_bairro'];
         $property->neighborhood = $result['bairro']['nome'];
         $property->city_id = $result['id_cidade'];
         $property->city = $this->createCity($result['id_cidade'], $this->getState($result['id_uf']), $result['cidade']['nome']);
         $property->neighborhood = $this->createNeighborhood($result['id_bairro'], $result['id_cidade'], $result['bairro']['nome']);
         $property->state_id = $this->getState($result['id_uf']);
+        $property->complementary = $model['complemento'];
+        $property->reference_point = $model['ponto referencia'];
 
+        $property->condominium_price = $model['valor condominio'];
+        /*
+            precisa colocar status do imóvel (antiga flag)
+         */
+        $property->notes = $model['descricao geral'];
+        $property->total_area = $model['area total'];
+        $property->total_built_area = $model['area util construida'];
+
+        // falta Exclusividade
+
+        $property->website_home_highlight = $this->simNaoToBool($model['destaque']);
+
+        $property->website_title = $model['titulo'];
+        $property->website_notes = $model['descricao site'];
+        $property = $this->parseArea($property, $model['dimensao terreno']);
+        $property->fgts = $this->booleanValue($model['fgts']);
+        $property->user_id = $model['usuario cadastro'];
+        $property->has_board = $this->booleanValue($model['placa']);
+        $property->floor = $model['andar'];
+        $property->kitchen = $this->addRoom('kitchen', (int)$this->booleanValue($model['cozinha']));
         $property->room = $this->addRoom("room", $model['salas']);
+        $property->lavatory = $this->addRoom('lavatory', (int)$this->booleanValue($model['lavabo']));
+        $property->bathroom = $this->addRoom('bathroom', $model['banheiros']);
         $property->bedroom = $this->addRoom("dorm", $model['dormitorios']);
         $property->suites = $this->addRoom('suit', $model['suites']);
-        $property->parking_lot = $this->addRoom('parking_lot', $model['garagens cobertas'] + $model['garagens descobertas']);
-        $property->kitchen = $this->addRoom('kitchen', (int)$this->booleanValue($model['cozinha']));
-        $property->bathroom = $this->addRoom('bathroom', $model['banheiros']);
-        $property->lavatory = $this->addRoom('lavatory', (int)$this->booleanValue($model['lavabo']));
 
-        $property->user_id = $model['usuario cadastro'];
+        $property->characteristics = $this->processCharacteristics($model);
+
+        $property->parking_lot = $this->addRoom('parking_lot', $model['garagens cobertas'] + $model['garagens descobertas']);
+        $property->age = date('Y') - $model['ano construcao'];
+        $property->iptu_price = $model['valor iptu'];
 
         return $property;
     }

@@ -70,6 +70,8 @@ namespace Microsistec\DbParser;
  * @property int status
  * @property bool publish
  * @property int maintence_id
+ * @property int user_id
+ * @property int draft
  */
 
 class Building extends AbstractParsedType

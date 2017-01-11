@@ -21,15 +21,16 @@ class BuildingPhotoParser extends AbstractParser
              ["id" => 2, "name" => "Planta", "prefix" => "PL"],
              ["id" => 3, "name" => "Fase da Obra", "prefix" => "FO"],
              ["id" => 4, "name" => "Área Comum", "prefix" => "AC"],
-             ["id" => 5, "name" => "Fotos", "prefix" => "FT"],
-             ["id" => 6, "name" => "Fotos do Decorado", "prefix" => "FD"]
+             ["id" => 5, "name" => "Foto", "prefix" => "FT"],
+             ["id" => 6, "name" => "Fotos do Decorado", "prefix" => "FD"],
+             ["id" => 7, "name" => "Banner", "prefix" => "BN"],
     ];
 
     public function parse($model, $domain = "", $account = "")
     {
         $foto = new BuildingPhoto();
 
-        $this->id = $foto->maintence_id = $model['id foto'];
+        $this->id = $foto->maintence_id = $foto->id = $model['id foto'];
         $foto->path = $model['url grande'];
         $foto->thumb_path = $model['url miniatura'];
         $foto->name = $model['legenda'];
@@ -50,6 +51,5 @@ class BuildingPhotoParser extends AbstractParser
 
         return $simplified[$category];
     }
-
 
 }
