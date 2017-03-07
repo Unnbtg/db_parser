@@ -95,6 +95,7 @@ class NewParser extends ParserAbstract
 
     public function getFeatures($model)
     {
+        $characteristics = [];
         foreach ($model as $feature) {
             $characteristics[] = $feature->name;
         }
