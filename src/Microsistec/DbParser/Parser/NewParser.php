@@ -78,13 +78,10 @@ class NewParser extends ParserAbstract
 
     public function getContact($model)
     {
-        foreach($model as $user){
-            $owner = [
-                'name' => $user->name,
-                'email' => $user->email,
-                'phone' => $user->phone,
-            ];
-        }
+        $owner = [
+            'name' => $model->name,
+            'email' => $model->email,
+        ];
         return $owner;
     }
 
@@ -194,7 +191,7 @@ class NewParser extends ParserAbstract
 
         return $parser->parse($model);
     }
-    
+
     public function getAge($age)
     {
         $current = date("Y");
