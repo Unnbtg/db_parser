@@ -46,6 +46,7 @@ class NewParser extends ParserAbstract
         $property->address = $model->street;
         $property->complement = $model->complementary;
         $property->age = $model->age;
+        $property->construction_age = $this->getAge($model->age);
         $property->characteristics = $this->getFeatures($model->features);
         $property->condominium_price = $model->condominium_price;
         $property->iptu_price = $model->iptu_price;
@@ -192,5 +193,12 @@ class NewParser extends ParserAbstract
         $parser = new RoomParser();
 
         return $parser->parse($model);
+    }
+    
+    public function getAge($age)
+    {
+        $current = date("Y");
+        $year = $current - $age;
+        return $year;
     }
 }
