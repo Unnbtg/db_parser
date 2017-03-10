@@ -46,6 +46,7 @@ class NewParser extends ParserAbstract
         $property->address = $model->street;
         $property->complement = $model->complementary;
         $property->age = $model->age;
+        $property->construction_age = $this->getAge($model->age);
         $property->characteristics = $this->getFeatures($model->features);
         $property->condominium_price = $model->condominium_price;
         $property->iptu_price = $model->iptu_price;
@@ -69,7 +70,7 @@ class NewParser extends ParserAbstract
         $property->for_sale = $model->for_sale;
         $property->for_rent = $model->for_rent;
         $property->for_vacation = $model->for_vacation;
-        $property->seller_contact = $this->getContact($model->owners);
+        $property->seller_contact = $this->getContact($model->user);
 
         return $property;
 
@@ -77,13 +78,10 @@ class NewParser extends ParserAbstract
 
     public function getContact($model)
     {
-        foreach($model as $user){
-            $owner = [
-                'name' => $user->name,
-                'email' => $user->email,
-                'phone' => $user->phone,
-            ];
-        }
+        $owner = [
+            'name' => $model->name,
+            'email' => $model->email,
+        ];
         return $owner;
     }
 
@@ -97,6 +95,7 @@ class NewParser extends ParserAbstract
 
     public function getFeatures($model)
     {
+        $characteristics = [];
         foreach ($model as $feature) {
             $characteristics[] = $feature->name;
         }
@@ -192,5 +191,12 @@ class NewParser extends ParserAbstract
         $parser = new RoomParser();
 
         return $parser->parse($model);
+    }
+
+    public function getAge($age)
+    {
+        $current = date("Y");
+        $year = $current - $age;
+        return $year;
     }
 }
