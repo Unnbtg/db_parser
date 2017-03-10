@@ -25,7 +25,7 @@ class FormParser extends AbstractParser
         $form->created_at = $model['data cadastro'];
         $form->updated_at = $model['data atualizacao'];
         $form->touched_at = $model['data atendimento'];
-        $form->comment = $model['comentario'];
+        $form->content = $model['comentario'];
         $form->situation = $this->getFromComplexConfig(strtolower($model['status']), $this->status);
         $form->customer_id = $model['id cliente'];
         $form->user_id = $model['id usuario'];

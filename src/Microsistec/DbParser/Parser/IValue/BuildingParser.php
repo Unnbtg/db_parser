@@ -36,6 +36,17 @@ class BuildingParser extends AbstractParser
         "em construção" => 1
     ];
 
+    protected $salesSystem = [
+        "preço fechado" => 1,
+        "preço de custo" => 2,
+    ];
+
+    protected $workPhase = [
+        'pronto' => 1,
+        'em construção' => 2,
+        'não iniciado' => 3,
+    ];
+
     public function parse($model, $domain = "", $account = "")
     {
         try {
@@ -47,8 +58,10 @@ class BuildingParser extends AbstractParser
                 return false;
             }
 
-            $this->id = $building->code = $model['id empreendimento'];
+            $this->id = $building->alternative_code = $model['id empreendimento'];
             $building->maintence_id = $model['id empreendimento'];
+            $building->sales_system = $this->parseSalesSystem($model['sistema venda']);
+            $building->on_duty = $model['plantão'];
 
             $building->name = $model['nome'];
             $type = $this->parseTipo($model['tipo']);
@@ -97,6 +110,17 @@ class BuildingParser extends AbstractParser
         }
 
         return $this->status[$status];
+    }
+
+    public function parseSalesSystem($salesSystem)
+    {
+        $salesSystem = strtolower($salesSystem);
+
+        if (!isset($this->salesSystem[$salesSystem])) {
+            return 1;
+        }
+
+        return $this->salesSystem[$salesSystem];
     }
 
 

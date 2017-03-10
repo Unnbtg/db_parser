@@ -13,6 +13,28 @@ namespace Microsistec\DbParser;
  * Class Customer
  * @package Microsistec\DbParser
  *
+ * @property int ref
+ * @property int status
+ * @property string obs
+ * @property int gender
+ * @property int type
+ * @property string branch_activity
+ * @property int children
+ * @property int cars
+ * @property int scholling
+ * @property int attorney
+ * @property string attorney_name
+ * @property string attorney_rg
+ * @property string attorney_cpf
+ * @property string attorney_email
+ * @property string attorney_phone
+ * @property string attorney_street
+ * @property string attorney_street_number
+ * @property string attorney_complementary
+ * @property string attorney_zipcode
+ * @property string attorney_state_id
+ * @property string attorney_city_id
+ * @property string attorney_neighborhood_id
  *
  * @property string name
  * @property string cpf
