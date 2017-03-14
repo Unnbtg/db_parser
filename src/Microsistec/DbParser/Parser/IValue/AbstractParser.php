@@ -12,8 +12,9 @@ namespace Microsistec\DbParser\Parser\IValue;
 use Microsistec\DbParser\City;
 use Microsistec\DbParser\Neighborhood;
 use Microsistec\DbParser\Parser\ParserAbstract;
+use Microsistec\DbParser\Parser\ParserInterface;
 
-abstract class AbstractParser extends ParserAbstract
+abstract class AbstractParser extends ParserAbstract implements ParserInterface
 {
 
     protected $states = [
