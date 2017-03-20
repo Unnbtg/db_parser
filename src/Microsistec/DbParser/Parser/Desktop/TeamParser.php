@@ -14,7 +14,7 @@ class TeamParser extends ParserAbstract implements ParserInterface
         $team->maintence_id = $model->id;
         $team->id           = $model->id;
         $team->name         = $model->name;
-        $team->status       = 0;
+        $team->status       = $model->status;
 
         return $team;
     }
