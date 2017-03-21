@@ -14,7 +14,7 @@ use Microsistec\DbParser\Parser\ParserAbstract;
 use Microsistec\DbParser\Parser\ParserInterface;
 use Microsistec\DbParser\ZipCodeService;
 
-class CustomerParser extends ParserAbstract implements ParserInterface
+class JuridicalCustomerParser extends ParserAbstract implements ParserInterface
 {
     /*
      * Online:                   Desktop:
@@ -44,22 +44,32 @@ class CustomerParser extends ParserAbstract implements ParserInterface
         $customer->code                      = $model->id;
         $customer->name                      = $model->name;
         $customer->status                    = 0;
-        $customer->type                      = 1;
+        $customer->type                      = 2;
         $customer->user_id                   = 1;
         $customer->cpf                       = $this->unMask($model->cpf);
-        $customer->zipcode                   = $this->unMask($model->zipcode);
+        $customer->zipcode                   = $this->maskCep($model->zipcode);
+
+        $addressService                      = new ZipCodeService();
+
+        $result                              = $addressService->getAddress($customer->zipcode);
+
+        if($result){
+            $customer->neighborhood_id           = $result->neighborhood_id;
+            $customer->city_id                   = $result->city_id;
+            $customer->state_id                  = $this->getState($result->state_id);
+        }
+
         $customer->street                    = $model->street;
         $customer->street_number             = $model->number;
         $customer->complementary             = $model->complementary;
         $customer->city                      = $model->city;
-        $customer->neighborhood              = $model->neighborhood;
         $customer->state                     = $model->state;
-        $customer->state_id                  = $this->getState($model->state);
+        $customer->neighborhood              = $model->neighborhood;
         $customer->rg                        = $this->unMask($model->rg);
         $customer->issued_at                 = $model->rg_issued_at;
         $customer->issuer                    = $model->rg_issuer;
         $customer->birthdate                 = $model->birthdate;
-        $customer->marital_status            = !empty($model->marital_status) ? $this->marital_status[$model->marital_status] : null;
+        $customer->marital_status            = isset($model->marital_status) ? $this->marital_status[$model->marital_status] : null;
         $customer->occupation                = $model->occupation;
         $customer->nationality               = $model->nationality;
         $customer->naturalness               = $model->naturalness;
@@ -71,7 +81,7 @@ class CustomerParser extends ParserAbstract implements ParserInterface
         $customer->spouse_rg_issued_at       = $model->spouse_rg_issued_at;
         $customer->spouse_rg_issuer          = $model->spouse_rg_issuer;
         $customer->spouse_birthdate          = $model->spouse_birthdate;
-        $customer->spouse_marital_status     = !empty($model->spouse_marital_status) ? $this->marital_status[$model->spouse_marital_status] : null;
+        $customer->spouse_marital_status     = isset($model->marital_status) ? $this->marital_status[$model->spouse_marital_status] : null;
         $customer->spouse_occupation         = $model->spouse_occupation;
         $customer->spouse_nationality        = $model->spouse_nationality;
         $customer->spouse_naturalness        = $model->spouse_naturalness;
