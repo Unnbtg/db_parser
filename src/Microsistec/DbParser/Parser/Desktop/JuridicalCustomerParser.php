@@ -42,63 +42,28 @@ class JuridicalCustomerParser extends ParserAbstract implements ParserInterface
         $customer->maintence_id              = $model->id;
         $customer->id                        = $model->id;
         $customer->code                      = $model->id;
-        $customer->name                      = $model->name;
+        $customer->name                      = $model->corporate_name;
         $customer->status                    = 0;
         $customer->type                      = 2;
         $customer->user_id                   = 1;
-        $customer->cpf                       = $this->unMask($model->cpf);
-        $customer->zipcode                   = $this->maskCep($model->zipcode);
-
-        $addressService                      = new ZipCodeService();
-
-        $result                              = $addressService->getAddress($customer->zipcode);
-
-        if($result){
-            $customer->neighborhood_id           = $result->neighborhood_id;
-            $customer->city_id                   = $result->city_id;
-            $customer->state_id                  = $this->getState($result->state_id);
-        }
-
+        $customer->zipcode                   = $this->unMask($model->zipcode);
         $customer->street                    = $model->street;
         $customer->street_number             = $model->number;
         $customer->complementary             = $model->complementary;
         $customer->city                      = $model->city;
-        $customer->state                     = $model->state;
         $customer->neighborhood              = $model->neighborhood;
-        $customer->rg                        = $this->unMask($model->rg);
-        $customer->issued_at                 = $model->rg_issued_at;
-        $customer->issuer                    = $model->rg_issuer;
-        $customer->birthdate                 = $model->birthdate;
-        $customer->marital_status            = isset($model->marital_status) ? $this->marital_status[$model->marital_status] : null;
-        $customer->occupation                = $model->occupation;
-        $customer->nationality               = $model->nationality;
-        $customer->naturalness               = $model->naturalness;
-        $customer->paternal_filiation        = $model->paternal_filiation;
-        $customer->maternal_filiation        = $model->maternal_filiation;
-        $customer->spouse_name               = $model->spouse_name;
-        $customer->spouse_cpf                = $this->unMask($model->spouse_cpf);
-        $customer->spouse_rg                 = $this->unMask($model->spouse_rg);
-        $customer->spouse_rg_issued_at       = $model->spouse_rg_issued_at;
-        $customer->spouse_rg_issuer          = $model->spouse_rg_issuer;
-        $customer->spouse_birthdate          = $model->spouse_birthdate;
-        $customer->spouse_marital_status     = isset($model->marital_status) ? $this->marital_status[$model->spouse_marital_status] : null;
-        $customer->spouse_occupation         = $model->spouse_occupation;
-        $customer->spouse_nationality        = $model->spouse_nationality;
-        $customer->spouse_naturalness        = $model->spouse_naturalness;
-        $customer->spouse_paternal_filiation = $model->spouse_paternal_filiation;
-        $customer->spouse_maternal_filiation = $model->spouse_maternal_filiation;
-        $customer->union_date                = $model->union_date;
-        $customer->union_security            = $model->union_security;
+        $customer->state                     = $model->state;
+        $customer->state_id                  = $this->getState($model->state);
+        $customer->opening_date              = $model->opening_date;
+        $customer->fantasy_name              = $model->fantasy_name;
+        $customer->cnpj                      = $this->unMask($model->cnpj);
+        $customer->ie                        = $this->unMask($model->ie);
+        $customer->im                        = $this->unMask($model->im);
         $customer->income                    = $model->income;
         $customer->bank_name                 = $model->bank_name;
         $customer->bank_agency               = $model->bank_agency;
         $customer->bank_account              = $model->bank_account;
-        $customer->owner                     = null;
-        $customer->interested                = null;
-        $customer->children                  = null;
-        $customer->autos                     = null;
-        $customer->gender                    = null;
-        $customer->branch_id                 = $model->branch;
+        $customer->branch_id                 = $model->juridical_branch;
         $customer->emails                    = $model->emails;
         $customer->phones                    = $model->phones;
 
