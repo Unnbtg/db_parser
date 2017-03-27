@@ -55,6 +55,9 @@ class PropertyParser extends OldParser implements ParserInterface
         //$property->block = $model->block;
 
         $property->street_number = $model->street_number;
+        $property->city = $model->city;
+        $property->neighborhood = $model->neighborhood;
+        $property->state = $model->uf;
         $property->complementary = $model->complementary;
         $property->condominium_name = $model->condominium_name;
         $property->age = $model->age;
