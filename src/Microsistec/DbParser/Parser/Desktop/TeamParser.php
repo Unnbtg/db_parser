@@ -10,11 +10,12 @@ class TeamParser extends ParserAbstract implements ParserInterface
 {
     public function parse($model, $domain = "", $account = "")
     {
-        $team         = new Team();
+        $team               = new Team();
         $team->maintence_id = $model->id;
         $team->id           = $model->id;
         $team->name         = $model->name;
         $team->status       = $model->status;
+        $team->user_id      = 1;
 
         return $team;
     }

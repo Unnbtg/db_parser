@@ -27,6 +27,7 @@ class UserParser extends ParserAbstract implements ParserInterface
         $user->photo            = null;
         $user->activated_at     = $model->admission;
         $user->phones           = $model->phones;
+        $user->user_id          = 1;
 
         return $user;
     }

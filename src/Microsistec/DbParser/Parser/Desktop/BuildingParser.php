@@ -18,8 +18,61 @@ class BuildingParser extends ParserAbstract implements ParserInterface
 {
     public function parse($model, $domain = "", $account = "")
     {
-        $building = new Building();
-        $building->id = $model->id;
+        $building                             = new Building();
+        $building->maintence_id               = $model->id;
+        $building->id                         = $model->id;
+        $building->branch_id                  = $model->branch_id;
+        $building->code                       = $model->code;
+        $building->start_date                 = $model->start_date;
+        $building->end_date                   = $model->end_date;
+        $building->construction_stage         = $model->progress_percent;
+        $building->website_home_highlight     = $model->website_home_highlight;
+        $building->website_home_rotate_banner = $model->website_home_rotate_banner;
+        $building->website_title              = $model->website_title;
+        $building->website_keywords           = $model->website_keywords;
+        $building->website_description        = $model->website_description;
+        $building->website_notes              = $model->website_notes;
+        $building->launch_status              = $model->release_status;
+        $building->zipcode                    = $model->zipcode;
+        $building->street                     = $model->street;
+        $building->street_number              = $model->street_number;
+        $building->zone                       = $model->zone;
+        $building->city                       = $model->city;
+        $building->neighborhood               = $model->neighborhood;
+        $building->state                      = $model->state;
+        $building->foundation_end             = $model->foundation_end;
+        $building->foundation_percent         = $model->foundation_percent;
+        $building->structure_end              = $model->structure_end;
+        $building->structure_percent          = $model->structure_percent;
+        $building->brickwork_end              = $model->brickwork_end;
+        $building->brickwork_percent          = $model->brickwork_percent;
+        $building->hydraulic_end              = $model->hydraulic_end;
+        $building->hydraulic_percent          = $model->hydraulic_percent;
+        $building->electric_end               = $model->electric_end;
+        $building->electric_percent           = $model->electric_percent;
+        $building->completion_end             = $model->completion_end;
+        $building->completion_percent         = $model->completion_percent;
+        $building->progress_percent           = $model->progress_percent;
+        $building->name                       = $model->name;
+        $building->photos                     = $model->photos;
+        $building->migration_obs              = $model->migration_obs;
+        $building->show_name                  = substr($model->internet_options, 0, 1);
+        $building->show_price                 = substr($model->internet_options, 1, 1);
+        $building->show_payment_quantities    = substr($model->internet_options, 4, 1);
+        $building->show_payment_values        = substr($model->internet_options, 2, 1);
+        $building->type                       = ($model->type == 0 || $model->type == 2 || $model->type == 4) ? 1 : 2;
+        $building->finality                   = ($model->type == 0 || $model->type == 1 || $model->type == 2 || $model->type == 4) ? 1 : 2;
+        $building->draft                      = true;
+        $building->created_at                 = $model->created_at;
+        $building->updated_at                 = $model->updated_at;
+        $building->user_id                    = 1;
+        $building->internal_notes             = $model->internal_obs;
+        $building->on_duty                    = false;
+        $building->work_phase                 = $model->construction_stage == 0 ? 3 : $model->construction_stage;
+        $building->hotsite                    = $model->hotsite;
+        $building->characteristics            = $model->characteristics;
+
+        return $building;
     }
 
 }
