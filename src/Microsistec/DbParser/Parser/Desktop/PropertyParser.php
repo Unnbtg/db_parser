@@ -29,8 +29,8 @@ class PropertyParser extends OldParser implements ParserInterface
         $property->alternative_code              = $model->alternative_code;
         $property->user_code                     = $model->code;
         $property->old_type                      = $model->type;
-        $property->finality                      = '';
-        $property->type                          = '';
+        $property->finality                      = $this->getFinality($model);
+        $property->type                          = $this->getTypes($model);
         $property->subtype                       = '';
         $property->for_rent                      = substr($model->finality, 0, 1);
         $property->for_sale                      = substr($model->finality, 1, 1);
@@ -153,6 +153,59 @@ class PropertyParser extends OldParser implements ParserInterface
             case '5':
                 return new Rural($model);
         }
+    }
+
+    private function getFinality($model)
+    {
+        switch ($model->type) {
+            case 0: //casa
+            case 1: //apartamento
+                return 1; //residencial
+                break;
+            case 2: //terreno
+                switch ($model->definition_01){ //valor do campo
+                    case 0:
+                    case 1:
+                    case 5:
+                    case 7:
+                    case 8:
+                    case 12:
+                        return 1; //residencial
+                        break;
+                    case 2;
+                    case 3;
+                    case 4;
+                        return 4; // rural
+                        break;
+                    case 6:
+                    case 15:
+                        return 3; // industrial
+                        break;
+                    case 9:
+                    case 10:
+                    case 11:
+                    case 13:
+                    case 14:
+                        return 2; // comercial
+                        break;
+                }
+                break;
+            case 4: // imóvel comercial
+                return 2; // comercial
+                break;
+            case 5: // imóvel rural
+                return 4; // rural
+                break;
+        }
+    }
+
+    private function getTypes($model)
+    {
+        $types = [
+            0 => 8,
+            1 => 1,
+            2 => 11,
+        ];
     }
 
 }

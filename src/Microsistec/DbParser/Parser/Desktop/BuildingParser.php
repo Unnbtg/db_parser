@@ -70,9 +70,69 @@ class BuildingParser extends ParserAbstract implements ParserInterface
         $building->on_duty                    = false;
         $building->work_phase                 = $model->construction_stage == 0 ? 3 : $model->construction_stage;
         $building->hotsite                    = $model->hotsite;
-        $building->characteristics            = $model->characteristics;
+        $building->features                   = $this->characteristics($model);
 
         return $building;
+    }
+
+    private function characteristics($model)
+    {
+        //key = posicao do campo caracteristicas no desktop
+        //value = uid na tabela features do sci online
+        $characteristics = [
+            "24" => '4',
+            "27" => '5',
+            "16" => '7',
+            "12" => '12',
+            "19" => '13',
+            "4"  => '14',
+            "13" => '23',
+            "14" => '24',
+            "22" => '26',
+            "29" => '27',
+            "28" => '56',
+            "8"  => '242',
+            "21" => '31',
+            "17" => '41',
+            "37" => '44',
+            "20" => '45',
+            "40" => '46',
+            "39" => '',
+            "26" => '50',
+            "18" => '52',
+            "5"  => '54',
+            "34" => '57',
+            "1"  => '58',
+            "2"  => '60',
+            "33" => '63',
+            "32" => '64',
+            "31" => '65',
+            "15" => '66',
+            "36" => '67',
+            "25" => '68',
+            "35" => '251',
+            "11" => '71',
+            "10" => '72',
+            "9"  => '73',
+            "30" => '74',
+            "6"  => '78',
+            "7"  => '79',
+            "38" => '82',
+            "3"  => '85',
+            "23" => '86',
+        ];
+
+        $newCharacteristics = [];
+
+        foreach (str_split($model->characteristics) as $key => $value) {
+            if($value != 1 || empty($characteristics[$key+1]) ){
+                continue;
+            }
+            $newCharacteristics[] = $characteristics[$key+1];
+        }
+
+        return $newCharacteristics;
+
     }
 
 }
