@@ -8,20 +8,34 @@
 
 namespace Microsistec\DbParser\Parser\Desktop;
 
-
-use Microsistec\DbParser\Definition\PropertyType\Apartament;
-use Microsistec\DbParser\Definition\PropertyType\Commercial;
-use Microsistec\DbParser\Definition\PropertyType\House;
-use Microsistec\DbParser\Definition\PropertyType\Rural;
-use Microsistec\DbParser\Definition\PropertyType\Terrain;
+use Microsistec\DbParser\Parser\Desktop\PropertyTypes\Apartment;
+use Microsistec\DbParser\Parser\Desktop\PropertyTypes\Commercial;
+use Microsistec\DbParser\Parser\Desktop\PropertyTypes\House;
+use Microsistec\DbParser\Parser\Desktop\PropertyTypes\Land;
 use Microsistec\DbParser\Parser\OldParser;
 use Microsistec\DbParser\Parser\ParserInterface;
 use Microsistec\DbParser\Property;
 
 class PropertyParser extends OldParser implements ParserInterface
 {
+
+    private $flag = [
+        0  => 1, //Livre
+        3  => 2, //Bloqueado
+        5  => 3, //Vendido
+        8  => 4, //Suspenso
+        10 => 5, //Alugado
+        11 => 6, //Reservado
+        12 => 7, //Vendido Terceiros
+        13 => 8, //Alugado Terceiros
+        14 => 9, //Baixado
+    ];
+
+
     public function parse($model, $domain = "", $account = "")
     {
+        $types = $this->getTypes($model);
+
         $property                                = new Property();
         $property->maintence_id                  = $model->id;
         $property->id                            = $model->id;
@@ -29,9 +43,10 @@ class PropertyParser extends OldParser implements ParserInterface
         $property->alternative_code              = $model->alternative_code;
         $property->user_code                     = $model->code;
         $property->old_type                      = $model->type;
+        $property->flag                          = $this->getFlag($model);
         $property->finality                      = $this->getFinality($model);
-        $property->type                          = $this->getTypes($model);
-        $property->subtype                       = '';
+        $property->type                          = $types['tipo'];
+        $property->subtype                       = $types['subtipo'];
         $property->for_rent                      = substr($model->finality, 0, 1);
         $property->for_sale                      = substr($model->finality, 1, 1);
         $property->for_vacation                  = substr($model->finality, 2, 1);
@@ -136,23 +151,11 @@ class PropertyParser extends OldParser implements ParserInterface
             $property->vacations          = $model->vacations;
         }
 
-        return $property;
-    }
-
-    public function getPropertyType($model)
-    {
-        switch ($model->type) {
-            case '0':
-                return new House($model);
-            case '1':
-                return new Apartament($model);
-            case '2':
-                return new Terrain($model);
-            case '4':
-                return new Commercial($model);
-            case '5':
-                return new Rural($model);
+        if($model->type == 0) {
+            var_dump($property);
         }
+
+        return $property;
     }
 
     private function getFinality($model)
@@ -201,11 +204,31 @@ class PropertyParser extends OldParser implements ParserInterface
 
     private function getTypes($model)
     {
-        $types = [
-            0 => 8,
-            1 => 1,
-            2 => 11,
-        ];
+       switch ($model->type) {
+           case 0:
+               $result = (new House())->getTypeSubtype($model);
+               break;
+           case 1:
+               $result = (new Apartment())->getTypeSubtype($model);
+               break;
+           case 2:
+               $result = (new Land())->getTypeSubtype($model);
+               break;
+           case 4:
+               $result = (new Commercial())->getTypeSubtype($model);
+               break;
+           case 4:
+               $result = (new Land())->getTypeSubtype($model);
+               break;
+       }
+
+       return $result;
+
+    }
+
+    public function getFlag($model)
+    {
+        return $this->flag[$model->flag];
     }
 
 }
