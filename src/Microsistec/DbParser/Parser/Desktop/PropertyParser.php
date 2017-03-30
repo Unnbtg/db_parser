@@ -12,6 +12,7 @@ use Microsistec\DbParser\Parser\Desktop\PropertyTypes\Apartment;
 use Microsistec\DbParser\Parser\Desktop\PropertyTypes\Commercial;
 use Microsistec\DbParser\Parser\Desktop\PropertyTypes\House;
 use Microsistec\DbParser\Parser\Desktop\PropertyTypes\Land;
+use Microsistec\DbParser\Parser\Desktop\PropertyTypes\Rural;
 use Microsistec\DbParser\Parser\OldParser;
 use Microsistec\DbParser\Parser\ParserInterface;
 use Microsistec\DbParser\Property;
@@ -39,7 +40,7 @@ class PropertyParser extends OldParser implements ParserInterface
         $property                                = new Property();
         $property->maintence_id                  = $model->id;
         $property->id                            = $model->id;
-        $property->code                          = $model->code;
+        $property->code                          = $model->id;
         $property->alternative_code              = $model->alternative_code;
         $property->user_code                     = $model->code;
         $property->old_type                      = $model->type;
@@ -47,6 +48,7 @@ class PropertyParser extends OldParser implements ParserInterface
         $property->finality                      = $this->getFinality($model);
         $property->type                          = $types['tipo'];
         $property->subtype                       = $types['subtipo'];
+        $property->features                      = isset($types['feature']) ? $types['feature'] : null;
         $property->for_rent                      = substr($model->finality, 0, 1);
         $property->for_sale                      = substr($model->finality, 1, 1);
         $property->for_vacation                  = substr($model->finality, 2, 1);
@@ -148,11 +150,7 @@ class PropertyParser extends OldParser implements ParserInterface
         $property->videos             = [$model->video_url];
 
         if(isset($model->vacations)){
-            $property->vacations          = $model->vacations;
-        }
-
-        if($model->type == 0) {
-            var_dump($property);
+            $property->vacations      = $model->vacations;
         }
 
         return $property;
@@ -217,8 +215,8 @@ class PropertyParser extends OldParser implements ParserInterface
            case 4:
                $result = (new Commercial())->getTypeSubtype($model);
                break;
-           case 4:
-               $result = (new Land())->getTypeSubtype($model);
+           case 5:
+               $result = (new Rural())->getTypeSubtype($model);
                break;
        }
 
