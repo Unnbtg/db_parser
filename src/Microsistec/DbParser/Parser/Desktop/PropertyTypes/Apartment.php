@@ -46,70 +46,73 @@ class Apartment implements CharacteristicInterface
 
     public function getTypeSubtype($model)
     {
-        $definitions = str_split(substr($model->definition_01,0,24));
-        $result = null;
+        if($model->definition_01 >= 0){
 
-        /**
-         * se tiver todos os subtipos que naum saum tipos, retorno cobertura triplex
-         * afinal, eh o subtipo mais top de todos
-         */
-        if (
-            isset($definitions[0]) && $definitions[0] == 1 &&
-            isset($definitions[3]) && $definitions[3] == 1 &&
-            isset($definitions[4]) && $definitions[4] == 1 &&
-            isset($definitions[6]) && $definitions[6] == 1 &&
-            isset($definitions[11]) && $definitions[11] == 1 &&
-            isset($definitions[23]) && $definitions[23] == 1 &&
-            isset($definitions[24]) && $definitions[24] == 1)
-        {
-            return $this->types[27];
-        }
+            $definitions = str_split(substr($model->definition_01,0,24));
+            $result = null;
 
-        /**
-         * cobertura duplex
-         */
-        if($definitions[2] && $definitions[3]) {
-            return $this->types[26];
-        }
-
-        /**
-         * se tiver duplex e triplex, retorna cobertura triplex
-         */
-        if($definitions[2] && ($definitions[3] && $definitions[4])) {
-            return $this->types[27];
-        }
-
-        /**
-         * cobertura triplex
-         */
-        if($definitions[2] && $definitions[4]) {
-            return $this->types[27];
-        }
-
-        /**
-         * se tiver cobertura, jah retorno
-         */
-        if($definitions[2]) {
-            return $this->types[3];
-        }
-
-        foreach ($definitions as $key => $value) {
-
-            if (is_null($this->types[$key+1]['subtipo']) && $value == 1) {
-                $result['tipo'] = !isset($result['tipo']) ? $this->types[$key+1]['tipo'] : $result['tipo'];
-                $result['subtipo'] = null;
-
-                if ($this->types[$key+1]['tipo'] == 1) {
-                    $result['subtipo'] = 5;
-                }
-
-                $result['feature'][] = isset($this->types[$key+1]['feature']) ? $this->types[$key+1]['feature'] : '';
+            /**
+             * se tiver todos os subtipos que naum saum tipos, retorno cobertura triplex
+             * afinal, eh o subtipo mais top de todos
+             */
+            if (
+                isset($definitions[0]) && $definitions[0] == 1 &&
+                isset($definitions[3]) && $definitions[3] == 1 &&
+                isset($definitions[4]) && $definitions[4] == 1 &&
+                isset($definitions[6]) && $definitions[6] == 1 &&
+                isset($definitions[11]) && $definitions[11] == 1 &&
+                isset($definitions[23]) && $definitions[23] == 1 &&
+                isset($definitions[24]) && $definitions[24] == 1)
+            {
+                return $this->types[27];
             }
 
-        }
+            /**
+             * cobertura duplex
+             */
+            if((isset($definitions[2]) && $definitions[2] == 1) && (isset($definitions[3]) && $definitions[3] == 1)) {
+                return $this->types[26];
+            }
 
-        if (!is_null($result)) {
-            return $result;
+            /**
+             * se tiver duplex e triplex, retorna cobertura triplex
+             */
+            if((isset($definitions[2]) && $definitions[2] == 1) && ((isset($definitions[3]) &&  $definitions[3] == 1) && (isset($definitions[4]) && $definitions[4] == 1))) {
+                return $this->types[27];
+            }
+
+            /**
+             * cobertura triplex
+             */
+            if((isset($definitions[2]) && $definitions[2] == 1) && (isset($definitions[4]) && $definitions[4] == 1)) {
+                return $this->types[27];
+            }
+
+            /**
+             * se tiver cobertura, jah retorno
+             */
+            if(isset($definitions[2]) && $definitions[2] == 1) {
+                return $this->types[3];
+            }
+
+            foreach ($definitions as $key => $value) {
+
+                if (is_null($this->types[$key+1]['subtipo']) && $value == 1) {
+                    $result['tipo'] = !isset($result['tipo']) ? $this->types[$key+1]['tipo'] : $result['tipo'];
+                    $result['subtipo'] = null;
+
+                    if ($this->types[$key+1]['tipo'] == 1) {
+                        $result['subtipo'] = 5;
+                    }
+
+                    $result['feature'][] = isset($this->types[$key+1]['feature']) ? $this->types[$key+1]['feature'] : '';
+                }
+
+            }
+
+            if (!is_null($result)) {
+                return $result;
+            }
         }
 
         return $this->types[1];

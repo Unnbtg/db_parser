@@ -42,7 +42,7 @@ class PropertyParser extends OldParser implements ParserInterface
         $property                                = new Property();
         $property->maintence_id                  = $model->id;
         $property->id                            = $model->id;
-        $property->code                          = $model->id;
+        $property->code                          = $model->code;
         $property->alternative_code              = $model->alternative_code;
         $property->user_code                     = $model->code;
         $property->old_type                      = $model->type;
@@ -169,7 +169,18 @@ class PropertyParser extends OldParser implements ParserInterface
             $property->vacations = $model->vacations;
         }
 
-        return $property;
+        $encodedProperty = new Property();
+
+        foreach ($property as $key => $value) {
+            if (is_scalar($value)) {
+                $encodedProperty->{$key} = utf8_encode(utf8_decode($value));
+                continue;
+            }
+
+            $encodedProperty->{$key} = $value;
+        }
+
+        return $encodedProperty;
     }
 
     private function getFinality($model)

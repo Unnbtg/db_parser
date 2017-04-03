@@ -72,6 +72,19 @@ class BuildingParser extends ParserAbstract implements ParserInterface
         $building->hotsite                    = $model->hotsite;
         $building->features                   = $this->characteristics($model);
 
+        $encodedBuilding = new Building();
+
+        foreach ($building as $key => $value) {
+
+            if (is_scalar($value)) {
+                $encodedBuilding->{$key} = utf8_encode(utf8_decode($value));
+                continue;
+            }
+
+            $encodedBuilding->{$key} = $value;
+
+        }
+
         return $building;
     }
 
