@@ -17,11 +17,11 @@ class PositionTransformer extends TransformAbstract
         $filtered = [];
 
         foreach ($exploded as $key => $value) {
-            if (!$value || !isset($base[$key])) {
+            if (!$value || !isset($base[$key + 1])) {
                 continue;
             }
 
-            $filtered[] = $base[$key ];
+            $filtered[] = $base[$key + 1];
         }
 
         return $this->extractDefaults($filtered, $defaults);

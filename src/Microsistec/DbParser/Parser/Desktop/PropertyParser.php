@@ -35,7 +35,9 @@ class PropertyParser extends OldParser implements ParserInterface
 
     public function parse($model, $domain = "", $account = "")
     {
-        $types = $this->getTypes($model);
+        $typeInstance = $this->getInstanceByType($model);
+
+        $types = $typeInstance->getTypeSubtype($model);
 
         $property                                = new Property();
         $property->maintence_id                  = $model->id;
@@ -48,7 +50,7 @@ class PropertyParser extends OldParser implements ParserInterface
         $property->finality                      = $this->getFinality($model);
         $property->type                          = $types['tipo'];
         $property->subtype                       = $types['subtipo'];
-        $property->features                      = isset($types['feature']) ? $types['feature'] : null;
+
         $property->for_rent                      = substr($model->finality, 0, 1);
         $property->for_sale                      = substr($model->finality, 1, 1);
         $property->for_vacation                  = substr($model->finality, 2, 1);
@@ -147,10 +149,24 @@ class PropertyParser extends OldParser implements ParserInterface
         $roomsCount->lavatory         = $model->lavatory;
         $roomsCount->car_garage       = $model->parking_lots;
         $property->roomsCount         = $roomsCount;
-        $property->videos             = [$model->video_url];
+        $property->videos             = !empty($model->video_url) ? [$model->video_url] : [];
+
+        $property->features[]         = isset($types['feature']) ? $types['feature'] : null;
+
+
+        $property->features[]         = $typeInstance->getFeatures($model);
+
+        /*var_dump($property->features);
+        echo '02: ' . $model->definition_02 .PHP_EOL.
+            '03: ' . $model->definition_03.PHP_EOL.
+            '04: ' . $model->definition_04.PHP_EOL.
+            '05: ' . $model->definition_05.PHP_EOL.
+            'master: ' . $model->definition_master.PHP_EOL.
+            'code: ' . $model->code . PHP_EOL.
+            'type: ' . $model->type . PHP_EOL;*/
 
         if(isset($model->vacations)){
-            $property->vacations      = $model->vacations;
+            $property->vacations = $model->vacations;
         }
 
         return $property;
@@ -200,28 +216,27 @@ class PropertyParser extends OldParser implements ParserInterface
         }
     }
 
-    private function getTypes($model)
+    private function getInstanceByType($model)
     {
-       switch ($model->type) {
-           case 0:
-               $result = (new House())->getTypeSubtype($model);
-               break;
-           case 1:
-               $result = (new Apartment())->getTypeSubtype($model);
-               break;
-           case 2:
-               $result = (new Land())->getTypeSubtype($model);
-               break;
-           case 4:
-               $result = (new Commercial())->getTypeSubtype($model);
-               break;
-           case 5:
-               $result = (new Rural())->getTypeSubtype($model);
-               break;
-       }
+        switch ($model->type) {
+            case 0:
+                $instance = new House();
+                break;
+            case 1:
+                $instance = new Apartment();
+                break;
+            case 2:
+                $instance = new Land();
+                break;
+            case 4:
+                $instance = new Commercial();
+                break;
+            case 5:
+                $instance = new Rural();
+                break;
+        }
 
-       return $result;
-
+        return $instance;
     }
 
     public function getFlag($model)

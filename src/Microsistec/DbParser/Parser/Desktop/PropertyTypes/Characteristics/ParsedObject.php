@@ -13,16 +13,27 @@ class ParsedObject
 {
 
     public $proximities = [];
-    public $property = [];
+    public $features = [];
     public $rooms = [];
 
-    public function addProperty($property) {
-        $this->property = array_merge($this->property, $property);
+    public function addFeatures($features)
+    {
+        if (is_array($features)) {
+            $this->features = array_merge($this->features, $features);
+        }
     }
-    public function addProximity($proximity) {
-        $this->proximities = array_merge($this->proximities, $proximity);
+
+    public function addProximity($proximity)
+    {
+        if (is_array($proximity)) {
+            $this->proximities = array_merge($this->proximities, $proximity);
+        }
     }
-    public function addRoom($room) {
-        $this->rooms = array_merge($this->rooms, $room);
+
+    public function addRoom($room)
+    {
+        if (is_array($room)) {
+            $this->rooms = array_merge($this->rooms, $room);
+        }
     }
 }

@@ -11,9 +11,12 @@ namespace Microsistec\DbParser\Parser\Desktop\PropertyTypes\Characteristics\Tran
 
 abstract class TransformAbstract implements TransformerInterface
 {
-    protected function extractDefaults($transformed, $defaults) {
+    protected function extractDefaults($transformed, $defaults)
+    {
         $extracted = [];
+
         foreach ($transformed as $item) {
+
             $value = array_search($item, $defaults);
 
             if (!$value) {
@@ -21,6 +24,7 @@ abstract class TransformAbstract implements TransformerInterface
             }
 
             $extracted[] = $value;
+
         }
 
         return $extracted;

@@ -2,14 +2,18 @@
 
 namespace Microsistec\DbParser\Parser\Desktop\PropertyTypes;
 
+use Microsistec\DbParser\Parser\Desktop\PropertyTypes\Characteristics\CharacteristicInterface;
+use Microsistec\DbParser\Parser\Desktop\PropertyTypes\Characteristics\Parser;
+
 /**
  * Created by PhpStorm.
  * User: mueller
  * Date: 28/03/17
  * Time: 16:06
  */
-class House
+class House implements CharacteristicInterface
 {
+
     private $types = [
         1 => ['tipo' => 8, 'subtipo' => null, 'feature' => [230] ], //Isolada
         2 => ['tipo' => 8, 'subtipo' => null, 'feature' => [231] ], //Geminada
@@ -102,4 +106,168 @@ class House
         return $this->types[5];
 
     }
+
+    public function getFeatures($model)
+    {
+        $parser = new Parser();
+        return $parser->parse($model, $this);
+    }
+
+    public function getParserInformation()
+    {
+        return [
+            'features' => [
+                [
+                    'field' => 'definition_02',
+                    'type' => "position",
+                    "values" => [
+                        1 => "varanda",
+                        2 => "lavanderia",
+                        3 => "quintal",
+                        4 => "churrasqueira",
+                        5 => "piscina",
+                        7 => "terraco",
+                        8 => "grades",
+                        9 => "muros",
+                        10 => "portao-automatico", //não tem
+                        11 => "area-de-servico",
+                        12 => "jardim",
+                        13 => "salao-de-festas",
+                        14 => "sauna",
+                        15 => "solarium",
+                        16 => "interfone",
+                        17 => "central-de-gas",
+                        18 => "aquecimento-solar", // não tem
+                        19 => "entrada-lateral",
+                        20 => "deposito",
+                        21 => "sacada",
+                        22 => "sacada-panoramica",
+                        23 => "forno-de-pao-e-pizza", // so tem o de pizza e de pao não
+                        24 => "gerador-de-emergencia",
+                        25 => "garagem-fechada",
+                        26 => "piscina-aquecida",
+                        27 => "deck-molhado",
+                        28 => "parque-aquatico",
+                        29 => "salao-de-jogos",
+                        30 => "fitness", // no sci online so tem fitness
+                        31 => "quadra-poliesportiva",
+                        32 => "quadra-de-volei",
+                        33 => "quadra-de-tenis",
+                        34 => "espaco-gourmet",
+                        35 => "espaco-grill",
+                        36 => "playground",
+                        37 => "brinquedoteca",
+                        38 => "hall-social", // so hall de entrada
+                        39 => "office",
+                        40 => "cinema",
+                        41 => "lan-house",
+                        42 => "garage-band",
+                        43 => "espaco-mulher",
+                        44 => "spa",
+                        45 => "atelier",
+                        46 => "port-cochere",
+                        47 => "mirante",
+                        48 => "bangalo",
+                        49 => "estar-com-pergolado", // nao tem e o que demonios é isso??
+                        50 => "espaco-zen",
+                        51 => "redario",
+                        52 => "pista-de-skate",
+                        53 => "pista-de-caminhada",
+                        54 => "pista-de-bocha",
+                        55 => "pet-place",
+                        56 => "praca-da-arvore", //não tem
+                        57 => "pomar",
+                        58 => "lago",
+                        59 => "lavanderia-coletiva",
+                    ]
+                ]
+            ],
+            'room' => [
+                [
+                    'field' => 'definition_master',
+                    'type' => 'patterns',
+                    'values' => [
+                        1 => "piso-de-madeira",
+                        "piso-frio",
+                        "carpete",
+                        "ladrilho",
+                        "pedra",
+                        "granito",
+                        "alvenaria", // só tem parede em alvenaria
+                        "tijolinho",
+                        "litoceramica",
+                        "azulejo-ate-o-teto",
+                        "azulejo-parcial",
+                        "parede-com-massa-corrida",
+                        "pintura-texturizada",
+                        "gesso-moldura",
+                        "gesso-rebaixado",
+                        "ambiente-em-l",
+                        "2-ambientes",
+                        "3-ambientes",
+                        "cozinha-americana",
+                        "copa",
+                        "pia",// temos tipos de pia no sci-online, não ela solta.
+                        "gabinete",
+                        "box-simples",
+                        "box-blindex",
+                        "closet",
+                        "hidromassagem",
+                        "janelas-de-madeira",
+                        "janelas-de-aluminio",
+                        "luminarias",
+                        "armario-embutido",
+                        "moveis-planejados",
+                        "ar-condicionado",
+                        "ventilador-de-teto",
+                    ],
+                    'options' => [
+                        'bedroom',
+                        'room',
+                        'kitchen',
+                        'bathroom',
+                        'service_area'
+                    ]
+                ],
+                [
+                    'field' => 'definition_master',
+                    'type' => 'position',
+                    'values' => [
+                        205 => "carpete-de-madeira",
+                        "piso-laminado",
+                        "piso-porcelanato",
+                        "gesso-sanca",
+                        "lavabo",//tem não
+                        "despensa",
+                        "escritorio", // nope
+                        "porta-balcao",
+                        "cortina-de-vidro",
+                        "armarios-individuais",//nope
+                        "churrasqueira-na-sacada", //nope
+                        "medidores-de-agua-individuais", // nope
+                        "lareira",
+                        "janela-de-ferro",
+                        "contra-piso",
+                        "pintura-latex",
+                        "servicos-pay-per-use", //nope
+                        "deposito-na-garagem", //nope
+                        "sistema-de-refrigeracao-central-tipo-sprit", //nope
+                        "sistema-de-aquecimento-de-agua-a-gas",//nope
+                        "perfil-de-estudantes", //nope
+                        "piso-paviflex",
+                        "laje", //nope
+                        "madeira", //nope
+                        "pvc", // nope
+                        "wc-empregada", // nope
+                        "2-entradas", // nope
+                        "piso-ceramica",
+                        "piso-marmore",
+                        "piso-granito",
+                        "papel-de-parede",
+                    ]
+                ]
+            ]
+        ];
+    }
+
 }

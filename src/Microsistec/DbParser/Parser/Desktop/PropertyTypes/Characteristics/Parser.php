@@ -20,22 +20,26 @@ class Parser
      * @param CharacteristicInterface $source The information source for the parser work with.
      * @return ParsedObject Always returns a ParsedObject even if it's fails, in that case all properties will be empty.
      */
-    public function parse($model, /*CharacteristicInterface*/ $source = []) {
+    public function parse($model, /*CharacteristicInterface*/ $source = [])
+    {
+        $base = $source;
 
-        $base =$source;
-        if (! is_array($source)){
+        if (!is_array($source)) {
             $base = $source->getParserInformation();
         }
+
         $parsedObject = new ParsedObject();
 
-        $this->extract($parsedObject, $base['property'], CharacteristicsDictionary::SciOnline["property"], $model, 'property');
+        $this->extract($parsedObject, $base['features'], CharacteristicsDictionary::SciOnline["features"], $model, 'features');
 
         if (isset($base['proximity'])) {
             $this->extract($parsedObject, $base['proximity'], CharacteristicsDictionary::SciOnline["proximity"], $model, 'proximity');
         }
 
-        $this->extract($parsedObject, $base['room'], CharacteristicsDictionary::SciOnline["room"], $model, 'room');
-        var_dump($parsedObject);exit;
+        if (isset($base['room'])) {
+            $this->extract($parsedObject, $base['room'], CharacteristicsDictionary::SciOnline["room"], $model, 'room');
+        }
+
         return $parsedObject;
     }
 
@@ -45,8 +49,8 @@ class Parser
 
         foreach ($values as $iterator) {
             $transform = TransformerFactory::create($iterator["type"]);
-            $options =isset($iterator['options'])?$iterator['options'] : [];
-            $transformed = $transform->transform( $model->{$iterator['field']}, $iterator['values'],$defaults['options'],  $options);
+            $options = isset($iterator['options']) ? $iterator['options'] : [];
+            $transformed = $transform->transform($model->{$iterator['field']}, $iterator['values'], $defaults['options'], $options);
             $this->add($parsedObject, $toAdd, $transformed);
         }
     }
@@ -54,8 +58,8 @@ class Parser
     private function add($to, $how, $what) {
 
         switch ($how) {
-            case "property":
-                $how = "addProperty";
+            case "features":
+                $how = "addFeatures";
                 break;
             case "proximity":
                 $how = "addProximity";

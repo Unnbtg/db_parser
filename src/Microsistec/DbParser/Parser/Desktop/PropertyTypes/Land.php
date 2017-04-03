@@ -1,14 +1,18 @@
 <?php
 
 namespace Microsistec\DbParser\Parser\Desktop\PropertyTypes;
+use Microsistec\DbParser\Parser\Desktop\PropertyTypes\Characteristics\CharacteristicInterface;
+use Microsistec\DbParser\Parser\Desktop\PropertyTypes\Characteristics\Parser;
+
 /**
  * Created by PhpStorm.
  * User: mueller
  * Date: 28/03/17
  * Time: 16:08
  */
-class Land
+class Land implements CharacteristicInterface
 {
+
     private $types = [
         0 => ['tipo' => 11, 'subtipo' => null],  //Simples
         1 => ['tipo' => 1, 'subtipo' => null],  //Incorporação
@@ -31,6 +35,60 @@ class Land
     public function getTypeSubtype($model)
     {
         return $this->types[$model->definition_01];
+    }
+
+    public function getFeatures($model)
+    {
+        $parser = new Parser();
+        return $parser->parse($model, $this);
+    }
+
+    public function getParserInformation()
+    {
+        return [
+            'features' => [
+                [
+                    'field' => 'definition_02',
+                    'type' => 'value',
+                    'values' => [
+                        0 => "arenoso",
+                        1 => "argiloso",
+                        2 => "terra-roxa",
+                        3 => "mangue",
+                        4 => "pedregoso",
+                        5 => "plano",
+                        6 => "declive",
+                        7 => "aclive",
+                        8 => "leve-declive",
+                        9 => "leve-aclive",
+                    ]
+                ],
+                [
+                    'type' => 'position',
+                    'field' => 'definition_master',
+                    'values' => [
+                        5 => "rua-asfaltada",
+                        "rua-calcada",
+                    ]
+                ]
+
+            ],
+            'proximity' => [
+                [
+                    'type' => 'position',
+                    'field' => 'definition_master',
+                    'values' => [
+                        1 => "padaria",
+                        "supermercado",
+                        "ponto-de-onibus",
+                        "escola",
+                        "rua-asfaltada",
+                        "rua-calcada",
+                    ]
+                ]
+
+            ]
+        ];
     }
 
 }

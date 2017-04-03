@@ -17,6 +17,7 @@ class PatternTransformer  extends PositionTransformer
         $possibilities = count($base);
 
         foreach ($options as $key => $field) {
+
             $toSkip = $key * $possibilities;
 
             if ($key > 0) {

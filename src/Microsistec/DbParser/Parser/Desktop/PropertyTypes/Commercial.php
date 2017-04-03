@@ -1,13 +1,16 @@
 <?php
 
 namespace Microsistec\DbParser\Parser\Desktop\PropertyTypes;
+use Microsistec\DbParser\Parser\Desktop\PropertyTypes\Characteristics\CharacteristicInterface;
+use Microsistec\DbParser\Parser\Desktop\PropertyTypes\Characteristics\Parser;
+
 /**
  * Created by PhpStorm.
  * User: mueller
  * Date: 28/03/17
  * Time: 17:40
  */
-class Commercial
+class Commercial implements CharacteristicInterface
 {
 
     private $types = [
@@ -157,7 +160,148 @@ class Commercial
 
     public function getTypeSubtype($model)
     {
-        return $this->types[$model->definition_01];
+        if ($model->definition_01 >= 0) {
+            return $this->types[$model->definition_01];
+        }
+    }
+
+    public function getFeatures($model)
+    {
+        $parser = new Parser();
+        return $parser->parse($model, $this);
+    }
+
+    public function getParserInformation()
+    {
+        return [
+            'features' => [
+                [
+                    'type' => 'position',
+                    'field' => 'definition_02',
+                    'values' => [
+                        1 => "mezanino",
+                        2 => "garagem", // não existe apenas "garagem"
+                        3 => "estacionamento", // não existe apenas estacionamento
+                        4 => "deposito",
+                        5 => "copa",
+                        6 => "cozinha",
+                        7 => "ar-central",
+                        8 => "toldo",
+                        9 => "exaustores",
+                        10 => "vitrine",
+                        11 => "divisorias", // não tem
+                        12 => "acesso-para-deficientes",
+                        13 => "atelier",
+                        14 => "hall-social", // so o de entrada
+                        15 => "office",
+                        16 => "sala-de-reuniao",
+                        17 => "auditorio",
+                        18 => "cafe",
+                        19 => "restaurante", // nothing like that
+                        20 => "piso-elevado",
+                        21 => "fibra-otica",
+                        22 => "varanda",
+                    ]
+                ],
+                [
+                    'field' => 'definition_03',
+                    'type' => 'position',
+                    'values' => [
+                        1 => "porta-de-aco", //nope
+                        2 => "porta-de-vidro", //nope
+                        3 => "recepcao",
+                        4 => "interfone",
+                        5 => "vigia",
+                        6 => "extintores", // nope
+                        7 => "grades", // nope
+                        8 => "sistema-de-alarme",
+                    ]
+                ]
+            ],
+            'room' => [
+                [
+                    'field' => 'definition_master',
+                    'type' => 'patterns',
+                    'values' => [
+                        1 => "piso-de-madeira",
+                        "piso-frio",
+                        "carpete",
+                        "ladrilho",
+                        "pedra",
+                        "granito",
+                        "alvenaria", // só tem parede em alvenaria
+                        "tijolinho",
+                        "litoceramica",
+                        "azulejo-ate-o-teto",
+                        "azulejo-parcial",
+                        "parede-com-massa-corrida",
+                        "pintura-texturizada",
+                        "gesso-moldura",
+                        "gesso-rebaixado",
+                        "ambiente-em-l",
+                        "2-ambientes",
+                        "3-ambientes",
+                        "cozinha-americana",
+                        "copa",
+                        "pia",// temos tipos de pia no sci-online, não ela solta.
+                        "gabinete",
+                        "box-simples",
+                        "box-blindex",
+                        "closet",
+                        "hidromassagem",
+                        "janelas-de-madeira",
+                        "janelas-de-aluminio",
+                        "luminarias",
+                        "armario-embutido",
+                        "moveis-planejados",
+                        "ar-condicionado",
+                        "ventilador-de-teto",
+                    ],
+                    'options' => [
+                        'internal',
+                        'kitchen',
+                        'bathroom',
+                    ]
+                ],
+                [
+                    'field' => 'definition_master',
+                    'type' => 'position',
+                    'values' => [
+                        205 => "carpete-de-madeira",
+                        "piso-laminado",
+                        "piso-porcelanato",
+                        "gesso-sanca",
+                        "lavabo", //nope
+                        "despensa",
+                        "escritorio", //nope
+                        "porta-balcao",
+                        "cortina-de-vidro",
+                        "armarios-individuais",
+                        "churrasqueira-na-sacada", // nope
+                        "medidores-de-agua-individuais",
+                        "lareira",
+                        "janelas-de-ferro",
+                        "contra-piso",
+                        "pintura-latex",
+                        "servicos-pay-per-use", // nope
+                        "deposito-na-garagem", // nope
+                        "sistema-de-refrigeracao-central-tipo-sprit", // nope
+                        "sistema-de-aquecimento-de-agua-a-gas", // nope
+                        "perfil-de-estudantes", // nope
+                        "piso-paviflex",
+                        "laje", // nope
+                        "madeira", // nope
+                        "pvc", // nope
+                        "wc-empregada", // nope
+                        "2-entradas", // nope
+                        "piso-ceramica",
+                        "piso-marmore",
+                        "piso-granito",
+                        "papel-de-parede",
+                    ]
+                ]
+            ]
+        ];
     }
 
 }
