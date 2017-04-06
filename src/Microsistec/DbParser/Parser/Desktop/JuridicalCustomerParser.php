@@ -54,7 +54,7 @@ class JuridicalCustomerParser extends ParserAbstract implements ParserInterface
         $customer->neighborhood              = $model->neighborhood;
         $customer->state                     = $model->state;
         $customer->state_id                  = $this->getState($model->state);
-        $customer->opening_date              = $model->opening_date;
+        $customer->opening_date              = $this->formatDate($model->opening_date);
         $customer->fantasy_name              = $model->fantasy_name;
         $customer->cnpj                      = $this->unMask($model->cnpj);
         $customer->ie                        = $this->unMask($model->ie);

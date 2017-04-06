@@ -46,7 +46,7 @@ class Apartment implements CharacteristicInterface
 
     public function getTypeSubtype($model)
     {
-        if($model->definition_01 >= 0){
+        if($model->definition_01 != ''){
 
             $definitions = str_split(substr($model->definition_01,0,24));
             $result = null;

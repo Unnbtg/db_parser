@@ -50,11 +50,10 @@ class PropertyParser extends OldParser implements ParserInterface
         $property->finality                      = $this->getFinality($model);
         $property->type                          = $types['tipo'];
         $property->subtype                       = $types['subtipo'];
-
         $property->for_rent                      = substr($model->finality, 0, 1);
         $property->for_sale                      = substr($model->finality, 1, 1);
         $property->for_vacation                  = substr($model->finality, 2, 1);
-        $property->situation                     = $model->situation + 1;
+        $property->situation                     = $model->situation != '' ? $model->situation + 1 : '';
         $property->has_board                     = $model->has_board;
         $property->zipcode                       = $this->unMask($model->zipcode);
         $property->zone                          = $model->zone;
@@ -83,15 +82,18 @@ class PropertyParser extends OldParser implements ParserInterface
         $property->rent_price                    = $model->rent_price;
         $property->iptu_price                    = $model->iptu_price;
         $property->condominium_price             = $model->condominium_price;
-        $property->fgts                          = substr($model->payment_options, 0, 1);
-        $property->letter_of_credit              = substr($model->payment_options, 1, 1);
-        $property->bank_financing                = substr($model->payment_options, 13, 1);
-        $property->direct_financing              = substr($model->payment_options, 12, 1);
-        $property->lessor_bail                   = substr($model->payment_options, 4, 1);
-        $property->guarantor                     = substr($model->payment_options, 5, 1);
-        $property->deposit                       = substr($model->payment_options, 6, 1);
+
+        if($model->payment_options != ''){
+            $property->fgts                          = substr($model->payment_options, 0, 1);
+            $property->letter_of_credit              = substr($model->payment_options, 1, 1);
+            $property->bank_financing                = substr($model->payment_options, 13, 1);
+            $property->direct_financing              = substr($model->payment_options, 12, 1);
+            $property->lessor_bail                   = substr($model->payment_options, 4, 1);
+            $property->guarantor                     = substr($model->payment_options, 5, 1);
+            $property->deposit                       = substr($model->payment_options, 6, 1);
+            $property->requires_guarantor_deed       = substr($model->payment_options, 7, 1);
+        }
         $property->mcmv                          = $model->mcmv;
-        $property->requires_guarantor_deed       = substr($model->payment_options, 7, 1);
         $property->keys                          = $model->keys;
         $property->keys_available                = ($model->keys != '') ? true : false;
         $property->mcmv                          = $model->mcmv;
@@ -111,7 +113,7 @@ class PropertyParser extends OldParser implements ParserInterface
         $property->built_area_price              = $model->built_area_price;
         $property->total_area_price              = $model->total_area_price;
         $property->relative_distance             = $model->relative_distance;
-        $property->orientation                   = $model->position + 1;
+        $property->orientation                   = $model->position != '' ? $model->position + 1 : '';
         $property->website_home_highlight        = $model->website_home_highlight;
         $property->website_rotative_banner       = $model->website_rotative_banner;
         $property->website_notes                 = $model->website_notes;
@@ -129,12 +131,12 @@ class PropertyParser extends OldParser implements ParserInterface
         }
 
         $property->sales_authorization      = $model->sales_authorization;
-        $property->authorization_start_date = $model->authorization_start_date;
+        $property->authorization_start_date = $this->formatDate($model->authorization_start_date);
         $property->authorization_end_date   = $model->authorization_end_date;
         $property->lease_price              = $model->lease_price;
 
         if ($model->type == 2) {
-            $property->ground_type = $model->definition_02 + 1;
+            $property->ground_type = ($model->definition_02 != "") ? $model->definition_02 + 1 : '';
         }
 
         $property->opportunity        = $model->opportunity;
@@ -150,11 +152,12 @@ class PropertyParser extends OldParser implements ParserInterface
         $roomsCount->car_garage       = $model->parking_lots;
         $property->roomsCount         = $roomsCount;
         $property->videos             = !empty($model->video_url) ? [$model->video_url] : [];
-
         $property->features[]         = isset($types['feature']) ? $types['feature'] : null;
-
-
         $property->features[]         = $typeInstance->getFeatures($model);
+
+        $property->created_at              = $this->formatDate($model->created_at);
+        $property->updated_at              = $this->formatDate($model->updated_at);
+        $property->deleted                 = $model->deleted;
 
         /*var_dump($property->features);
         echo '02: ' . $model->definition_02 .PHP_EOL.

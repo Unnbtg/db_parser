@@ -63,8 +63,9 @@ class BuildingParser extends ParserAbstract implements ParserInterface
         $building->type                       = ($model->type == 0 || $model->type == 2 || $model->type == 4) ? 1 : 2;
         $building->finality                   = ($model->type == 0 || $model->type == 1 || $model->type == 2 || $model->type == 4) ? 1 : 2;
         $building->draft                      = true;
-        $building->created_at                 = $model->created_at;
-        $building->updated_at                 = $model->updated_at;
+        $building->created_at                 = $this->formatDate($model->created_at);
+        $building->updated_at                 = $this->formatDate($model->updated_at);
+        $building->deleted                    = $model->deleted;
         $building->user_id                    = 1;
         $building->internal_notes             = $model->internal_obs;
         $building->on_duty                    = false;

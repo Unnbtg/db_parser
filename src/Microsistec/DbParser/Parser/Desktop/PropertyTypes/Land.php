@@ -34,7 +34,7 @@ class Land implements CharacteristicInterface
 
     public function getTypeSubtype($model)
     {
-        if ($model->definition_01 >= 0) {
+        if ($model->definition_01 != '') {
             return $this->types[$model->definition_01];
         }
     }

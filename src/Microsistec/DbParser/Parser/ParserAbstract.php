@@ -87,4 +87,29 @@ abstract class ParserAbstract
         return preg_replace("/[^0-9]/", "", $data);
     }
 
+    protected function formatDate($date)
+    {
+        $date = str_replace('/', '-', $date);
+        if (empty($date)) {
+            return "";
+        }
+
+        $date = explode(' ', $date);
+
+        if (count($date) == 1) {
+            $date = $date[0];
+            return implode('-', array_reverse(explode('/', $date)));
+
+        }
+
+
+        $time = strtotime($date[0] . " " . $date[1]);
+
+        if (isset($date[2]) && $date[2] == "PM") {
+            return date('Y-m-d H:i:s', strtotime("+ 12 hours", $time));
+        }
+
+        return date('Y-m-d H:i:s', $time);
+    }
+
 }

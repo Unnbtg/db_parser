@@ -17,7 +17,7 @@ class UserParser extends ParserAbstract implements ParserInterface
         $user->email            = $model->email;
         $user->type             = 0;
         $user->status           = 0;
-        $user->admission        = $model->admission;
+        $user->admission        = $this->formatDate($model->admission);
         $user->locality         = null;
         $user->creci_number     = $model->creci;
         $user->creci_region     = $model->region;
@@ -25,7 +25,7 @@ class UserParser extends ParserAbstract implements ParserInterface
         $user->team_id          = $model->team;
         $user->branch_id        = $model->branch;
         $user->photo            = null;
-        $user->activated_at     = $model->admission;
+        $user->activated_at     = $this->formatDate($model->admission);
         $user->phones           = $model->phones;
         $user->user_id          = 1;
 
