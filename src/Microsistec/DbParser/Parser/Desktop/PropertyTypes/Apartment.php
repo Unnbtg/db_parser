@@ -20,7 +20,7 @@ class Apartment implements CharacteristicInterface
         3 => ['tipo' => 2, 'subtipo' => null], //Cobertura
         4 => ['tipo' => 1, 'subtipo' => 2], //Duplex
         5 => ['tipo' => 1, 'subtipo' => 7], //Triplex
-        6 => ['tipo' => 1, 'subtipo' => null, 'feature' => [236] ], //Alto Padrão
+        6 => ['tipo' => 1, 'subtipo' => null, 'feature' => 236 ], //Alto Padrão
         7 => ['tipo' => 1, 'subtipo' => 1], //1 por andar
         8 => ['tipo' => 3, 'subtipo' => null], //Flat
         9 => ['tipo' => 37, 'subtipo' => null], //Sala Living
@@ -28,15 +28,15 @@ class Apartment implements CharacteristicInterface
         11 => ['tipo' => 1, 'subtipo' => null], //Grande (vira padrao)
         12 => ['tipo' => 1, 'subtipo' => 6], //Térreo
         13 => ['tipo' => 6, 'subtipo' => null], //Loft
-        14 => ['tipo' => 1, 'subtipo' => null, 'feature' => [94]], //Vista p/ Mar
-        15 => ['tipo' => 1, 'subtipo' => null, 'feature' => [238]], //Reformado
+        14 => ['tipo' => 1, 'subtipo' => null, 'feature' => 94], //Vista p/ Mar
+        15 => ['tipo' => 1, 'subtipo' => null, 'feature' => 238], //Reformado
         16 => ['tipo' => 1, 'subtipo' => null], //Financiamento Direto
         17 => ['tipo' => 1, 'subtipo' => null], //Financiamento Bancário
-        18 => ['tipo' => 1, 'subtipo' => null, 'feature' => [204]], //Sem Condomínio
-        19 => ['tipo' => 1, 'subtipo' => null, 'feature' => [30]], //Frente p/ Mar
+        18 => ['tipo' => 1, 'subtipo' => null, 'feature' => 204], //Sem Condomínio
+        19 => ['tipo' => 1, 'subtipo' => null, 'feature' => 30], //Frente p/ Mar
         20 => ['tipo' => 7, 'subtipo' => null], //Studio
-        21 => ['tipo' => 1, 'subtipo' => null, 'feature' => [241]], //Tipo Casa
-        22 => ['tipo' => 1, 'subtipo' => null, 'feature' => [242]], //De Campo
+        21 => ['tipo' => 1, 'subtipo' => null, 'feature' => 241], //Tipo Casa
+        22 => ['tipo' => 1, 'subtipo' => null, 'feature' => 242], //De Campo
         23 => ['tipo' => 5, 'subtipo' => null], //Penthouse
         24 => ['tipo' => 1, 'subtipo' => 3], //Garden
         25 => ['tipo' => 1, 'subtipo' => 4], //Garden Elevado
@@ -48,21 +48,22 @@ class Apartment implements CharacteristicInterface
     {
         if($model->definition_01 != ''){
 
-            $definitions = str_split(substr($model->definition_01,0,24));
+            $definitions = str_split(substr($model->definition_01,0,25));
             $result = null;
 
             /**
              * se tiver todos os subtipos que naum saum tipos, retorno cobertura triplex
              * afinal, eh o subtipo mais top de todos
              */
+
             if (
-                isset($definitions[0]) && $definitions[0] == 1 &&
-                isset($definitions[3]) && $definitions[3] == 1 &&
-                isset($definitions[4]) && $definitions[4] == 1 &&
-                isset($definitions[6]) && $definitions[6] == 1 &&
-                isset($definitions[11]) && $definitions[11] == 1 &&
-                isset($definitions[23]) && $definitions[23] == 1 &&
-                isset($definitions[24]) && $definitions[24] == 1)
+                (isset($definitions[0]) && $definitions[0] == 1) &&
+                (isset($definitions[3]) && $definitions[3] == 1) &&
+                (isset($definitions[4]) && $definitions[4] == 1) &&
+                (isset($definitions[6]) && $definitions[6] == 1) &&
+                (isset($definitions[11]) && $definitions[11] == 1) &&
+                (isset($definitions[23]) && $definitions[23] == 1) &&
+                (isset($definitions[24]) && $definitions[24] == 1))
             {
                 return $this->types[27];
             }
@@ -105,7 +106,11 @@ class Apartment implements CharacteristicInterface
                         $result['subtipo'] = 5;
                     }
 
-                    $result['feature'][] = isset($this->types[$key+1]['feature']) ? $this->types[$key+1]['feature'] : '';
+                    if(isset($this->types[$key+1]['feature'])){
+                        $result['feature'][] = $this->types[$key+1]['feature'];
+
+                    }
+
                 }
 
             }
@@ -151,7 +156,7 @@ class Apartment implements CharacteristicInterface
                         16 => "lazer-na-cobertura",
                         17 => "wi-fi",
                         18 => "piscina-da-cobertura",
-                        19 => "sauna-vapor",//existe sauna, sauna-umida ou sauna-seca
+                        19 => "sauna-umida", //no desktop eh sauna a vapor
                         20 => "jacuzzi"
                     ]
                 ],
@@ -168,9 +173,9 @@ class Apartment implements CharacteristicInterface
                         7 => "playground",
                         8 => "elevador-cadeirante",
                         9 => "entrada-lateral",
-                        10 => "deposito",
+                        10 => "deposito-na-garagem",
                         11 => "sacada-panoramica",
-                        12 => "forno-de-poo-e-pizza", // so tem o de pizza o de pão não
+                        12 => "forno-de-pizza", // so tem o de pizza o de pão não
                         13 => "gerador-de-emergencia",
                         14 => "quadra-de-tenis",
                         15 => "quadra-de-volei",
@@ -185,13 +190,13 @@ class Apartment implements CharacteristicInterface
                         24 => "pista-de-bocha",
                         25 => "bangalo",
                         26 => "espaco-zen",
-                        27 => "estar-com-pergolado",
+                        27 => "pergolado",
                         28 => "redario",
-                        29 => "praça-da-arvore", // a famosa
+                        29 => "praca-de-convivencia", // praça da arvore no desktop
                         30 => "pomar",
                         31 => "lago",
                         32 => "deck-para-barco",
-                        33 => "sacada-tecnica", // tem naum
+                        33 => "sacada-tecnica",
                     ]
                 ],
                 [
@@ -201,7 +206,7 @@ class Apartment implements CharacteristicInterface
                         1 => "guarita",
                         2 => "portaria",
                         3 => "portao-eletronico",
-                        4 => "circuito-fechado-tv", //tem circuito de segurança, mas não especifica que é de tv
+                        4 => "cftv", //circuito fechado de tv no desktop
                         5 => "interfone",
                         6 => "alarme-monitorado",
                         7 => "vigia",
@@ -218,8 +223,8 @@ class Apartment implements CharacteristicInterface
                         4 => "entrada-de-servico",
                         5 => "central-de-gas",
                         6 => "garagem-privativa",
-                        7 => "garagem-coletiva-suficiente", //tem apenas garagem-coletiva...nao indica ser suficiente
-                        8 => "garagem-coberta", //não tem
+                        7 => "garagem-coletiva", //tem apenas garagem-coletiva...nao indica ser suficiente
+                        8 => "garagem-coberta",
                         9 => "sacada",
                         10 => "terraco",
                         11 => "area-de-servico",
@@ -252,7 +257,7 @@ class Apartment implements CharacteristicInterface
                         "ladrilho",
                         "pedra",
                         "granito",
-                        "alvenaria", // só tem parede em alvenaria
+                        "parede-em-alvenaria", // só tem parede em alvenaria
                         "tijolinho",
                         "litoceramica",
                         "azulejo-ate-o-teto",
@@ -274,7 +279,7 @@ class Apartment implements CharacteristicInterface
                         "hidromassagem",
                         "janelas-de-madeira",
                         "janelas-de-aluminio",
-                        "luminarias",
+                        "luminaria",
                         "armario-embutido",
                         "moveis-planejados",
                         "ar-condicionado",
@@ -291,6 +296,7 @@ class Apartment implements CharacteristicInterface
                 [
                     'field' => 'definition_master',
                     'type' => 'position',
+                    'options' => 'others',
                     'values' => [
                         205 => "carpete-de-madeira",
                         "piso-laminado",

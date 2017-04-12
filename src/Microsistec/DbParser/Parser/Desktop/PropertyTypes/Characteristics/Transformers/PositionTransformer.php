@@ -24,6 +24,10 @@ class PositionTransformer extends TransformAbstract
             $filtered[] = $base[$key + 1];
         }
 
+        if (!empty($options)) {
+            return [$options => $filtered];
+        }
+
         return $this->extractDefaults($filtered, $defaults);
     }
 

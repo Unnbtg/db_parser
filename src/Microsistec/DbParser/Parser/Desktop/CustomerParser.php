@@ -39,9 +39,10 @@ class CustomerParser extends ParserAbstract implements ParserInterface
     public function parse($model, $domain = "", $account = "")
     {
         $customer                            = new Customer();
-        $customer->maintence_id              = $model->id;
-        $customer->id                        = $model->id;
-        $customer->code                      = $model->id;
+        $customer->maintence_id              = (int)$model->id;
+        $customer->id                        = (int)$model->id;
+        $customer->code                      = (int)$model->code;
+        $customer->branch_id                 = (int)$model->branch_id;
         $customer->name                      = $model->name;
         $customer->status                    = 0;
         $customer->type                      = 1;
@@ -80,19 +81,34 @@ class CustomerParser extends ParserAbstract implements ParserInterface
         $customer->union_date                = $this->formatDate($model->union_date);
         $customer->union_security            = $model->union_security;
         $customer->income                    = $model->income;
+        $customer->bank_account              = $model->bank_account;
         $customer->bank_name                 = $model->bank_name;
         $customer->bank_agency               = $model->bank_agency;
-        $customer->bank_account              = $model->bank_account;
         $customer->owner                     = null;
         $customer->interested                = null;
-        $customer->children                  = null;
-        $customer->autos                     = null;
-        $customer->gender                    = null;
-        $customer->branch_id                 = $model->branch;
-        $customer->emails                    = $model->emails;
-        $customer->phones                    = $model->phones;
+        $customer->emails                    = $this->parseEmails($model->emails);
+        $customer->phones                    = $this->parsePhones($model->phones);
+        $customer->deleted_at                = ($model->deleted == true) ? date('Y-m-d H:i:s') : null;
 
-        return $customer;
+        $encodedCustomer = new Customer();
+
+        foreach ($customer as $key => $value) {
+
+            $encodedCustomer->{$key} = $value !== '' ? $value : null;
+
+            if (!empty($value) && is_scalar($value)) {
+
+                if(!is_int($value)) {
+                    $encodedCustomer->{$key} = utf8_encode(utf8_decode($value));
+                }
+
+                continue;
+            }
+
+
+        }
+
+        return $encodedCustomer;
     }
 
 }

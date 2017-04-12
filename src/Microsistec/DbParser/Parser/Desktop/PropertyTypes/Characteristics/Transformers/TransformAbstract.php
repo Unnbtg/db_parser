@@ -15,7 +15,7 @@ abstract class TransformAbstract implements TransformerInterface
     {
         $extracted = [];
 
-        foreach ($transformed as $item) {
+        foreach ($transformed as $key => $item) {
 
             $value = array_search($item, $defaults);
 

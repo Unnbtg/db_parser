@@ -213,7 +213,7 @@ class Commercial implements CharacteristicInterface
                         4 => "interfone",
                         5 => "vigia",
                         6 => "extintores", // nope
-                        7 => "grades", // nope
+                        7 => "grades",
                         8 => "sistema-de-alarme",
                     ]
                 ]

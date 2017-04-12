@@ -15,30 +15,30 @@ class House implements CharacteristicInterface
 {
 
     private $types = [
-        1 => ['tipo' => 8, 'subtipo' => null, 'feature' => [230] ], //Isolada
-        2 => ['tipo' => 8, 'subtipo' => null, 'feature' => [231] ], //Geminada
+        1 => ['tipo' => 8, 'subtipo' => null, 'feature' => 230 ], //Isolada
+        2 => ['tipo' => 8, 'subtipo' => null, 'feature' => 231 ], //Geminada
         3 => ['tipo' => 9, 'subtipo' => null], //Sobrado
-        4 => ['tipo' => 8, 'subtipo' => null, 'feature' => [232] ], //Esquina
+        4 => ['tipo' => 8, 'subtipo' => null, 'feature' => 232 ], //Esquina
         5 => ['tipo' => 8, 'subtipo' => 10], //Padrão
-        6 => ['tipo' => 8, 'subtipo' => null, 'feature' => [233] ], //Vila
-        7 => ['tipo' => 8, 'subtipo' => null, 'feature' => [234] ], //Condomínio Fechado
+        6 => ['tipo' => 8, 'subtipo' => null, 'feature' => 233 ], //Vila
+        7 => ['tipo' => 8, 'subtipo' => null, 'feature' => 234 ], //Condomínio Fechado
         8 => ['tipo' => 8, 'subtipo' => 11], //Sobreposta Alta
         9 => ['tipo' => 8, 'subtipo' => 12], //Sobreposta Baixa
-        10 => ['tipo' => 8, 'subtipo' => null, 'feature' => [235] ], //Semi Acabada
+        10 => ['tipo' => 8, 'subtipo' => null, 'feature' => 235 ], //Semi Acabada
         11 => ['tipo' => 8, 'subtipo' => 13], //Edícula
-        12 => ['tipo' => 8, 'subtipo' => null, 'feature' => [236] ], //Alto Padrão
+        12 => ['tipo' => 8, 'subtipo' => null, 'feature' => 236 ], //Alto Padrão
         13 => ['tipo' => 8, 'subtipo' => 14], //Casa Térrea
-        14 => ['tipo' => 8, 'subtipo' => null, 'feature' => [237] ], //Loteamento Fechado
+        14 => ['tipo' => 8, 'subtipo' => null, 'feature' => 237 ], //Loteamento Fechado
         15 => ['tipo' => 8, 'subtipo' => null], //Kitchinete
-        16 => ['tipo' => 8, 'subtipo' => null, 'feature' => [238] ], //Reformada
+        16 => ['tipo' => 8, 'subtipo' => null, 'feature' => 238 ], //Reformada
         17 => ['tipo' => 8, 'subtipo' => null], //Financiamento Direto
         18 => ['tipo' => 8, 'subtipo' => null], //Financiamento Bancário
         19 => ['tipo' => 8, 'subtipo' => null], //Casa p/ Renda
-        20 => ['tipo' => 8, 'subtipo' => null, 'feature' => [239] ], //Vilagio
+        20 => ['tipo' => 8, 'subtipo' => null, 'feature' => 239 ], //Vilagio
         21 => ['tipo' => 8, 'subtipo' => 15], //Duplex
         22 => ['tipo' => 8, 'subtipo' => 16], //Triplex
-        23 => ['tipo' => 8, 'subtipo' => null, 'feature' => [30] ], //Frente p/ Mar
-        24 => ['tipo' => 8, 'subtipo' => null, 'feature' => [240] ], //Assobradado
+        23 => ['tipo' => 8, 'subtipo' => null, 'feature' => 30 ], //Frente p/ Mar
+        24 => ['tipo' => 8, 'subtipo' => null, 'feature' => 240 ], //Assobradado
     ];
 
     public function getTypeSubtype($model)
@@ -58,7 +58,10 @@ class House implements CharacteristicInterface
                     if (is_null($this->types[$key+1]['subtipo']) && $value == 1) {
                         $result['tipo'] = $result['tipo'] != 9 ? $this->types[$key+1]['tipo'] : $result['tipo'];
                         $result['subtipo'] = null;
-                        $result['feature'][] = isset($this->types[$key+1]['feature']) ? $this->types[$key+1]['feature'] : '';
+                        if(isset($this->types[$key+1]['feature'])){
+                            $result['feature'][] = $this->types[$key+1]['feature'];
+
+                        }
                     }
 
                 } catch (\Exception $e) {
@@ -130,30 +133,31 @@ class House implements CharacteristicInterface
                         3 => "quintal",
                         4 => "churrasqueira",
                         5 => "piscina",
+                        6 => "edicula",
                         7 => "terraco",
                         8 => "grades",
                         9 => "muros",
-                        10 => "portao-automatico", //não tem
+                        10 => "portao-eletronico", //não tem
                         11 => "area-de-servico",
                         12 => "jardim",
                         13 => "salao-de-festas",
-                        14 => "sauna",
+                        14 => "sauna", // no desktop eh soh sauna
                         15 => "solarium",
                         16 => "interfone",
                         17 => "central-de-gas",
                         18 => "aquecimento-solar", // não tem
                         19 => "entrada-lateral",
-                        20 => "deposito",
+                        20 => "deposito-na-garagem",
                         21 => "sacada",
                         22 => "sacada-panoramica",
-                        23 => "forno-de-pao-e-pizza", // so tem o de pizza e de pao não
+                        23 => "forno-de-pizza", // so tem o de pizza e de pao não
                         24 => "gerador-de-emergencia",
                         25 => "garagem-fechada",
                         26 => "piscina-aquecida",
                         27 => "deck-molhado",
                         28 => "parque-aquatico",
                         29 => "salao-de-jogos",
-                        30 => "fitness", // no sci online so tem fitness
+                        30 => "sala-fitness", // no sci online so tem sala-fitness e no desktop soh fitness
                         31 => "quadra-poliesportiva",
                         32 => "quadra-de-volei",
                         33 => "quadra-de-tenis",
@@ -161,7 +165,7 @@ class House implements CharacteristicInterface
                         35 => "espaco-grill",
                         36 => "playground",
                         37 => "brinquedoteca",
-                        38 => "hall-social", // so hall de entrada
+                        38 => "hall-de-entrada", // so hall de entrada no online, no desktop soh tem hall social
                         39 => "office",
                         40 => "cinema",
                         41 => "lan-house",
@@ -172,14 +176,14 @@ class House implements CharacteristicInterface
                         46 => "port-cochere",
                         47 => "mirante",
                         48 => "bangalo",
-                        49 => "estar-com-pergolado", // nao tem e o que demonios é isso??
+                        49 => "pergolado", // nao tem e o que demonios é isso??
                         50 => "espaco-zen",
                         51 => "redario",
                         52 => "pista-de-skate",
                         53 => "pista-de-caminhada",
                         54 => "pista-de-bocha",
                         55 => "pet-place",
-                        56 => "praca-da-arvore", //não tem
+                        56 => "praca-de-convivencia", //praca da arvore no desktop
                         57 => "pomar",
                         58 => "lago",
                         59 => "lavanderia-coletiva",
@@ -197,7 +201,7 @@ class House implements CharacteristicInterface
                         "ladrilho",
                         "pedra",
                         "granito",
-                        "alvenaria", // só tem parede em alvenaria
+                        "parede-em-alvenaria", // só tem parede em alvenaria
                         "tijolinho",
                         "litoceramica",
                         "azulejo-ate-o-teto",
@@ -219,7 +223,7 @@ class House implements CharacteristicInterface
                         "hidromassagem",
                         "janelas-de-madeira",
                         "janelas-de-aluminio",
-                        "luminarias",
+                        "luminaria",
                         "armario-embutido",
                         "moveis-planejados",
                         "ar-condicionado",

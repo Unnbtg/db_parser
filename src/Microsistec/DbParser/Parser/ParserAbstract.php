@@ -112,4 +112,51 @@ abstract class ParserAbstract
         return date('Y-m-d H:i:s', $time);
     }
 
+    protected function parsePhones($phones)
+    {
+        $result = [];
+
+        foreach ($phones as $phone) {
+
+            $phone->phone = $this->unMask($phone->phone);
+            $phone->carrier = $phone->carrier != '' ? $phone->carrier : null;
+
+            if ($phone->phone != '') {
+                $result[] = $phone;
+            }
+
+        }
+
+        return $result;
+    }
+
+    protected function parseEmails($emails)
+    {
+        $result = [];
+
+        foreach ($emails as $email) {
+
+            $result[] = $email;
+
+        }
+
+        return $result;
+    }
+
+    protected function parseVacations($vacations)
+    {
+        $result = [];
+
+        foreach ($vacations as $vacation) {
+
+            $vacation->final      = $this->formatDate($vacation->final);
+            $vacation->updated_at = $this->formatDate($vacation->updated_at);
+            $vacation->price      = str_replace(',', '.', $vacation->price);
+            $result[]             = $vacation;
+
+        }
+
+        return $result;
+    }
+
 }

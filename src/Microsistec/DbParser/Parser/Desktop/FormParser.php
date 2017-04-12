@@ -42,9 +42,9 @@ class FormParser extends ParserAbstract implements ParserInterface
         $form->note                    = $model->note;
         $form->note_broker_client      = $model->note_broker_client;
         $form->note_broker_negotiation = $model->note_broker_negotiation;
-
         $form->created_at = $this->formatDate($model->created_at);
         $form->updated_at = $this->formatDate($model->updated_at);
+        $form->deleted_at = ($model->deleted == true) ? date('Y-m-d H:i:s') : null;
 
         return $form;
     }

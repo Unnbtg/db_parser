@@ -12,36 +12,16 @@ namespace Microsistec\DbParser\Parser\Desktop;
 use Microsistec\DbParser\Customer;
 use Microsistec\DbParser\Parser\ParserAbstract;
 use Microsistec\DbParser\Parser\ParserInterface;
-use Microsistec\DbParser\ZipCodeService;
 
 class JuridicalCustomerParser extends ParserAbstract implements ParserInterface
 {
-    /*
-     * Online:                   Desktop:
-     * 1 - casado                0 - solteiro
-     * 2 - solteiro              1 - casado
-     * 3 - divorciado            2 - separado
-     * 4 - viúvo                 3 - divorciado
-     * 5 - separado              4 - viuvo
-     * 6 - união estável         5 - união estável
-     *                           6 - outro
-     */
-    protected $marital_status = [
-        0 => 2,
-        1 => 1,
-        2 => 5,
-        3 => 3,
-        4 => 4,
-        5 => 6,
-        6 => null,
-    ];
 
     public function parse($model, $domain = "", $account = "")
     {
         $customer                            = new Customer();
-        $customer->maintence_id              = $model->id;
-        $customer->id                        = $model->id;
-        $customer->code                      = $model->id;
+        $customer->maintence_id              = (int)$model->id;
+        $customer->id                        = (int)$model->id;
+        $customer->code                      = (int)$model->id;
         $customer->name                      = $model->corporate_name;
         $customer->status                    = 0;
         $customer->type                      = 2;
@@ -64,10 +44,29 @@ class JuridicalCustomerParser extends ParserAbstract implements ParserInterface
         $customer->bank_agency               = $model->bank_agency;
         $customer->bank_account              = $model->bank_account;
         $customer->branch_id                 = $model->juridical_branch;
-        $customer->emails                    = $model->emails;
-        $customer->phones                    = $model->phones;
+        $customer->emails                    = $this->parseEmails($model->emails);
+        $customer->phones                    = $this->parsePhones($model->phones);
+        $customer->deleted_at                = ($model->deleted == true) ? date('Y-m-d H:i:s') : null;
 
-        return $customer;
+        $encodedCustomer = new Customer();
+
+        foreach ($customer as $key => $value) {
+
+            $encodedCustomer->{$key} = $value !== '' ? $value : null;
+
+            if (!empty($value) && is_scalar($value)) {
+
+                if(!is_int($value)) {
+                    $encodedCustomer->{$key} = utf8_encode(utf8_decode($value));
+                }
+
+                continue;
+            }
+
+
+        }
+
+        return $encodedCustomer;
     }
 
 }

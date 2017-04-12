@@ -21,6 +21,13 @@ class ParsedObject
         if (is_array($features)) {
             $this->features = array_merge($this->features, $features);
         }
+
+        sort($this->features);
+    }
+
+    public function addFeature($feature_id)
+    {
+        $this->addFeatures([$feature_id]);
     }
 
     public function addProximity($proximity)
