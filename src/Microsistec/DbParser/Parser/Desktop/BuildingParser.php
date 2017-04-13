@@ -44,7 +44,7 @@ class BuildingParser extends ParserAbstract implements ParserInterface
             }
         }
 
-        $building->zipcode                    = $model->zipcode;
+        $building->zipcode                    = $this->unMask($model->zipcode);
         $building->street                     = $model->street;
         $building->street_number              = $model->street_number;
         $building->zone                       = $model->zone;
