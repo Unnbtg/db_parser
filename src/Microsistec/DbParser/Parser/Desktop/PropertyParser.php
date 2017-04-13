@@ -80,11 +80,22 @@ class PropertyParser extends OldParser implements ParserInterface
         $property->annual_installments_value     = str_replace(',', '.', $model->annual_value);
         $property->keys_installments             = (int)$model->keys_qtd;
         $property->keys_installments_value       = str_replace(',', '.', $model->keys_value);
-        $property->advance_payment               = str_replace(',', '.', $model->advance_payment);
+        $property->advance_payment               = (int)$model->advance_payment;
         $property->rent_price                    = str_replace(',', '.', $model->rent_price);
         $property->iptu_price                    = str_replace(',', '.', $model->iptu_price);
         $property->condominium_price             = str_replace(',', '.', $model->condominium_price);
         $property->migration_obs                 = $model->migration_obs;
+
+        $property->fgts                          = false;
+        $property->letter_of_credit              = false;
+        $property->bank_financing                = false;
+        $property->direct_financing              = false;
+        $property->lessor_bail                   = false;
+        $property->guarantor                     = false;
+        $property->deposit                       = false;
+        $property->requires_guarantor_deed       = false;
+        $property->exchange                      = false;
+
 
         if($model->payment_options != ''){
             $property->fgts                          = (bool)substr($model->payment_options, 0, 1);
@@ -144,7 +155,7 @@ class PropertyParser extends OldParser implements ParserInterface
 
         if ($model->type == 5) {
             $property->incra_number = $model->iptu_number;
-            $property->incra_price  = $model->iptu_price;
+            $property->incra_price  = str_replace(',', '.', $model->iptu_price);
         }
 
         //se tiver contrato de autorizacao (0 no desktop) aí eh true no online
@@ -162,15 +173,15 @@ class PropertyParser extends OldParser implements ParserInterface
 
         $property->opportunity        = (bool)$model->opportunity;
         $roomsCount                   = new \stdClass();
-        $roomsCount->dorm             = $model->bedrooms;
-        $roomsCount->suit             = $model->suits;
-        $roomsCount->bathroom         = $model->bathrooms;
-        $roomsCount->room             = $model->rooms;
-        $roomsCount->kitchen          = $model->kitchens;
-        $roomsCount->parking_lot      = $model->parking_spaces;
-        $roomsCount->housekeeper_room = $model->dependence_maid;
-        $roomsCount->lavatory         = $model->lavatory;
-        $roomsCount->car_garage       = $model->parking_lots;
+        $roomsCount->dorm             = (int)$model->bedrooms;
+        $roomsCount->suit             = (int)$model->suits;
+        $roomsCount->bathroom         = (int)$model->bathrooms;
+        $roomsCount->room             = (int)$model->rooms;
+        $roomsCount->kitchen          = (int)$model->kitchens;
+        $roomsCount->parking_lot      = (int)$model->parking_spaces;
+        $roomsCount->housekeeper_room = (int)$model->dependence_maid;
+        $roomsCount->lavatory         = (int)$model->lavatory;
+        $roomsCount->car_garage       = (int)$model->parking_lots;
         $property->roomsCount         = $roomsCount;
         $property->videos             = !empty($model->video_url) ? [$model->video_url] : [];
 
