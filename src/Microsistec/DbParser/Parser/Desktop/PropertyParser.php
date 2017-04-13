@@ -149,6 +149,7 @@ class PropertyParser extends OldParser implements ParserInterface
 
         //se tiver contrato de autorizacao (0 no desktop) aí eh true no online
         $property->sales_authorization      = $model->sales_authorization == 0 ? true : false;
+        $property->selling_exclusivity      = $model->sales_authorization == 1 ? true : false;
         $property->authorization_start_date = $this->formatDate($model->authorization_start_date);
         $property->authorization_end_date   = date('Y-m-d', strtotime("+ ". $model->authorization_end_date ." days", strtotime($property->authorization_start_date)));
         $property->lease_price              = $model->lease_price;

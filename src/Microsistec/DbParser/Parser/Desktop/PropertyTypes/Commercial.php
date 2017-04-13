@@ -181,7 +181,7 @@ class Commercial implements CharacteristicInterface
                     'values' => [
                         1 => "mezanino",
                         2 => "garagem", // não existe apenas "garagem"
-                        3 => "estacionamento", // não existe apenas estacionamento
+                        3 => "estacionamento-rotativo", // não existe apenas estacionamento
                         4 => "deposito",
                         5 => "copa",
                         6 => "cozinha",
