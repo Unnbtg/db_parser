@@ -76,7 +76,7 @@ class BuildingParser extends ParserAbstract implements ParserInterface
         $building->draft                      = false;
         $building->created_at                 = $this->formatDate($model->created_at);
         $building->updated_at                 = $this->formatDate($model->updated_at);
-        $building->deleted_at                 = ($model->deleted == true) ? date('Y-m-d H:is') : null;
+        $building->deleted_at                 = ($model->deleted == true) ? date('Y-m-d H:i:s') : null;
         $building->user_id                    = 1;
         $building->internal_notes             = $model->internal_obs;
         $building->on_duty                    = false;
