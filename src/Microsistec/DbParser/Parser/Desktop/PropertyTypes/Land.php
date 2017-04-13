@@ -71,6 +71,8 @@ class Land implements CharacteristicInterface
                     'values' => [
                         5 => "rua-asfaltada",
                         "rua-calcada",
+                        12 => "meio-lote",
+                        13 => "esquina",
                     ]
                 ]
 

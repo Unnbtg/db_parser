@@ -329,6 +329,11 @@ class CharacteristicsDictionary
                 307 => "lancamento",
                 308 => "garagem-coberta",
                 309 => "revenda",
+                310 => "cafe",
+                311 => "restaurante",
+                312 => "porta-de-aco",
+                313 => "porta-de-vidro",
+                314 => "extintores",
             ]
         ],
         "room" => [

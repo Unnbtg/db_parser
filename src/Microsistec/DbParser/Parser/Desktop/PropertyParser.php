@@ -98,6 +98,8 @@ class PropertyParser extends OldParser implements ParserInterface
             $property->exchange                      = (bool)substr($model->payment_options, 8, 4);
         }
 
+        $property->mcmv = false;
+
         if($model->type != 4) {
             $property->mcmv = (bool)$model->mcmv;
         }
@@ -113,12 +115,12 @@ class PropertyParser extends OldParser implements ParserInterface
         $property->receiver2_id                  = $model->receiver2_id;
         $property->indicator1                    = $model->indicator1;
         $property->indicator2                    = $model->indicator2;
-        $property->area_width                    = $model->area_width;
-        $property->area_height                   = $model->area_height;
-        $property->total_area                    = $model->total_area;
-        $property->total_built_area              = $model->total_built_area;
-        $property->built_area_price              = $model->built_area_price;
-        $property->total_area_price              = $model->total_area_price;
+        $property->area_width                    = str_replace(',', '.', $model->area_width);
+        $property->area_height                   = str_replace(',', '.', $model->area_height);
+        $property->total_area                    = str_replace(',', '.', $model->total_area);
+        $property->total_built_area              = str_replace(',', '.', $model->total_built_area);
+        $property->built_area_price              = str_replace(',', '.', $model->built_area_price);
+        $property->total_area_price              = str_replace(',', '.', $model->total_area_price);
         $property->relative_distance             = $model->relative_distance;
         $property->orientation                   = $model->position != '' ? $model->position + 1 : null;
         $property->website_home_highlight        = (bool)$model->website_home_highlight;
@@ -134,12 +136,11 @@ class PropertyParser extends OldParser implements ParserInterface
         $property->registry                      = $model->registry;
 
         $property->levels                        = $model->pavement;
-        $property->owner_id                      = (int)$model->owner_id;
+        $property->owners                        = [(int)$model->owner_id];
         $property->contacts                      = $model->contacts;
         $property->work_fund                     = $model->work_fund;
         $property->reserve_fund                  = $model->reserve_fund;
         $property->highlight_photo               = $model->highlight_photo;
-
 
         if ($model->type == 5) {
             $property->incra_number = $model->iptu_number;
@@ -154,6 +155,8 @@ class PropertyParser extends OldParser implements ParserInterface
 
         if ($model->type == 2) {
             $property->ground_type = ($model->definition_02 != "") ? $model->definition_02 + 1 : '';
+            $property->allotment = $model->allotment;
+            $property->address_block = $model->address_block;
         }
 
         $property->opportunity        = (bool)$model->opportunity;
@@ -169,29 +172,53 @@ class PropertyParser extends OldParser implements ParserInterface
         $roomsCount->car_garage       = $model->parking_lots;
         $property->roomsCount         = $roomsCount;
         $property->videos             = !empty($model->video_url) ? [$model->video_url] : [];
-        $property->features           = $typeInstance->getFeatures($model);
 
-        if (isset($property->features->rooms['others'])) {
+        $allFeatures                  = $typeInstance->getFeatures($model);
+
+        if (isset($allFeatures->rooms['others'])) {
             $tmp = json_decode($property->migration_obs, true);
-            $tmp['others'] = $property->features->rooms['others'];
+            $tmp['others'] = $allFeatures->rooms['others'];
             $property->migration_obs = $tmp;
+            unset($allFeatures->rooms['others']);
         }
 
         if ($model->furnished) {
-            $property->features->addFeature(126);
+            $allFeatures->addFeature(126);
         }
 
         if ($model->release) {
-            $property->features->addFeature(307);
+            $allFeatures->addFeature(307);
         }
 
         if ($model->resale) {
-            $property->features->addFeature(309);
+            $allFeatures->addFeature(309);
         }
 
         if (isset($types['feature'])) {
-            $property->features->addFeatures($types['feature']);
+            $allFeatures->addFeatures($types['feature']);
         }
+
+        if ($model->type == 4) {
+
+            if ($model->energy_type == 0) {
+                $allFeatures->addFeature(194);
+            }
+
+            if ($model->energy_type == 1) {
+                $allFeatures->addFeature(195);
+            }
+
+            if ($model->energy_type == 2) {
+                $allFeatures->addFeature(196);
+            }
+
+        }
+
+
+        $property->proximities        = $allFeatures->proximities;
+        $property->features           = $allFeatures->features;
+        $property->roomFeatures       = (object)$allFeatures->rooms;
+
 
         $property->created_at         = $this->formatDate($model->created_at);
         $property->updated_at         = $this->formatDate($model->updated_at);
@@ -216,13 +243,8 @@ class PropertyParser extends OldParser implements ParserInterface
 
             $encodedProperty->{$key} = $value !== '' ? $value : null;
 
-            if (is_scalar($value)) {
-
-                if(!is_int($value)) {
-                    $encodedProperty->{$key} = utf8_encode(utf8_decode($value));
-                }
-
-                continue;
+            if (!empty($value) && is_string($value)) {
+                $encodedProperty->{$key} = utf8_encode(utf8_decode($value));
             }
 
         }

@@ -95,14 +95,8 @@ class BuildingParser extends ParserAbstract implements ParserInterface
 
             $encodedBuilding->{$key} = $value !== '' ? $value : null;
 
-            if (!empty($value) && is_scalar($value)) {
-
-                if(!is_int($value)) {
-                    $encodedBuilding->{$key} = utf8_encode(utf8_decode($value));
-                }
-
-                continue;
-
+            if (!empty($value) && is_string($value)) {
+                $encodedBuilding->{$key} = utf8_encode(utf8_decode($value));
             }
 
         }

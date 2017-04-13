@@ -189,10 +189,10 @@ class Commercial implements CharacteristicInterface
                         8 => "toldo",
                         9 => "exaustores",
                         10 => "vitrine",
-                        11 => "divisorias", // não tem
+                        11 => "divisoria", // não tem
                         12 => "acesso-para-deficientes",
                         13 => "atelier",
-                        14 => "hall-social", // so o de entrada
+                        14 => "hall-de-entrada", // so o de entrada
                         15 => "office",
                         16 => "sala-de-reuniao",
                         17 => "auditorio",
@@ -229,7 +229,7 @@ class Commercial implements CharacteristicInterface
                         "ladrilho",
                         "pedra",
                         "granito",
-                        "alvenaria", // só tem parede em alvenaria
+                        "parede-em-alvenaria", // só tem parede em alvenaria
                         "tijolinho",
                         "litoceramica",
                         "azulejo-ate-o-teto",
@@ -251,7 +251,7 @@ class Commercial implements CharacteristicInterface
                         "hidromassagem",
                         "janelas-de-madeira",
                         "janelas-de-aluminio",
-                        "luminarias",
+                        "luminaria",
                         "armario-embutido",
                         "moveis-planejados",
                         "ar-condicionado",

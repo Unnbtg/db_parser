@@ -84,9 +84,10 @@ class CustomerParser extends ParserAbstract implements ParserInterface
         $customer->bank_account              = $model->bank_account;
         $customer->bank_name                 = $model->bank_name;
         $customer->bank_agency               = $model->bank_agency;
-        $customer->owner                     = null;
-        $customer->interested                = null;
+        $customer->owner                     = false;
+        $customer->interested                = false;
         $customer->emails                    = $this->parseEmails($model->emails);
+
         $customer->phones                    = $this->parsePhones($model->phones);
         $customer->deleted_at                = ($model->deleted == true) ? date('Y-m-d H:i:s') : null;
 
@@ -96,15 +97,9 @@ class CustomerParser extends ParserAbstract implements ParserInterface
 
             $encodedCustomer->{$key} = $value !== '' ? $value : null;
 
-            if (!empty($value) && is_scalar($value)) {
-
-                if(!is_int($value)) {
-                    $encodedCustomer->{$key} = utf8_encode(utf8_decode($value));
-                }
-
-                continue;
+            if (!empty($value) && is_string($value)) {
+               $encodedCustomer->{$key} = utf8_encode(utf8_decode($value));
             }
-
 
         }
 

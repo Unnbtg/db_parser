@@ -240,6 +240,7 @@ class House implements CharacteristicInterface
                 [
                     'field' => 'definition_master',
                     'type' => 'position',
+                    'options' => 'others',
                     'values' => [
                         205 => "carpete-de-madeira",
                         "piso-laminado",

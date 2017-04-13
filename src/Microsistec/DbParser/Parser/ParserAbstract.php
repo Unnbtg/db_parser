@@ -57,7 +57,11 @@ abstract class ParserAbstract
 
     protected function getState($state)
     {
-        return $this->getFromComplexConfig($state, $this->states);
+        if (!is_null($state) && !empty($state)) {
+            return $this->getFromComplexConfig($state, $this->states);
+        }
+
+        return null;
     }
 
     public function getFromComplexConfig($value, $config)
@@ -91,17 +95,15 @@ abstract class ParserAbstract
     {
         $date = str_replace('/', '-', $date);
         if (empty($date)) {
-            return "";
+            return null;
         }
 
         $date = explode(' ', $date);
 
         if (count($date) == 1) {
             $date = $date[0];
-            return implode('-', array_reverse(explode('/', $date)));
-
+            return date('Y-m-d', strtotime($date));
         }
-
 
         $time = strtotime($date[0] . " " . $date[1]);
 
@@ -136,7 +138,7 @@ abstract class ParserAbstract
 
         foreach ($emails as $email) {
 
-            $result[] = $email;
+            $result[] = $email->email;
 
         }
 
@@ -149,6 +151,7 @@ abstract class ParserAbstract
 
         foreach ($vacations as $vacation) {
 
+            $vacation->initial    = $this->formatDate($vacation->initial);
             $vacation->final      = $this->formatDate($vacation->final);
             $vacation->updated_at = $this->formatDate($vacation->updated_at);
             $vacation->price      = str_replace(',', '.', $vacation->price);
