@@ -39,9 +39,18 @@ class FormParser extends ParserAbstract implements ParserInterface
         $form->property_max_value      = $model->property_max_value;
         $form->property_dorm           = $model->property_dorm;
         $form->property_suite          = $model->property_suite;
-        $form->note                    = $model->note;
-        $form->note_broker_client      = $model->note_broker_client;
-        $form->note_broker_negotiation = $model->note_broker_negotiation;
+
+        $form->notes = [];
+        if(!empty($model->note)){
+            $form->notes[] = $model->note;
+        }
+        if(!empty($model->note_broker_client)){
+            $form->notes[] = $model->note_broker_client;
+        }
+        if(!empty($model->note_broker_negotiation)){
+            $form->notes[] = $model->note_broker_negotiation;
+        }
+
         $form->created_at = $this->formatDate($model->created_at);
         $form->updated_at = $this->formatDate($model->updated_at);
         $form->deleted_at = ($model->deleted == true) ? date('Y-m-d H:i:s') : null;
