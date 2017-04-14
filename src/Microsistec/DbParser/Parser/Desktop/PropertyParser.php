@@ -228,7 +228,6 @@ class PropertyParser extends OldParser implements ParserInterface
 
         }
 
-
         $property->proximities        = $allFeatures->proximities;
         $property->features           = $allFeatures->features;
         $property->roomFeatures       = (object)$allFeatures->rooms;
