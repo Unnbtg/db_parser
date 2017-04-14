@@ -25,20 +25,18 @@ class FormParser extends ParserAbstract implements ParserInterface
         $form->source            = 'sci';
         $form->situation         = 1;
         $form->customer_id       = $model->customer_id;
-        $form->property_type     = $model->property_type;
-        $form->property_finality = $model->property_finality;
-        $form->property_city     = $model->property_city;
 
-        if (is_array($model->property_neighborhoods)) {
-            $form->property_neighborhoods[] = $model->property_neighborhoods;
-        } else {
-            $form->property_neighborhoods = $model->property_neighborhoods;
-        }
+        $form->profile = new \stdClass();
 
-        $form->property_parking_lots   = $model->property_parking_lots;
-        $form->property_max_value      = $model->property_max_value;
-        $form->property_dorm           = $model->property_dorm;
-        $form->property_suite          = $model->property_suite;
+        $form->profile->property_city     = $model->property_city;
+        $form->profile->dorm_count        = (int)$model->property_dorm;
+        $form->profile->for_sale          = $model->property_finality == 0 ? true : false;
+        $form->profile->for_rent          = $model->property_finality == 1 ? true : false;
+        $form->profile->max_value         = str_replace(',', '.', $model->property_max_value);
+        $form->profile->neighborhoods     = [$model->property_neighborhoods];
+        $form->profile->parking_lot_count = (int)$model->property_parking_lots;
+        $form->profile->suit_count        = (int)$model->property_suite;
+        $form->profile->types             = [$model->property_type];
 
         $form->notes = [];
         if(!empty($model->note)){
