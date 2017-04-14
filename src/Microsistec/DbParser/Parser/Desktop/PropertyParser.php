@@ -156,6 +156,8 @@ class PropertyParser extends OldParser implements ParserInterface
         if ($model->type == 5) {
             $property->incra_number = $model->iptu_number;
             $property->incra_price  = str_replace(',', '.', $model->iptu_price);
+            unset($property->iptu_price);
+            unset($property->iptu_number);
         }
 
         //se tiver contrato de autorizacao (0 no desktop) aí eh true no online
