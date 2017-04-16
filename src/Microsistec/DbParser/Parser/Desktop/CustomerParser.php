@@ -60,7 +60,7 @@ class CustomerParser extends ParserAbstract implements ParserInterface
         $customer->issued_at                 = $this->formatDate($model->rg_issued_at);
         $customer->issuer                    = $model->rg_issuer;
         $customer->birthdate                 = $this->formatDate($model->birthdate);
-        $customer->marital_status            = !empty($model->marital_status) ? $this->marital_status[$model->marital_status] : null;
+        $customer->marital_status            = $model->marital_status != "" ? $this->marital_status[$model->marital_status] : null;
         $customer->occupation                = $model->occupation;
         $customer->nationality               = $model->nationality;
         $customer->naturalness               = $model->naturalness;
@@ -72,7 +72,7 @@ class CustomerParser extends ParserAbstract implements ParserInterface
         $customer->spouse_rg_issued_at       = $this->formatDate($model->spouse_rg_issued_at);
         $customer->spouse_rg_issuer          = $model->spouse_rg_issuer;
         $customer->spouse_birthdate          = $this->formatDate($model->spouse_birthdate);
-        $customer->spouse_marital_status     = !empty($model->spouse_marital_status) ? $this->marital_status[$model->spouse_marital_status] : null;
+        $customer->spouse_marital_status     = $model->spouse_marital_status != "" ? $this->marital_status[$model->spouse_marital_status] : null;
         $customer->spouse_occupation         = $model->spouse_occupation;
         $customer->spouse_nationality        = $model->spouse_nationality;
         $customer->spouse_naturalness        = $model->spouse_naturalness;
