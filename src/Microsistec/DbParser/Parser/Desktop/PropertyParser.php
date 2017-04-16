@@ -50,8 +50,8 @@ class PropertyParser extends OldParser implements ParserInterface
         $property->finality                      = $this->getFinality($model);
         $property->type                          = (int)$types['tipo'];
         $property->subtype                       = (int)$types['subtipo'];
-        $property->for_rent                      = (bool)substr($model->finality, 0, 1);
-        $property->for_sale                      = (bool)substr($model->finality, 1, 1);
+        $property->for_sale                      = (bool)substr($model->finality, 0, 1);
+        $property->for_rent                      = (bool)substr($model->finality, 1, 1);
         $property->for_vacation                  = (bool)substr($model->finality, 2, 1);
         $property->situation                     = $model->situation != '' ? $model->situation + 1 : null;
         $property->has_board                     = (bool)$model->has_board;
