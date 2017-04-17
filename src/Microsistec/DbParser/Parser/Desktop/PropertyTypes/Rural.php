@@ -75,14 +75,14 @@ class Rural implements CharacteristicInterface
                         8  => "pedregulho",//nope
                         9  => "paralelepipedo",//nope
                         10 => "cerca-eletrica",
-                        11 => "sistema-de-seguranca"// nope
+                        11 => "circuito-de-seguranca"// no desktop eh sistema de segurança
                     ],
                 ],
                 [
                     'field'  => 'definition_master',
                     'type'   => 'position',
                     'values' => [
-                        "playground",
+                        1 => "playground",
                         "salao-de-jogos",
                         "campos-de-futebol",
                         "churrasqueira",

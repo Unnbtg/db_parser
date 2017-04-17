@@ -158,6 +158,7 @@ class PropertyParser extends OldParser implements ParserInterface
             $property->incra_price  = str_replace(',', '.', $model->iptu_price);
             unset($property->iptu_price);
             unset($property->iptu_number);
+            unset($property->relative_distance);
         }
 
         //se tiver contrato de autorizacao (0 no desktop) aí eh true no online
@@ -232,10 +233,11 @@ class PropertyParser extends OldParser implements ParserInterface
         $property->features           = $allFeatures->features;
         $property->roomFeatures       = (object)$allFeatures->rooms;
 
-
         $property->created_at         = $this->formatDate($model->created_at);
         $property->updated_at         = $this->formatDate($model->updated_at);
         $property->deleted_at         = ($model->deleted == true) ? date('Y-m-d H:i:s') : null;
+        $property->publish            = $model->publish;
+        $property->portals            = $model->portals;
 
         /*var_dump($property->features);
         echo '02: ' . $model->definition_02 .PHP_EOL.

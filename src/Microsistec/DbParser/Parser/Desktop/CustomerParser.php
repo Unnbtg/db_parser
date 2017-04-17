@@ -27,12 +27,12 @@ class CustomerParser extends ParserAbstract implements ParserInterface
      *                           6 - outro
      */
     protected $marital_status = [
-        0 => 2,
-        1 => 1,
-        2 => 5,
-        3 => 3,
-        4 => 4,
-        5 => 6,
+        0 => 2, //Solteiro
+        1 => 1, //Casado
+        2 => 5, //Separado
+        3 => 3, //Divorciado
+        4 => 4, //Viuvo
+        5 => 6, //União estável
         6 => null,
     ];
 
@@ -56,7 +56,7 @@ class CustomerParser extends ParserAbstract implements ParserInterface
         $customer->neighborhood              = $model->neighborhood;
         $customer->state                     = $model->state;
         $customer->state_id                  = $this->getState($model->state);
-        $customer->rg                        = $this->unMask($model->rg);
+        $customer->rg                        = str_replace(['.', '-'], '', $model->rg);
         $customer->issued_at                 = $this->formatDate($model->rg_issued_at);
         $customer->issuer                    = $model->rg_issuer;
         $customer->birthdate                 = $this->formatDate($model->birthdate);
@@ -68,7 +68,7 @@ class CustomerParser extends ParserAbstract implements ParserInterface
         $customer->maternal_filiation        = $model->maternal_filiation;
         $customer->spouse_name               = $model->spouse_name;
         $customer->spouse_cpf                = $this->unMask($model->spouse_cpf);
-        $customer->spouse_rg                 = $this->unMask($model->spouse_rg);
+        $customer->spouse_rg                 =  str_replace(['.', '-'], '', $model->spouse_rg);
         $customer->spouse_rg_issued_at       = $this->formatDate($model->spouse_rg_issued_at);
         $customer->spouse_rg_issuer          = $model->spouse_rg_issuer;
         $customer->spouse_birthdate          = $this->formatDate($model->spouse_birthdate);

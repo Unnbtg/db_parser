@@ -36,12 +36,22 @@ class BuildingParser extends ParserAbstract implements ParserInterface
         if ($model->release_status == 1) {
             $building->launch_status = 3;
         } else {
-            if ($model->construction_stage == 0) {
+            if ($model->construction_stage == 0) { //Pré lancamento
                 $building->launch_status = 2;
             }
-            if ($model->construction_stage == 2) {
+            if ($model->construction_stage == 1) { //Em obras
+                $building->work_phase = 1;
+            }
+            if ($model->construction_stage == 2) { //Pronto
                 $building->launch_status = 4;
             }
+            if ($model->construction_stage == 3) { //Esgotado
+                $building->launch_status = 7;
+            }
+        }
+
+        if($model->resale) {
+            $building->launch_status = 6;
         }
 
         $building->zipcode                    = $this->unMask($model->zipcode);
@@ -71,6 +81,7 @@ class BuildingParser extends ParserAbstract implements ParserInterface
         $building->show_payment_quantities    = (bool)substr($model->internet_options, 4, 1);
         $building->show_payment_values        = (bool)substr($model->internet_options, 2, 1);
         $building->show_price                 = (bool)substr($model->internet_options, 1, 1);
+        $building->publish                    = (bool)substr($model->internet_options, 7, 1);
         $building->type                       = ($model->type == 0 || $model->type == 2 || $model->type == 4) ? 1 : 2;
         $building->finality                   = ($model->type == 3) ? 2 : 1;
         $building->draft                      = false;
@@ -80,6 +91,13 @@ class BuildingParser extends ParserAbstract implements ParserInterface
         $building->user_id                    = 1;
         $building->internal_notes             = $model->internal_obs;
         $building->on_duty                    = false;
+
+
+        $building->for_rent                   = $model->for_rent;
+        $building->release_status             = $model->release_status;
+        $building->own_construction           = $model->own_construction;
+
+        $building->prevision_date             = $this->formatDate($model->prevision_date);
 
         $building->work_phase                 = null;
         if($model->construction_stage != 3) {
@@ -120,7 +138,7 @@ class BuildingParser extends ParserAbstract implements ParserInterface
             "22" => 26,
             "29" => 27,
             "28" => 56,
-            "8"  => 242,
+            "8"  => 302,
             "21" => 31,
             "17" => 41,
             "37" => 44,
