@@ -21,9 +21,14 @@ class FormParser extends ParserAbstract implements ParserInterface
         $form                    = new Forms();
         $form->maintence_id      = $model->id;
         $form->id                = $model->id;
-        $form->status            = $model->status;
+        $form->status            = 2; //interessado
         $form->source            = 'sci';
-        $form->situation         = 1;
+        $form->user_id           = $model->broker_id;
+
+        if ($model->status == 0 || $model->status == 2) { //Ativa no desktop ou em negociacao
+            $form->situation = 1; //Aberta no online
+        }
+
         $form->customer_id       = $model->customer_id;
 
         $form->profile = new \stdClass();
@@ -55,6 +60,10 @@ class FormParser extends ParserAbstract implements ParserInterface
         $form->created_at = $this->formatDate($model->created_at);
         $form->updated_at = $this->formatDate($model->updated_at);
         $form->deleted_at = ($model->deleted == true) ? date('Y-m-d H:i:s') : null;
+
+        if ($model->status == 1) { //se for inativa exclui, thiago que decidiu
+            $form->deleted_at = date('Y-m-d H:i:s');
+        }
 
         return $form;
     }

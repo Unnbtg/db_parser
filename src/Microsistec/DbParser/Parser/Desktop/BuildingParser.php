@@ -16,6 +16,19 @@ use Microsistec\DbParser\Property;
 
 class BuildingParser extends ParserAbstract implements ParserInterface
 {
+    protected $zones = [
+        0 => 'Indefinida',
+        1 => 'Norte',
+        2 => 'Sul',
+        3 => 'Leste',
+        4 => 'Oeste',
+        5 => 'Centro',
+        6 => 'Grande São Paulo',
+        7 => 'Litoral',
+        8 => 'Interior',
+        9 => 'ABC',
+    ];
+
     public function parse($model, $domain = "", $account = "")
     {
         $building                             = new Building();
@@ -27,32 +40,11 @@ class BuildingParser extends ParserAbstract implements ParserInterface
         $building->end_date                   = $this->formatDate($model->end_date);
         $building->website_home_highlight     = (bool)$model->website_home_highlight;
         $building->website_home_rotate_banner = (bool)$model->website_home_rotate_banner;
+        $building->highlight_photo            = $model->highlight_photo;
         $building->website_title              = $model->website_title;
         $building->website_keywords           = $model->website_keywords;
         $building->website_description        = $model->website_description;
         $building->website_notes              = $model->website_notes;
-
-        $building->launch_status = null;
-        if ($model->release_status == 1) {
-            $building->launch_status = 3;
-        } else {
-            if ($model->construction_stage == 0) { //Pré lancamento
-                $building->launch_status = 2;
-            }
-            if ($model->construction_stage == 1) { //Em obras
-                $building->work_phase = 1;
-            }
-            if ($model->construction_stage == 2) { //Pronto
-                $building->launch_status = 4;
-            }
-            if ($model->construction_stage == 3) { //Esgotado
-                $building->launch_status = 7;
-            }
-        }
-
-        if($model->resale) {
-            $building->launch_status = 6;
-        }
 
         $building->zipcode                    = $this->unMask($model->zipcode);
         $building->street                     = $model->street;
@@ -91,19 +83,45 @@ class BuildingParser extends ParserAbstract implements ParserInterface
         $building->user_id                    = 1;
         $building->internal_notes             = $model->internal_obs;
         $building->on_duty                    = false;
-
-
+        $building->videos                     = $model->videos;
+        $building->contacts                   = $model->contacts;
         $building->for_rent                   = $model->for_rent;
-        $building->release_status             = $model->release_status;
-        $building->own_construction           = $model->own_construction;
+        $building->owners                     = [(int)$model->owner_id];
 
         $building->prevision_date             = $this->formatDate($model->prevision_date);
 
-        $building->work_phase                 = null;
-        if($model->construction_stage != 3) {
-            $building->work_phase = $model->construction_stage == 0 ? 3 : (int)$model->construction_stage;
+        $building->work_phase = null;
+        $building->launch_status = null;
+
+        if ($model->release_status == 1) { //Lancamento
+            $building->launch_status = 3;
+        }
+        if ($model->construction_stage == 0) { //Pré lancamento
+            $building->launch_status = 2;
+        }
+        if ($model->construction_stage == 1) { //Em obras
+            $building->work_phase = 1;
+        }
+        if ($model->construction_stage == 2) { //Pronto
+            $building->launch_status = 4;
+            $building->work_phase = 2;
         }
 
+        if ($model->construction_stage == 3) { //Esgotado
+            $building->launch_status = 7;
+        }
+
+        if($model->resale) {
+            $building->launch_status = 6;
+        }
+
+        foreach (str_split($model->characteristics) as $key => $value) {
+            if($key == 38 && $value == 1) {
+                $building->accept_mcmv = 1;
+            }
+        }
+
+        $building->zone                       = $this->getZone($model->zone);
         $building->hotsite                    = $model->hotsite;
         $building->features                   = $this->characteristics($model);
 
@@ -180,6 +198,15 @@ class BuildingParser extends ParserAbstract implements ParserInterface
 
         return $newCharacteristics;
 
+    }
+
+    protected function getZone($zone)
+    {
+        if (!empty($zone) && !is_null($zone)) {
+            return $this->zones[$zone];
+        }
+
+        return null;
     }
 
 }

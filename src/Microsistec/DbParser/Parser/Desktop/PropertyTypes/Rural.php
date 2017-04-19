@@ -84,12 +84,12 @@ class Rural implements CharacteristicInterface
                     'values' => [
                         1 => "playground",
                         "salao-de-jogos",
-                        "campos-de-futebol",
+                        "campo-de-futebol",
                         "churrasqueira",
                         "fogao-a-lenha",
                         "forno-de-pizza",
                         "sala-de-ginastica",
-                        "sauna-seca-/-umida", // nos temos as duas separadas não juntas
+                        "sauna", // nos temos as duas separadas não juntas
                         "quadra-poliesportiva",
                         "piscina",
                         "jardim",
@@ -98,8 +98,8 @@ class Rural implements CharacteristicInterface
                         "cachoeira",
                         "mata-nativa",
                         "nascente",
-                        "pecuaria-(leite)",
-                        "pecuaria-(corte)",
+                        "pecuaria-leite",
+                        "pecuaria-corte",
                         "avicultura",
                         "suinocultura",
                         "equinocultura",

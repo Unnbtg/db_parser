@@ -244,6 +244,44 @@ class Apartment implements CharacteristicInterface
                         25 => "garagem-coletiva-insulficiente",
                         26 => "varanda",
                     ]
+                ],
+                [
+                    'field' => 'definition_master',
+                    'type' => 'position',
+                    //'options' => 'others',
+                    'values' => [
+                        205 => "carpete-de-madeira",
+                        "piso-laminado",
+                        "piso-porcelanato",
+                        "gesso-sanca",
+                        "lavabo",//tem não
+                        "despensa",
+                        "escritorio", // nope
+                        "porta-balcao",
+                        "cortina-de-vidro",
+                        "armarios-individuais",//nope
+                        "churrasqueira-na-sacada", //nope
+                        "medidores-de-agua-individuais", // nope
+                        "lareira",
+                        "janela-de-ferro",
+                        "contra-piso",
+                        "pintura-latex",
+                        "servicos-pay-per-use", //nope
+                        "deposito-na-garagem-nao-vai", //nope
+                        "sistema-de-refrigeracao-central-tipo-sprit", //nope
+                        "sistema-de-aquecimento-de-agua-a-gas",//nope
+                        "perfil-de-estudantes", //nope
+                        "piso-paviflex",
+                        "laje", //nope
+                        "madeira", //nope
+                        "pvc", // nope
+                        "wc-empregada", // nope
+                        "2-entradas", // nope
+                        "piso-ceramica",
+                        "piso-marmore",
+                        "piso-granito",
+                        "papel-de-parede",
+                    ]
                 ]
             ],
             "room" => [
@@ -293,7 +331,7 @@ class Apartment implements CharacteristicInterface
                         'service_area'
                     ]
                 ],
-                [
+                /*[
                     'field' => 'definition_master',
                     'type' => 'position',
                     'options' => 'others',
@@ -330,7 +368,7 @@ class Apartment implements CharacteristicInterface
                         "piso-granito",
                         "papel-de-parede",
                     ]
-                ]
+                ]*/
             ]
         ];
     }

@@ -54,8 +54,7 @@ class CustomerParser extends ParserAbstract implements ParserInterface
         $customer->complementary             = $model->complementary;
         $customer->city                      = $model->city;
         $customer->neighborhood              = $model->neighborhood;
-        $customer->state                     = $model->state;
-        $customer->state_id                  = $this->getState($model->state);
+        $customer->state                     = $this->getState($model->state);
         $customer->rg                        = str_replace(['.', '-'], '', $model->rg);
         $customer->issued_at                 = $this->formatDate($model->rg_issued_at);
         $customer->issuer                    = $model->rg_issuer;

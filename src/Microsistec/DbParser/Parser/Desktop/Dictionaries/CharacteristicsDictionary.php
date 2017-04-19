@@ -334,6 +334,10 @@ class CharacteristicsDictionary
                 312 => "porta-de-aco",
                 313 => "porta-de-vidro",
                 314 => "extintores",
+                315 => "asfalto",
+                316 => "sem-calcamento",
+                317 => "pedregulho",
+                318 => "paralelepipedo",
             ]
         ],
         "room" => [

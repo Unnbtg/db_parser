@@ -94,7 +94,7 @@ abstract class ParserAbstract
     protected function formatDate($date)
     {
         $date = str_replace('/', '-', $date);
-        if (empty($date)) {
+        if (empty($date) || $date == '__-____') {
             return null;
         }
 
@@ -102,6 +102,8 @@ abstract class ParserAbstract
 
         if (count($date) == 1) {
             $date = $date[0];
+            $date = (strlen($date) == 7 ? '01-' : '') . $date;
+
             return date('Y-m-d', strtotime($date));
         }
 

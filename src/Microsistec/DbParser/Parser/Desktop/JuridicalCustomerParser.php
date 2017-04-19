@@ -47,6 +47,7 @@ class JuridicalCustomerParser extends ParserAbstract implements ParserInterface
         $customer->emails                    = $this->parseEmails($model->emails);
         $customer->phones                    = $this->parsePhones($model->phones);
         $customer->deleted_at                = ($model->deleted == true) ? date('Y-m-d H:i:s') : null;
+        $customer->information               = $model->information;
 
         $encodedCustomer = new Customer();
 
