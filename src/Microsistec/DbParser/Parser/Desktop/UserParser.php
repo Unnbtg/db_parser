@@ -13,6 +13,16 @@ class UserParser extends ParserAbstract implements ParserInterface
         $user                   = new User();
         $user->maintence_id     = (int)$model->id;
         $user->id               = (int)$model->id;
+
+        $user->is_broker = false;
+        $brokerId = $model->broker_id;
+
+        if(strpos($model->broker_id, '-B') !== false){
+            $brokerId = str_replace('-B', '', $model->broker_id);
+            $user->is_broker = true;
+        }
+
+        $user->broker_id        = $brokerId;
         $user->code             = (int)$model->code;
         $user->branch_id        = (int)$model->branch_id;
         $user->team_id          = (int)$model->team_id;
