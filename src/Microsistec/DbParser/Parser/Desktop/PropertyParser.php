@@ -145,7 +145,11 @@ class PropertyParser extends OldParser implements ParserInterface
         $property->branch_id                     = (int)$model->branch_id;
         $property->website_showcase              = (bool)$model->website_alternative_highlight;
         $property->registry                      = $model->registry;
-        $property->habitese                      = (bool)$model->habitese;
+
+        $property->habitese = false;
+        if(isset($model->habitese)) {
+            $property->habitese = (bool)$model->habitese;
+        }
 
         $property->levels                        = $model->pavement;
         $property->owners                        = [(int)$model->owner_id];
