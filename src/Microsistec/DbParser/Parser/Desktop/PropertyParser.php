@@ -106,7 +106,7 @@ class PropertyParser extends OldParser implements ParserInterface
             $property->guarantor                     = (bool)substr($model->payment_options, 5, 1);
             $property->deposit                       = (bool)substr($model->payment_options, 6, 1);
             $property->requires_guarantor_deed       = (bool)substr($model->payment_options, 7, 1);
-            $property->exchange                      = (bool)substr($model->payment_options, 8, 4);
+            $property->exchange                      = (bool)strstr(substr($model->payment_options, 8, 4),"1");
         }
 
         $property->mcmv = false;
