@@ -41,11 +41,13 @@ class Land implements CharacteristicInterface
 
                 foreach ($definition01 as $key => $value) {
 
-                    if ($value == 1) {
+                    if ($value == 1 && isset($this->types[$key])) {
                         return $this->types[$key];
                     }
 
                 }
+
+                return $this->types[0];
             }
 
             return $this->types[$model->definition_01];
