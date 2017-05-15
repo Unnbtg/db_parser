@@ -341,6 +341,10 @@ class PropertyParser extends OldParser implements ParserInterface
 
     public function getFlag($model)
     {
+        if (!isset($this->flag[$model->flag])) {
+            return $this->flag[8];
+        }
+
         return $this->flag[$model->flag];
     }
 
