@@ -12,7 +12,6 @@ namespace Microsistec\DbParser\Parser\Desktop;
 use Microsistec\DbParser\Building;
 use Microsistec\DbParser\Parser\ParserAbstract;
 use Microsistec\DbParser\Parser\ParserInterface;
-use Microsistec\DbParser\Property;
 
 class BuildingParser extends ParserAbstract implements ParserInterface
 {
@@ -40,7 +39,13 @@ class BuildingParser extends ParserAbstract implements ParserInterface
         $building->end_date                   = $this->formatDate($model->end_date);
         $building->website_home_highlight     = (bool)$model->website_home_highlight;
         $building->website_home_rotate_banner = (bool)$model->website_home_rotate_banner;
-        $building->highlight_photo            = $model->highlight_photo;
+
+        $building->highlight_photo = null;
+
+        if (isset($model->highlight_photo)) {
+            $building->highlight_photo            = $model->highlight_photo;
+        }
+
         $building->website_title              = $model->website_title;
         $building->website_keywords           = $model->website_keywords;
         $building->website_description        = $model->website_description;
