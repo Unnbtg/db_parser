@@ -25,6 +25,7 @@ class NewParser extends ParserAbstract
         $property = new Property();
 
         $property->id = $model->id;
+        $property->alternative_code = $model->alternative_code;
         $property->reference = $model->code;
         $property->disponibility = $this->getDisponibility($model);
         $rooms = $this->getRooms($model);
