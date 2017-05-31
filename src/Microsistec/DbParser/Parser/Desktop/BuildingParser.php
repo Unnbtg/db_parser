@@ -57,7 +57,7 @@ class BuildingParser extends ParserAbstract implements ParserInterface
         $building->zone                       = $model->zone;
         $building->city                       = $model->city;
         $building->neighborhood               = $model->neighborhood;
-        $building->state                      = $this->getState($model->state);
+        $building->state                      = $model->state;
         $building->foundation_end             = $this->formatDate($model->foundation_end);
         $building->foundation_percent         = (int)$model->foundation_percent;
         $building->structure_end              = $this->formatDate($model->structure_end);
