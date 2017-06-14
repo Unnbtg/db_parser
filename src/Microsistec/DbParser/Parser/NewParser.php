@@ -40,7 +40,7 @@ class NewParser extends ParserAbstract
         $property->kitchen = $rooms[RoomParser::KITCHEN];
         $property->city = $model->city->name;
         $property->neighborhood = $model->neighborhood->name;
-        $property->alternative_neighborhood = $model->alternative_neighborhood->name;
+        $property->alternative_neighborhood = !is_null($model->alternative_neighborhood) ? $model->alternative_neighborhood->name : $model->neighborhood->name;
         $property->number = $model->street_number;
         $property->reference_point = $model->reference_point;
         $property->cep = $model->zipcode;
@@ -83,6 +83,7 @@ class NewParser extends ParserAbstract
         $property->seller_contact = $this->getContact($model->user);
         $property->measure_unit_info = $model->measure_unit_info;
         $property->selling_exclusivity = $model->selling_exclusivity;
+        $property->website_notes = $model->website_notes;
 
         return $property;
 
