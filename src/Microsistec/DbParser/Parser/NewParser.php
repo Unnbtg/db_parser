@@ -40,7 +40,9 @@ class NewParser extends ParserAbstract
         $property->kitchen = $rooms[RoomParser::KITCHEN];
         $property->city = $model->city->name;
         $property->neighborhood = $model->neighborhood->name;
+        $property->alternative_neighborhood = $model->alternative_neighborhood->name;
         $property->number = $model->street_number;
+        $property->reference_point = $model->reference_point;
         $property->cep = $model->zipcode;
         $property->state = $this->getState($model->state_id);
         $property->zone = $model->zone;
@@ -50,6 +52,7 @@ class NewParser extends ParserAbstract
         $property->construction_age = $this->getAge($model->age);
         $property->characteristics = $this->getFeatures($model->features);
         $property->condominium_price = $model->condominium_price;
+        $property->condominium_name = $model->condominium_name;
         $property->iptu_price = $model->iptu_price;
         $property->vacation_max = $model->vacation_max;
         $property->vacation_parkingLots = $model->vacation_parkingLots;
@@ -71,7 +74,15 @@ class NewParser extends ParserAbstract
         $property->for_sale = $model->for_sale;
         $property->for_rent = $model->for_rent;
         $property->for_vacation = $model->for_vacation;
+        $property->for_vacation = $model->for_vacation;
+        $property->created_at = $model->created_at;
+        $property->updated_at = $model->updated_at;
+        $property->finality_info = $model->finality_info;
+        $property->situation_info = $model->situation_info;
+        $property->orientation_info = $model->orientation_info;
         $property->seller_contact = $this->getContact($model->user);
+        $property->measure_unit_info = $model->measure_unit_info;
+        $property->selling_exclusivity = $model->selling_exclusivity;
 
         return $property;
 
