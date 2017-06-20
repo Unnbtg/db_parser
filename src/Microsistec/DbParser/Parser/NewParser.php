@@ -100,9 +100,12 @@ class NewParser extends ParserAbstract
 
     public function getPicture($model)
     {
+        $pictures = [];
+
         foreach($model as $photos){
             $pictures[] = $photos;
         }
+
         return $pictures;
     }
 
