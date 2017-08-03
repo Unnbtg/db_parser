@@ -15,7 +15,7 @@ class Land implements CharacteristicInterface
 
     private $types = [
         0 => ['tipo' => 11, 'subtipo' => null],  //Simples
-        1 => ['tipo' => 1, 'subtipo' => null],  //Incorporação
+        1 => ['tipo' => 11, 'subtipo' => null],  //Incorporação
         2 => ['tipo' => 13, 'subtipo' => null],  //Sítio
         3 => ['tipo' => 14, 'subtipo' => null],  //Fazenda
         4 => ['tipo' => 12, 'subtipo' => null],  //Chácara
