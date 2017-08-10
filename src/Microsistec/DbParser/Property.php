@@ -89,6 +89,7 @@ use phpDocumentor\Reflection\Type;
  * @property string         $olx_token
  * @property string         $website_title
  * @property string         $latitude
+ * @property string         $longitude
  * @property string         $longaddressitude
  * @property string         $for_sale
  * @property string         $for_rent
