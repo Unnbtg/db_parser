@@ -82,6 +82,8 @@ class NewParser extends ParserAbstract
         $property->measure_unit             = $model->measure_unit;
         $property->selling_exclusivity      = $model->selling_exclusivity;
         $property->website_notes            = $model->website_notes;
+        $property->advance_payment          = $model->advance_payment;
+        $property->exchange                 = $model->exchange;
 
         return $property;
 
