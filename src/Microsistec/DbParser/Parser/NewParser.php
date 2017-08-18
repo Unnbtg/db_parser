@@ -45,6 +45,7 @@ class NewParser extends ParserAbstract
         $property->zone                     = $model->zone;
         $property->address                  = $model->street;
         $property->complement               = $model->complementary;
+        $property->floor                    = $model->floor;
         $property->age                      = $model->age;
         $property->construction_age         = $this->getAge($model->age);
         $property->characteristics          = $this->getFeatures($model->features);
@@ -78,6 +79,7 @@ class NewParser extends ParserAbstract
         $property->orientation_info         = $model->orientation_info;
         $property->seller_contact           = $this->getContact($model->user);
         $property->measure_unit_info        = $model->measure_unit_info;
+        $property->measure_unit             = $model->measure_unit;
         $property->selling_exclusivity      = $model->selling_exclusivity;
         $property->website_notes            = $model->website_notes;
 

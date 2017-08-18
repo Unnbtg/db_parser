@@ -223,7 +223,7 @@ class Commercial implements CharacteristicInterface
                     'field' => 'definition_master',
                     'type' => 'patterns',
                     'values' => [
-                        1 => "piso-de-madeira",
+                        "piso-de-madeira",
                         "piso-frio",
                         "carpete",
                         "ladrilho",
@@ -249,6 +249,7 @@ class Commercial implements CharacteristicInterface
                         "box-blindex",
                         "closet",
                         "hidromassagem",
+                        "gabinete",
                         "janelas-de-madeira",
                         "janelas-de-aluminio",
                         "luminaria",
