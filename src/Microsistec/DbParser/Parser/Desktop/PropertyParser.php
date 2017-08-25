@@ -110,6 +110,7 @@ class PropertyParser extends OldParser implements ParserInterface
         }
 
         $property->mcmv = false;
+        $property->measure_unit = $this->getMeasureInfo();
 
         if($model->type != 4) {
             $property->mcmv = (bool)$model->mcmv;
@@ -337,6 +338,23 @@ class PropertyParser extends OldParser implements ParserInterface
         }
 
         return $instance;
+    }
+
+    private function getMeasureInfo($model)
+    {
+        $unit = 1;
+
+        if($model->type == 5) {
+            if ($model->area_width) {
+               $unit = 1;
+            } elseif($model->area_height) {
+               $unit = 7;
+            } elseif($model->total_area) {
+               $unit = 2;
+            }
+        }
+
+        return $unit;
     }
 
     public function getFlag($model)
