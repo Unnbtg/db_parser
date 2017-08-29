@@ -84,6 +84,7 @@ class NewParser extends ParserAbstract
         $property->website_notes            = $model->website_notes;
         $property->advance_payment          = $model->advance_payment;
         $property->exchange                 = $model->exchange;
+        $property->monthly_installments_value = $model->monthly_installments_value;
 
         return $property;
 
