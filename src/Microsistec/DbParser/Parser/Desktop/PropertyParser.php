@@ -110,7 +110,7 @@ class PropertyParser extends OldParser implements ParserInterface
         }
 
         $property->mcmv = false;
-        $property->measure_unit = $this->getMeasureInfo();
+        $property->measure_unit = $this->getMeasureInfo($model);
 
         if($model->type != 4) {
             $property->mcmv = (bool)$model->mcmv;
