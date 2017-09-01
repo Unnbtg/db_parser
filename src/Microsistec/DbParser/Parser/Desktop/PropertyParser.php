@@ -345,12 +345,12 @@ class PropertyParser extends OldParser implements ParserInterface
         $unit = 1;
 
         if($model->type == 5) {
-            if ($model->area_width) {
-               $unit = 1;
-            } elseif($model->area_height) {
-               $unit = 7;
-            } elseif($model->total_area) {
+            if ($model->total_area > 0) {
                $unit = 2;
+            } elseif($model->area_height > 0) {
+               $unit = 7;
+            } elseif($model->area_width > 0) {
+               $unit = 1;
             }
         }
 
