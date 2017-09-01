@@ -68,7 +68,7 @@ class NewParser extends ParserAbstract
         $property->latitude                 = $model->latitude;
         $property->longitude                = $model->longitude;
         $property->website_title            = $model->website_title;
-        $property->useful_area              = $model->total_built_area;
+        $property->useful_area              = $model->total_useful_area;
         $property->for_sale                 = $model->for_sale;
         $property->for_rent                 = $model->for_rent;
         $property->for_vacation             = $model->for_vacation;
