@@ -170,7 +170,10 @@ class PropertyParser extends OldParser implements ParserInterface
             unset($property->iptu_price);
             unset($property->iptu_number);
             unset($property->relative_distance);
-            $property->total_area = str_replace(',', '.', $model->area_height);
+            $property->total_area       = str_replace(',', '.', $model->area_height);
+            $property->area_width       = 0;
+            $property->area_height      = 0;
+            $property->total_built_area = 0;
         }
 
         //se tiver contrato de autorizacao (0 no desktop) aí eh true no online
