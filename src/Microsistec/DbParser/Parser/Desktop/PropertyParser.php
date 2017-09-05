@@ -110,7 +110,8 @@ class PropertyParser extends OldParser implements ParserInterface
         }
 
         $property->mcmv = false;
-        $property->measure_unit = $this->getMeasureInfo($model);
+        //se for rural, eh hectare, senaum eh metro isso provisorio pro u1074
+        $property->measure_unit = ($model->type == 5) ? 7 : 1;
 
         if($model->type != 4) {
             $property->mcmv = (bool)$model->mcmv;
@@ -127,10 +128,14 @@ class PropertyParser extends OldParser implements ParserInterface
         $property->receiver2_id                  = $model->receiver2_id;
         $property->indicator1                    = $model->indicator1;
         $property->indicator2                    = $model->indicator2;
-        $property->area_width                    = str_replace(',', '.', $model->area_width);
-        $property->area_height                   = str_replace(',', '.', $model->area_height);
-        $property->total_area                    = str_replace(',', '.', $model->total_area);
-        $property->total_built_area              = str_replace(',', '.', $model->total_built_area);
+
+        if ($model->type != 5) {
+            $property->area_width       = str_replace(',', '.', $model->area_width);
+            $property->area_height      = str_replace(',', '.', $model->area_height);
+            $property->total_area       = str_replace(',', '.', $model->total_area);
+            $property->total_built_area = str_replace(',', '.', $model->total_built_area);
+        }
+
         $property->built_area_price              = str_replace(',', '.', $model->built_area_price);
         $property->total_area_price              = str_replace(',', '.', $model->total_area_price);
         $property->relative_distance             = $model->relative_distance;
@@ -165,6 +170,7 @@ class PropertyParser extends OldParser implements ParserInterface
             unset($property->iptu_price);
             unset($property->iptu_number);
             unset($property->relative_distance);
+            $property->total_area = str_replace(',', '.', $model->area_height);
         }
 
         //se tiver contrato de autorizacao (0 no desktop) aí eh true no online
@@ -338,23 +344,6 @@ class PropertyParser extends OldParser implements ParserInterface
         }
 
         return $instance;
-    }
-
-    private function getMeasureInfo($model)
-    {
-        $unit = 1;
-
-        if($model->type == 5) {
-            if ($model->total_area > 0) {
-               $unit = 2;
-            } elseif($model->area_height > 0) {
-               $unit = 7;
-            } elseif($model->area_width > 0) {
-               $unit = 1;
-            }
-        }
-
-        return $unit;
     }
 
     public function getFlag($model)
