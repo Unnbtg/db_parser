@@ -252,7 +252,7 @@ class PropertyParser extends OldParser implements ParserInterface
         $property->updated_at         = $this->formatDate($model->updated_at);
         $property->deleted_at         = ($model->deleted == true) ? date('Y-m-d H:i:s') : null;
         $property->publish            = $model->publish;
-        $property->portals            = $model->portals;
+        $property->portals            = [];
 
         /*var_dump($property->features);
         echo '02: ' . $model->definition_02 .PHP_EOL.
