@@ -133,7 +133,15 @@ class PropertyParser extends OldParser implements ParserInterface
             $property->area_width       = str_replace(',', '.', $model->area_width);
             $property->area_height      = str_replace(',', '.', $model->area_height);
             $property->total_area       = str_replace(',', '.', $model->total_area);
-            $property->total_built_area = str_replace(',', '.', $model->total_built_area);
+            $property->total_useful_area = str_replace(',', '.', $model->total_built_area);
+            if($model->type == 1) {
+                $property->total_area = 0;
+                $property->total_built_area = str_replace(',', '.', $model->total_area);
+            }
+
+            if($model->type == 2) {
+                $property->total_built_area = str_replace(',', '.', $model->total_built_area);
+            }
         }
 
         $property->built_area_price              = str_replace(',', '.', $model->built_area_price);
