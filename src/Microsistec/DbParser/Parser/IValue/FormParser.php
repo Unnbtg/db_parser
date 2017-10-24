@@ -20,15 +20,19 @@ class FormParser extends AbstractParser
 
     public function parse($model, $domain = "", $account = "")
     {
-        $form = new Forms();
+        $form               = new Forms();
+        $form->id           = $model['id atendimento'];
         $form->maintence_id = $model['id atendimento'];
-        $form->created_at = $model['data cadastro'];
-        $form->updated_at = $model['data atualizacao'];
-        $form->touched_at = $model['data atendimento'];
-        $form->content = $model['comentario'];
-        $form->situation = $this->getFromComplexConfig(strtolower($model['status']), $this->status);
-        $form->customer_id = $model['id cliente'];
-        $form->user_id = $model['id usuario'];
+        $form->user_id      = $model['id usuario cadastro'];
+        $form->customer_id  = $model['id cliente'];
+        $form->created_at   = $this->formatDate($model['data cadastro']);
+        $form->updated_at   = $this->formatDate($model['data atualizacao']);
+        $form->touched_at   = $this->formatDate($model['data atendimento']) ?: null;
+        $form->situation    = $this->getFromComplexConfig(strtolower($model['status']), $this->status);
+        $form->status       = 2; //interessado
+        $form->broker_id    = $model['id usuario'];
+        $form->notes        = [$model['comentario']];
+        $form->source       = 'sci';
 
         return $form;
     }

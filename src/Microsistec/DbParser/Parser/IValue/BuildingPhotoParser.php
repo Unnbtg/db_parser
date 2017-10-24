@@ -17,26 +17,26 @@ class BuildingPhotoParser extends AbstractParser
     protected $id;
 
     protected $category = [
-             ["id" => 1, "name" => "Estrutura", "prefix" => "ES"],
-             ["id" => 2, "name" => "Planta", "prefix" => "PL"],
-             ["id" => 3, "name" => "Fase da Obra", "prefix" => "FO"],
-             ["id" => 4, "name" => "Área Comum", "prefix" => "AC"],
-             ["id" => 5, "name" => "Foto", "prefix" => "FT"],
-             ["id" => 6, "name" => "Fotos do Decorado", "prefix" => "FD"],
-             ["id" => 7, "name" => "Banner", "prefix" => "BN"],
+        ["id" => 1, "name" => "Estrutura", "prefix" => "ES"],
+        ["id" => 2, "name" => "Planta", "prefix" => "PL"],
+        ["id" => 3, "name" => "Fase da Obra", "prefix" => "FO"],
+        ["id" => 4, "name" => "Área Comum", "prefix" => "AC"],
+        ["id" => 5, "name" => "Foto", "prefix" => "FT"],
+        ["id" => 6, "name" => "Fotos do Decorado", "prefix" => "FD"],
+        ["id" => 7, "name" => "Banner", "prefix" => "BN"],
     ];
 
     public function parse($model, $domain = "", $account = "")
     {
         $foto = new BuildingPhoto();
 
-        $this->id = $foto->maintence_id = $foto->id = $model['id foto'];
-        $foto->path = $model['url grande'];
-        $foto->thumb_path = $model['url miniatura'];
-        $foto->name = $model['legenda'];
-        $foto->position = $model['ordem'];
+        $this->id          = $foto->maintence_id = $foto->id = $model['id foto'];
+        $foto->path        = $model['url grande'];
+        $foto->thumb_path  = $model['url miniatura'];
+        $foto->name        = $model['legenda'];
+        $foto->position    = $model['ordem'];
         $foto->building_id = $model['id empreendimento'];
-        $foto->category = $this->parseCategory($model['tipo']);
+        $foto->category    = $this->parseCategory($model['tipo']);
 
         return $foto;
     }
@@ -46,7 +46,7 @@ class BuildingPhotoParser extends AbstractParser
         $simplified = $this->simplifyConfig($this->category);
 
         if (!isset($simplified[$category])) {
-            throw new ParserException("A categoria da foto de ID {$this->id} está inválida. Categoria informada: ". $category);
+            throw new ParserException("A categoria da foto de ID {$this->id} está inválida. Categoria informada: " . $category);
         }
 
         return $simplified[$category];

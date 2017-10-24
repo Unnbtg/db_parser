@@ -22,32 +22,40 @@ class UserParser extends AbstractParser
 
     public function parse($model, $domain = "", $account = "")
     {
-        $user = new User();
+        $this->id = (int)$model['id'];
 
-        $this->id = $user->maintence_id = $user->id = $model['id'];
-        $user->email = $model['e-mail'];
-        $user->name = $model['nome'];
-        $user->admission = $this->formatDate($model['data inicio']);
-        $user->creci_number = $model['creci'];
-        $user->status = $this->getFromComplexConfig(strtolower($model['status']), $this->status);
-        $user->phones[] = $this->parsePhone('home', $model['telefone']);
-        $user->phones[] = $this->parsePhone('cellphone', $model['celular']);
-        $user->phones[] = $this->parsePhone('home', $model['radio']);
+        $user                 = new User();
+        $user->maintence_id   = (int)$model['id'];
+        $user->id             = (int)$model['id'];
+        $user->name           = $model['nome completo'];
+        $user->photo          = $model['url foto'] ?: null;
+        $user->email          = $model['e-mail'];
+        $user->password       = null;
+        $user->type           = 0;
+        $user->status         = $this->getFromComplexConfig(strtolower($model['status']), $this->status);
+        $user->admission      = $this->formatDate($model['data inicio']) ?: null;
+        $user->locality       = null;
+        $user->creci_number   = $model['creci'] ?: null;
+        $user->creci_region   = null;
+        $user->creci_delegacy = null;
+        $user->team_id        = null;
+        $user->branch_id      = null;
+        $user->created_at     = $this->formatDate($model['data cadastro']) ?: null;
+        $user->phones[]       = $this->parsePhone('home', $model['telefone']);
+        $user->phones[]       = $this->parsePhone('cellphone', $model['celular']);
+        $user->phones[]       = $this->parsePhone('home', $model['radio']);
+        $user->user_id        = 1;
 
         return $user;
     }
 
-
     public function parsePhone($type, $phone)
     {
-        $uPhone = new Phone();
-        $uPhone->type = $type;
-        $uPhone->phone= $phone;
-        $uPhone->user_id = $this->id;
+        $uPhone        = new Phone();
+        $uPhone->type  = $type;
+        $uPhone->phone = $this->unMask($phone);
 
         return $uPhone;
 
     }
-
-
 }

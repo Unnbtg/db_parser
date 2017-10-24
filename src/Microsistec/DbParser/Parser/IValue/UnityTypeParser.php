@@ -47,30 +47,21 @@ class UnityTypeParser extends AbstractParser
 
     public function parse($model, $domain = "", $account = "")
     {
-        $unity = new BuildingUnityType();
-        $this->id = $unity->maintence_id = $model['id unidade'];
-        $unity->building_id = $model['id empreendimento'];
-        $unity->type = $this->parseType($model['tipo']);
-        $unity->bedroom = $model['dormitorios'];
-        $unity->suite = $model['suites'];
-        $unity->area_total = $model['area total'];
-        $unity->area_private = $model['area privativa'];
-        $unity->area_common = $model['area comum'];
-        $unity->room = $model['salas'];
-        $unity->bathroom = $model['banheiros'];
-        $unity->description = $model['descricao'];
+        $unity                  = new BuildingUnityType();
+        $this->id               = $unity->maintence_id = $model['id unidade'];
+        $unity->building_id     = $model['id empreendimento'];
+        $unity->type            = $this->parseType($model['tipo']);
+        $unity->bedroom         = $model['dormitorios'];
+        $unity->suite           = $model['suites'];
+        $unity->area_total      = $model['area total'];
+        $unity->area_private    = $model['area privativa'];
+        $unity->area_common     = $model['area comum'];
+        $unity->room            = $model['salas'];
+        $unity->bathroom        = $model['banheiros'];
+        $unity->description     = $model['descricao'];
         $unity->characteristics = $this->parseCharacteristics($model);
 
         return $unity;
-    }
-
-    public function parseCharacteristics($model)
-    {
-        $fromTo = [
-            'piscina' => 'piscina'
-        ];
-
-        return $this->fromTo($fromTo, $model);
     }
 
     public function parseType($type)
@@ -78,10 +69,19 @@ class UnityTypeParser extends AbstractParser
         $simplified = $this->simplifyConfig($this->types);
 
         if (!isset($simplified[$type])) {
-            throw new ParserException("O Tipo da unidade tipo {$this->id} é inválido. Tipo enviado: ". $type);
+            throw new ParserException("O Tipo da unidade tipo {$this->id} é inválido. Tipo enviado: " . $type);
         }
 
         return $simplified[$type];
+    }
+
+    public function parseCharacteristics($model)
+    {
+        $fromTo = [
+            'piscina' => 'piscina',
+        ];
+
+        return $this->fromTo($fromTo, $model);
     }
 
 }

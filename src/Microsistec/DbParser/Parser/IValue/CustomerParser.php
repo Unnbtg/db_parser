@@ -45,7 +45,7 @@ class CustomerParser extends AbstractParser
         ['id' => 4, 'name' => 'viúvo'],
         ['id' => 5, 'name' => 'separado'],
         ['id' => 6, 'name' => 'união estável'],
-        ['id' => 0, 'name' => 'não informado']
+        ['id' => 0, 'name' => 'não informado'],
     ];
 
     protected $status = [
@@ -88,61 +88,86 @@ class CustomerParser extends AbstractParser
     {
         $customer = new Customer();
 
-        $this->id = $customer->maintence_id = $customer->id = $model['id cliente'];
-        $customer->code = $model['referência'];
-        $customer->name = $model['nome'];
-        $customer->email = $this->parseEmail($model['emails']);
-        $customer->phone = $this->parsePhone($model['telefones']);
-        $customer->status = $this->getFromComplexConfig(strtolower($model['ativo']), $this->status);
-        $customer->created_at = $model['data cadastro'];
+        $this->id = $model['id cliente'];
+
+        $customer->maintence_id              = $model['id cliente'];
+        $customer->id                        = $model['id cliente'];
+        $customer->name                      = $model['nome'];
+        $customer->user_id                   = 1;
+        $customer->broker_id                 = 1;
+        $customer->cpf                       = $model['cpf'];
+        $customer->street                    = $model['tipo logradouro'] . ' ' . $model['logradouro'];
+        $customer->street_number             = $model['número'];
+        $customer->complementary             = $model['complemento'];
+        $customer->neighborhood              = $model['bairro'];
+        $customer->city                      = $model['cidade'];
+        $customer->state                     = $model['uf'];
+        $customer->zipcode                   = $model['cep'];
+        $customer->rg                        = $model['rg'];
+        $customer->rg_issuer                 = null;
+        $customer->rg_issued_at              = null;
+        $customer->birthdate                 = $model['data nascimento'] ?: null;
+        $customer->marital_status            = $this->parseMaritalStatus($model['estado civil']);
+        $customer->occupation                = $model['profissão'];
+        $customer->nationality               = $model['nacionalidade'];
+        $customer->naturalness               = $model['naturalidade'];
+        $customer->paternal_filiation        = null;
+        $customer->maternal_filiation        = null;
+        $customer->spouse_name               = null;
+        $customer->spouse_cpf                = null;
+        $customer->spouse_rg                 = null;
+        $customer->spouse_rg_issued_at       = null;
+        $customer->spouse_rg_issuer          = null;
+        $customer->spouse_birthdate          = null;
+        $customer->spouse_marital_status     = null;
+        $customer->spouse_occupation         = null;
+        $customer->spouse_nationality        = null;
+        $customer->spouse_naturalness        = null;
+        $customer->spouse_paternal_filiation = null;
+        $customer->spouse_maternal_filiation = null;
+        $customer->union_date                = null;
+        $customer->union_security            = null;
+        $customer->income                    = $model['renda'];
+        $customer->bank_name                 = null;
+        $customer->bank_agency               = null;
+        $customer->bank_account              = null;
+        $customer->children                  = (int)$model['quantidade filho'];
+        $customer->autos                     = (int)$model['quantidade carro'];
+        $customer->degree_level              = $this->getFromComplexConfig(strtolower($model['escolaridade']), $this->degree_levels);
+        $customer->gender                    = $this->getFromComplexConfig(strtolower($model['sexo']), $this->gender);
+        $customer->status                    = $this->getFromComplexConfig(strtolower($model['ativo']), $this->status);
+        $customer->code                      = (int)$model['referência'];
+        $customer->type                      = $this->getFromComplexConfig(strtolower($model['tipo de pessoa']), $this->type);
+        $customer->cnpj                      = $model['cnpj'];
+        $customer->branch_id                 = null;
+        $customer->owner                     = false;
+        $customer->interested                = false;
+        $customer->emails                    = $this->parseEmail($model['emails']);
+        $customer->phones                    = $this->parsePhone($model['telefones']);
+        $customer->created_at                = $this->formatDate($model['data cadastro']);
+        $customer->updated_at                = $this->formatDate($model['data atualização']);
 
         $customer->notes = [];
         if (!empty($model['observações'])) {
-            $customer->notes[] = $this->createCustomerNote($model['observações']);
+            $customer->notes[] = $model['observações'];
         }
-
-        $customer->birthdate = $model['data nascimento'];
-        $customer->gender = $this->getFromComplexConfig(strtolower($model['sexo']), $this->gender);
-        $customer->type = $this->getFromComplexConfig(strtolower($model['tipo de pessoa']), $this->type);
-        $customer->rg = $model['rg'];
-        $customer->cpf = $model['cpf'];
-
-        $customer->notes = [];
 
         if (!empty($model['notas'])) {
-            $customer->notes[] = $this->createCustomerNote($model['notas']);
-        }
-
-        $customer->nationality = $model['nacionalidade'];
-        $customer->naturalness = $model['naturalidade'];
-
-        $customer->branch = $model['ramo atuação'];
-
-        $customer->occupation = $model['profissão'];
-
-        $customer->external_source = $model['midia origem'];
-
-        $customer->marital_status = $this->parseMaritalStatus($model['estado civil']);
-        $customer->children = $model['quantidade filho'];
-        $customer->autos = $model['quantidade carro'];
-        $customer->income = $model['renda'];
-        $customer->degree_level = $this->getFromComplexConfig(strtolower($model['escolaridade']), $this->degree_levels);
-        $customer->customer_attorney = $this->getFromComplexConfig(strtolower($model['procurador']), $this->attorney);
-
-        $customer->zipcode = $model['cep'];
-        $customer->street = $model['tipo logradouro'] . ' ' . $model['logradouro'];
-        $customer->street_number = $model['número'];
-        $customer->complementary = $model['complemento'];
-
-        if (!empty($model['cep'])) {
-            $address = new ZipCodeService();
-            $cep = $address->getAddress($model['cep']);
-            $customer->neighborhood_id = $cep['id_bairro'];
-            $customer->city_id = $cep['id_cidade'];
-            $customer->state_id = $cep['id_uf'];
+            $customer->notes[] = $model['notas'];
         }
 
         return $customer;
+    }
+
+    private function parseMaritalStatus($maritalStatus)
+    {
+        $marital = $this->simplifyConfig($this->maritalStatus);
+
+        if (!in_array($maritalStatus, $marital)) {
+            throw new ParserException("Estado cívil inválido para o cliente {$this->id}. Estado civil informado: $maritalStatus");
+        }
+
+        return $marital[strtolower($maritalStatus)];
     }
 
     private function parseEmail($email)
@@ -154,7 +179,7 @@ class CustomerParser extends AbstractParser
         $email = array_map('trim', explode(',', $email));
         $email = is_array($email) ? $email : [$email];
 
-        return array_map([$this, 'createEmail'], $email);
+        return $email;
     }
 
     private function parsePhone($phones)
@@ -166,43 +191,19 @@ class CustomerParser extends AbstractParser
         if (empty($matchs)) {
             return;
         }
+
         foreach ($matchs[0] as $match) {
+
             list($type, $number) = explode(": ", $match);
-            $cPhone = new Phone();
-            $cPhone->type = $this->phoneTypes[$type];
+
+            $cPhone        = new Phone();
+            $cPhone->type  = $this->phoneTypes[$type];
             $cPhone->phone = $number;
 
             $parsedPhones[] = $cPhone;
         }
+
         return $parsedPhones;
-    }
-
-    private function createCustomerNote($note)
-    {
-        $cNote = new CustomerNote();
-
-        $cNote->body = $note;
-
-        return $cNote;
-    }
-
-    private function parseMaritalStatus($maritalStatus)
-    {
-        $marital = $this->simplifyConfig($this->maritalStatus);
-        if (!in_array($maritalStatus, $marital)) {
-            throw new ParserException("Estado cívil inválido para o cliente {$this->id}. Estado civil informado: $maritalStatus");
-        }
-
-        return $marital[$maritalStatus];
-    }
-
-    private function createEmail($email)
-    {
-        $cEmail = new CustomerEmail();
-        $cEmail->default = 1;
-        $cEmail->name = "Padrão";
-        $cEmail->email = trim($email);
-        return $cEmail;
     }
 
 }
