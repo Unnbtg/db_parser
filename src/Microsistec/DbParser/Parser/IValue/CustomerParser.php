@@ -198,7 +198,7 @@ class CustomerParser extends AbstractParser
 
             $cPhone        = new Phone();
             $cPhone->type  = $this->phoneTypes[$type];
-            $cPhone->phone = $number;
+            $cPhone->phone = $this->unMask($number);
 
             $parsedPhones[] = $cPhone;
         }

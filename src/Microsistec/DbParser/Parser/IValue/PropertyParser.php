@@ -54,7 +54,7 @@ class PropertyParser extends AbstractParser
         ["id" => 27, "name" => "Indústria", "prefix" => "IN", "finality" => [3]],
         ["id" => 28, "name" => "Jazidas", "prefix" => "JA", "finality" => [3]],
         ["id" => 29, "name" => "PCH", "prefix" => "PCH", "finality" => [3]],
-        ["id" => 30, "name" => "Prédio", "prefix" => "PR", "finality" => [2, 3]],
+        ["id" => 30, "name" => "Prédio", "prefix" => "PR", "finality" => [1, 2, 3]],
         ["id" => 31, "name" => "Mineradora", "prefix" => "MI", "finality" => [3]],
         ["id" => 32, "name" => "Pedreira", "prefix" => "PD", "finality" => [3]],
         ["id" => 33, "name" => "Sobreloja", "prefix" => "SL", "finality" => [2]],
@@ -76,8 +76,35 @@ class PropertyParser extends AbstractParser
     private $situation = [
         ["id" => 1, "name" => "Desocupado"],
         ["id" => 1, "name" => "Em construção"],
-        ["id" => 1, "name" => "Não Informado"],
+        ["id" => null, "name" => "Não Informado"],
         ["id" => 3, "name" => "Ocupado"],
+    ];
+
+    private $orientation = [
+        ["id" => 1, "name" => "Frente"],
+        ["id" => 2, "name" => "Lateral"],
+        ["id" => 3, "name" => "Fundos"],
+        ["id" => 4, "name" => "Norte"],
+        ["id" => 5, "name" => "Norte-Leste"],
+        ["id" => 6, "name" => "Norte-Oeste"],
+        ["id" => 7, "name" => "Sul"],
+        ["id" => 8, "name" => "Sul-Leste"],
+        ["id" => 9, "name" => "Sul-Oeste"],
+        ["id" => 10, "name" => "Leste"],
+        ["id" => 11, "name" => "Oeste"]
+    ];
+
+    private $topography = [
+        ["id" => 1, "name" => "Arenoso"],
+        ["id" => 2, "name" => "Argiloso"],
+        ["id" => 3, "name" => "Terra Roxa"],
+        ["id" => 4, "name" => "Mangue"],
+        ["id" => 5, "name" => "Pedregoso"],
+        ["id" => 6, "name" => "Plano"],
+        ["id" => 7, "name" => "Declive"],
+        ["id" => 8, "name" => "Aclive"],
+        ["id" => 9, "name" => "Leve declive"],
+        ["id" => 10, "name" => "Leve aclive"],
     ];
 
     public function parse($model, $domain = "", $account = "")
@@ -116,7 +143,7 @@ class PropertyParser extends AbstractParser
         $property->street_number                 = $model['numero'];
         $property->complementary                 = $model['complemento'];
         $property->condominium_name              = null;
-        $property->age                           = (string)(date('Y') - $model['ano construcao']);
+        $property->age                           = $model['ano construcao'] > 0 ? (string)(date('Y') - $model['ano construcao']) : 0;
         $property->floor                         = $model['andar'];
         $property->level                         = null;
         $property->sell_price                    = $model['valor venda'];
@@ -165,7 +192,7 @@ class PropertyParser extends AbstractParser
         $property->relative_distance             = null;
         $property->relative_distance_to          = null;
         $property->reference_point               = $model['ponto referencia'];
-        $property->orientation                   = null;
+        $property->orientation                   = $this->getFromComplexConfig($model['face'], $this->orientation);
         $property->website_home_highlight        = $this->simNaoToBool($model['destaque']);
         $property->website_rotative_banner       = $this->simNaoToBool($model['super destaque']);
         $property->website_notes                 = $model['descricao site'];
@@ -186,7 +213,7 @@ class PropertyParser extends AbstractParser
         $property->authorization_start_date = null;
         $property->authorization_end_date   = null;
         $property->lease_price              = null;
-        $property->ground_type              = null;
+        $property->ground_type              = $this->getFromComplexConfig($model['topografia'], $this->topography);
         $property->opportunity              = false;
         $property->exchange                 = $this->simNaoToBool($model['aceita permuta']);
         $property->advance_payment          = $model['sinal'];
@@ -231,8 +258,8 @@ class PropertyParser extends AbstractParser
         if ($area) {
             $tmp = preg_split('/x|X/', $area);
             if (count($tmp) > 1) {
-                $result['width']  = str_replace(['.', ','], ['', '.'],$tmp[0]);
-                $result['height'] = str_replace(['.', ','], ['', '.'],$tmp[1]);
+                $result['width']  = str_replace(['.', ','], ['', '.'], $tmp[0]);
+                $result['height'] = str_replace(['.', ','], ['', '.'], $tmp[1]);
             }
         }
 
@@ -297,7 +324,7 @@ class PropertyParser extends AbstractParser
             'litoral'               => 189,
             'vista mar'             => 94,
             'pe na areia'           => 190,
-            'ar'                    => 31,
+            'ar'                    => null,
             'elevador'              => 20,
             '220v'                  => 192,
             '330v'                  => 193,
@@ -352,17 +379,29 @@ class PropertyParser extends AbstractParser
             'piso marmore'          => null,
             'piso porcelanato'      => null,
             'sem comdomínio'        => 204,
+            'copa'                  => 254,
+            'banheiro empregada'    => 128,
+            'armario cozinha'       => null,
+            'armario closet'        => null,
+            'armario banheiro'      => null,
+            'portao'                => null,
+            'gerador'               => 106,
+            'altura pe direito'     => null,
+            'area escritorio'       => null,
+            'garagem caminhao'      => null,
+            'barracao'              => null,
+            'maquinario'            => null,
         ];
 
         foreach ($chars as $key => $value) {
             if (isset($model[$key])) {
-                if ($this->simNaoToBool($model[$key])) {
+                if ($this->simNaoToBool($this->booleanValue($model[$key]))) {
                     $characteristics[] = $value;
                 }
             }
         }
 
-        return !empty($characteristics) ? array_filter($characteristics) : $characteristics;
+        return !empty($characteristics) ? array_values(array_filter($characteristics)) : $characteristics;
     }
 
     private function getRoomsCount($model)
@@ -373,10 +412,10 @@ class PropertyParser extends AbstractParser
         $roomsCount->bathroom         = (int)$model['banheiros'];
         $roomsCount->room             = (int)$model['salas'];
         $roomsCount->kitchen          = (int)$this->simNaoToBool($model['cozinha']);
-        $roomsCount->parking_lot      = $model['garagens cobertas'] + $model['garagens descobertas'];
+        $roomsCount->parking_lot      = $model['finalidade'] == 'Comercial' ? ($model['garagens cobertas'] + $model['garagens descobertas']) : 0;
         $roomsCount->housekeeper_room = (int)$this->simNaoToBool($model['dormitorio empregada']);
         $roomsCount->lavatory         = (int)$this->simNaoToBool($model['lavabo']);
-        $roomsCount->car_garage       = 0;
+        $roomsCount->car_garage       = $model['finalidade'] !== 'Comercial' ? ($model['garagens cobertas'] + $model['garagens descobertas']) : 0;
 
         return $roomsCount;
     }

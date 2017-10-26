@@ -27,6 +27,7 @@ class UserParser extends AbstractParser
         $user                 = new User();
         $user->maintence_id   = (int)$model['id'];
         $user->id             = (int)$model['id'];
+        $user->broker_id      = (int)$model['id'];
         $user->name           = $model['nome completo'];
         $user->photo          = $model['url foto'] ?: null;
         $user->email          = $model['e-mail'];

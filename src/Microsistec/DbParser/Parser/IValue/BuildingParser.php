@@ -33,10 +33,10 @@ class BuildingParser extends AbstractParser
         'Galpões Comerciais'                                                                           => ['type' => 1, 'finality' => 2],
         'Industrial'                                                                                   => ['type' => 1, 'finality' => 3],
         'Chácaras'                                                                                     => ['type' => 1, 'finality' => 4],
-        'Edifício Residencial'                                                                         => ['type' => 1, 'finality' => 1],
+        'Edifício Residencial'                                                                         => ['type' => 2, 'finality' => 1],
         'Galpões Comerciais, Industrial'                                                               => ['type' => 1, 'finality' => 2],
         'Galpões Comerciais, Industrial, Prédios comerciais'                                           => ['type' => 1, 'finality' => 2],
-        'Prédios comerciais'                                                                           => ['type' => 1, 'finality' => 2],
+        'Prédios comerciais'                                                                           => ['type' => 2, 'finality' => 2],
     ];
 
     protected $status = [
@@ -106,6 +106,7 @@ class BuildingParser extends AbstractParser
         $building->name                       = trim($model['nome']);
         $building->show_name                  = false; // Acho melhor por padrão não mostrar o nome
         $building->show_price                 = false; // Acho melhor por padrão não mostrar o valor
+        $building->show_rent_price            = false; // Acho melhor por padrão não mostrar o valor de locacao
         $building->show_payment_quantities    = true; // Quantidade de parcelas naum tem problema
         $building->show_payment_values        = true; // Valor das parcelas naum tem problema
         $type                                 = $this->parseTipo($model['tipo']);
@@ -127,7 +128,7 @@ class BuildingParser extends AbstractParser
         $building->city                       = isset($model['cidade']) ? $model['cidade'] : null;
         $building->state                      = $model['estado'];
         $building->publish                    = $this->simNaoToBool($model['publicar']);
-        $building->status                     = $this->parseStatus($model['fase']);
+        $building->general_status             = $this->parseStatus($model['fase']);
 
         return $building;
     }
