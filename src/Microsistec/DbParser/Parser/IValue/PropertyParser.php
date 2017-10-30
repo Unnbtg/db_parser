@@ -76,7 +76,7 @@ class PropertyParser extends AbstractParser
     private $situation = [
         ["id" => 1, "name" => "Desocupado"],
         ["id" => 1, "name" => "Em construção"],
-        ["id" => null, "name" => "Não Informado"],
+        ["id" => 1, "name" => "Não Informado"],
         ["id" => 3, "name" => "Ocupado"],
     ];
 
@@ -143,7 +143,7 @@ class PropertyParser extends AbstractParser
         $property->street_number                 = $model['numero'];
         $property->complementary                 = $model['complemento'];
         $property->condominium_name              = null;
-        $property->age                           = $model['ano construcao'] > 0 ? (string)(date('Y') - $model['ano construcao']) : 0;
+        $property->age                           = $model['ano construcao'] > 0 ? (string)(date('Y') - $model['ano construcao']) : null;
         $property->floor                         = $model['andar'];
         $property->level                         = null;
         $property->sell_price                    = $model['valor venda'];
@@ -192,7 +192,7 @@ class PropertyParser extends AbstractParser
         $property->relative_distance             = null;
         $property->relative_distance_to          = null;
         $property->reference_point               = $model['ponto referencia'];
-        $property->orientation                   = $this->getFromComplexConfig($model['face'], $this->orientation);
+        $property->orientation                   = $this->getFromComplexConfig($model['face'], $this->orientation) ? $this->getFromComplexConfig($model['face'], $this->orientation) : null;
         $property->website_home_highlight        = $this->simNaoToBool($model['destaque']);
         $property->website_rotative_banner       = $this->simNaoToBool($model['super destaque']);
         $property->website_notes                 = $model['descricao site'];
@@ -213,7 +213,7 @@ class PropertyParser extends AbstractParser
         $property->authorization_start_date = null;
         $property->authorization_end_date   = null;
         $property->lease_price              = null;
-        $property->ground_type              = $this->getFromComplexConfig($model['topografia'], $this->topography);
+        $property->ground_type              = $this->getFromComplexConfig($model['topografia'], $this->topography) ? $this->getFromComplexConfig($model['topografia'], $this->topography) : null;
         $property->opportunity              = false;
         $property->exchange                 = $this->simNaoToBool($model['aceita permuta']);
         $property->advance_payment          = $model['sinal'];
