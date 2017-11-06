@@ -22,7 +22,7 @@ class JuridicalCustomerParser extends ParserAbstract implements ParserInterface
         $customer->maintence_id              = (int)$model->id;
         $customer->id                        = (int)$model->id;
         $customer->code                      = (int)$model->id;
-        $customer->name                      = $model->corporate_name;
+        $customer->name                      = $model->corporate_name ? $model->corporate_name : 'não cadastrado';
         $customer->status                    = 0;
         $customer->type                      = 2;
         $customer->user_id                   = 1;
@@ -33,7 +33,6 @@ class JuridicalCustomerParser extends ParserAbstract implements ParserInterface
         $customer->city                      = $model->city;
         $customer->neighborhood              = $model->neighborhood;
         $customer->state                     = $model->state;
-        $customer->state_id                  = $this->getState($model->state);
         $customer->opening_date              = $this->formatDate($model->opening_date);
         $customer->fantasy_name              = $model->fantasy_name;
         $customer->cnpj                      = $this->unMask($model->cnpj);

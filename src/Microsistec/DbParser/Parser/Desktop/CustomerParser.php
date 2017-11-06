@@ -43,7 +43,7 @@ class CustomerParser extends ParserAbstract implements ParserInterface
         $customer->id                        = (int)$model->id;
         $customer->code                      = (int)$model->code;
         $customer->branch_id                 = (int)$model->branch_id;
-        $customer->name                      = $model->name;
+        $customer->name                      = $model->name ? $model->name : 'não cadastrado';
         $customer->status                    = 0;
         $customer->type                      = 1;
         $customer->user_id                   = 1;
@@ -54,7 +54,7 @@ class CustomerParser extends ParserAbstract implements ParserInterface
         $customer->complementary             = $model->complementary;
         $customer->city                      = $model->city;
         $customer->neighborhood              = $model->neighborhood;
-        $customer->state                     = $this->getState($model->state);
+        $customer->state                     = $model->state;
         $customer->rg                        = str_replace(['.', '-'], '', $model->rg);
         $customer->issued_at                 = $this->formatDate($model->rg_issued_at);
         $customer->issuer                    = $model->rg_issuer;
