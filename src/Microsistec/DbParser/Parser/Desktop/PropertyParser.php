@@ -166,8 +166,8 @@ class PropertyParser extends OldParser implements ParserInterface
         }
 
         $property->levels                        = $model->pavement;
-        $property->owners                        = [(int)$model->owner_id];
-        $property->juridical_owners              = isset($model->juridical_owner_id) ? [(int)$model->juridical_owner_id] : null;
+        $property->owners                        = $model->owner_id > 0 ? [(int)$model->owner_id] : [];
+        $property->juridical_owners              = isset($model->juridical_owner_id) && $model->juridical_owner_id > 0 ? [(int)$model->juridical_owner_id] : [];
         $property->contacts                      = $model->contacts;
         $property->work_fund                     = $model->work_fund;
         $property->reserve_fund                  = $model->reserve_fund;
