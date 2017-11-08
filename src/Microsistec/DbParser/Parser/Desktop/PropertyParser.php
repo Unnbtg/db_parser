@@ -39,35 +39,35 @@ class PropertyParser extends OldParser implements ParserInterface
 
         $types = $typeInstance->getTypeSubtype($model);
 
-        $property                                = new Property();
-        $property->maintence_id                  = (int)$model->id;
-        $property->id                            = (int)$model->id;
-        $property->code                          = (int)$model->code;
-        $property->alternative_code              = $model->alternative_code;
-        $property->user_code                     = (int)$model->code;
-        $property->old_type                      = $model->type;
-        $property->status                        = $this->getFlag($model);
-        $property->finality                      = $this->getFinality($model);
-        $property->type                          = (int)$types['tipo'];
-        $property->subtype                       = (int)$types['subtipo'];
-        $property->for_sale                      = (bool)substr($model->finality, 0, 1);
-        $property->for_rent                      = (bool)substr($model->finality, 1, 1);
-        $property->for_vacation                  = (bool)substr($model->finality, 2, 1);
-        $property->situation                     = $model->situation != '' ? $model->situation + 1 : null;
-        $property->has_board                     = (bool)$model->has_board;
-        $property->zipcode                       = $this->unMask($model->zipcode);
-        $property->zone                          = $model->zone;
-        $property->street                        = $model->street;
-        $property->block                         = $model->block;
-        $property->street_number                 = $model->street_number;
-        $property->city                          = $model->city;
-        $property->neighborhood                  = $model->neighborhood;
-        $property->state                         = $model->uf;
-        $property->complementary                 = $model->complementary;
-        $property->condominium_name              = $model->condominium_name;
-        $property->age                           = $model->age;
-        $property->floor                         = $model->floor;
-        $property->reference_point               = $model->reference_point;
+        $property                   = new Property();
+        $property->maintence_id     = (int)$model->id;
+        $property->id               = (int)$model->id;
+        $property->code             = (int)$model->code;
+        $property->alternative_code = $model->alternative_code;
+        $property->user_code        = (int)$model->code;
+        $property->old_type         = $model->type;
+        $property->status           = $this->getFlag($model);
+        $property->finality         = $this->getFinality($model);
+        $property->type             = (int)$types['tipo'];
+        $property->subtype          = (int)$types['subtipo'];
+        $property->for_sale         = (bool)substr($model->finality, 0, 1);
+        $property->for_rent         = (bool)substr($model->finality, 1, 1);
+        $property->for_vacation     = (bool)substr($model->finality, 2, 1);
+        $property->situation        = $model->situation != '' ? $model->situation + 1 : null;
+        $property->has_board        = (bool)$model->has_board;
+        $property->zipcode          = $this->unMask($model->zipcode);
+        $property->zone             = $model->zone;
+        $property->street           = $model->street;
+        $property->block            = $model->block;
+        $property->street_number    = $model->street_number;
+        $property->city             = $model->city;
+        $property->neighborhood     = $model->neighborhood;
+        $property->state            = $model->uf;
+        $property->complementary    = $model->complementary;
+        $property->condominium_name = $model->condominium_name;
+        $property->age              = $model->age;
+        $property->floor            = $model->floor;
+        $property->reference_point  = $model->reference_point;
         //(?:((?:\d+)?(?:[\,\.]\d+)*(?:[\.\,]))(\d+)?)
         $property->sell_price                    = str_replace(',', '.', $model->sell_price);
         $property->monthly_installments          = (int)$model->monthly_qtd;
@@ -86,92 +86,92 @@ class PropertyParser extends OldParser implements ParserInterface
         $property->condominium_price             = str_replace(',', '.', $model->condominium_price);
         $property->migration_obs                 = $model->migration_obs;
 
-        $property->fgts                          = false;
-        $property->letter_of_credit              = false;
-        $property->bank_financing                = false;
-        $property->direct_financing              = false;
-        $property->lessor_bail                   = false;
-        $property->guarantor                     = false;
-        $property->deposit                       = false;
-        $property->requires_guarantor_deed       = false;
-        $property->exchange                      = false;
+        $property->fgts                    = false;
+        $property->letter_of_credit        = false;
+        $property->bank_financing          = false;
+        $property->direct_financing        = false;
+        $property->lessor_bail             = false;
+        $property->guarantor               = false;
+        $property->deposit                 = false;
+        $property->requires_guarantor_deed = false;
+        $property->exchange                = false;
 
 
-        if($model->payment_options != ''){
-            $property->fgts                          = (bool)substr($model->payment_options, 0, 1);
-            $property->letter_of_credit              = (bool)substr($model->payment_options, 1, 1);
-            $property->bank_financing                = (bool)substr($model->payment_options, 13, 1);
-            $property->direct_financing              = (bool)substr($model->payment_options, 12, 1);
-            $property->lessor_bail                   = (bool)substr($model->payment_options, 4, 1);
-            $property->guarantor                     = (bool)substr($model->payment_options, 5, 1);
-            $property->deposit                       = (bool)substr($model->payment_options, 6, 1);
-            $property->requires_guarantor_deed       = (bool)substr($model->payment_options, 7, 1);
-            $property->exchange                      = (bool)strstr(substr($model->payment_options, 8, 4),"1");
+        if ($model->payment_options != '') {
+            $property->fgts                    = (bool)substr($model->payment_options, 0, 1);
+            $property->letter_of_credit        = (bool)substr($model->payment_options, 1, 1);
+            $property->bank_financing          = (bool)substr($model->payment_options, 13, 1);
+            $property->direct_financing        = (bool)substr($model->payment_options, 12, 1);
+            $property->lessor_bail             = (bool)substr($model->payment_options, 4, 1);
+            $property->guarantor               = (bool)substr($model->payment_options, 5, 1);
+            $property->deposit                 = (bool)substr($model->payment_options, 6, 1);
+            $property->requires_guarantor_deed = (bool)substr($model->payment_options, 7, 1);
+            $property->exchange                = (bool)strstr(substr($model->payment_options, 8, 4), "1");
         }
 
         $property->mcmv = false;
         //se for rural, eh hectare, senaum eh metro isso provisorio pro u1074
         $property->measure_unit = ($model->type == 5) ? 7 : 1;
 
-        if($model->type != 4) {
+        if ($model->type != 4) {
             $property->mcmv = (bool)$model->mcmv;
         }
 
-        $property->keys                          = $model->keys;
-        $property->keys_available                = ($model->keys != '') ? true : false;
-        $property->iptu_number                   = $model->iptu_number;
-        $property->energy_number                 = $model->energy_number;
-        $property->water_number                  = $model->water_number;
-        $property->registration_number           = $model->registration_number;
-        $property->deed_status                   = (int)$model->deed_status + 1;
-        $property->receiver1_id                  = $model->receiver1_id;
-        $property->receiver2_id                  = $model->receiver2_id;
-        $property->indicator1                    = $model->indicator1;
-        $property->indicator2                    = $model->indicator2;
+        $property->keys                = $model->keys;
+        $property->keys_available      = ($model->keys != '') ? true : false;
+        $property->iptu_number         = $model->iptu_number;
+        $property->energy_number       = $model->energy_number;
+        $property->water_number        = $model->water_number;
+        $property->registration_number = $model->registration_number;
+        $property->deed_status         = (int)$model->deed_status + 1;
+        $property->receiver1_id        = $model->receiver1_id;
+        $property->receiver2_id        = $model->receiver2_id;
+        $property->indicator1          = $model->indicator1;
+        $property->indicator2          = $model->indicator2;
 
         if ($model->type != 5) {
-            $property->area_width       = str_replace(',', '.', $model->area_width);
-            $property->area_height      = str_replace(',', '.', $model->area_height);
-            $property->total_area       = str_replace(',', '.', $model->total_area);
+            $property->area_width        = str_replace(',', '.', $model->area_width);
+            $property->area_height       = str_replace(',', '.', $model->area_height);
+            $property->total_area        = str_replace(',', '.', $model->total_area);
             $property->total_useful_area = str_replace(',', '.', $model->total_built_area);
-            if($model->type == 1) {
-                $property->total_area = 0;
+            if ($model->type == 1) {
+                $property->total_area       = 0;
                 $property->total_built_area = str_replace(',', '.', $model->total_area);
             }
 
-            if($model->type == 2) {
+            if ($model->type == 2) {
                 $property->total_built_area = str_replace(',', '.', $model->total_built_area);
             }
         }
 
-        $property->built_area_price              = str_replace(',', '.', $model->built_area_price);
-        $property->total_area_price              = str_replace(',', '.', $model->total_area_price);
-        $property->relative_distance             = $model->relative_distance;
-        $property->orientation                   = $model->position != '' ? $model->position + 1 : null;
-        $property->website_home_highlight        = (bool)$model->website_home_highlight;
-        $property->website_rotative_banner       = (bool)$model->website_rotative_banner;
-        $property->website_notes                 = $model->website_notes;
-        $property->website_title                 = $model->website_title;
-        $property->website_keywords              = $model->website_keywords;
-        $property->website_description           = $model->website_description;
-        $property->notes                         = $model->notes;
-        $property->user_id                       = 1;
-        $property->branch_id                     = (int)$model->branch_id;
-        $property->website_showcase              = (bool)$model->website_alternative_highlight;
-        $property->registry                      = $model->registry;
+        $property->built_area_price        = str_replace(',', '.', $model->built_area_price);
+        $property->total_area_price        = str_replace(',', '.', $model->total_area_price);
+        $property->relative_distance       = $model->relative_distance;
+        $property->orientation             = $model->position != '' ? $model->position + 1 : null;
+        $property->website_home_highlight  = (bool)$model->website_home_highlight;
+        $property->website_rotative_banner = (bool)$model->website_rotative_banner;
+        $property->website_notes           = $model->website_notes;
+        $property->website_title           = $model->website_title;
+        $property->website_keywords        = $model->website_keywords;
+        $property->website_description     = $model->website_description;
+        $property->notes                   = $model->notes;
+        $property->user_id                 = 1;
+        $property->branch_id               = (int)$model->branch_id;
+        $property->website_showcase        = (bool)$model->website_alternative_highlight;
+        $property->registry                = $model->registry;
 
         $property->habitese = false;
-        if(isset($model->habitese)) {
+        if (isset($model->habitese)) {
             $property->habitese = (bool)$model->habitese;
         }
 
-        $property->levels                        = $model->pavement;
-        $property->owners                        = $model->owner_id > 0 ? [(int)$model->owner_id] : [];
-        $property->juridical_owners              = isset($model->juridical_owner_id) && $model->juridical_owner_id > 0 ? [(int)$model->juridical_owner_id] : [];
-        $property->contacts                      = $model->contacts;
-        $property->work_fund                     = $model->work_fund;
-        $property->reserve_fund                  = $model->reserve_fund;
-        $property->highlight_photo               = $model->highlight_photo;
+        $property->levels           = $model->pavement;
+        $property->owners           = $model->owner_id > 0 ? [(int)$model->owner_id] : [];
+        $property->juridical_owners = isset($model->juridical_owner_id) && $model->juridical_owner_id > 0 ? [(int)$model->juridical_owner_id] : [];
+        $property->contacts         = $model->contacts;
+        $property->work_fund        = $model->work_fund;
+        $property->reserve_fund     = $model->reserve_fund;
+        $property->highlight_photo  = $model->highlight_photo;
 
         if ($model->type == 5) {
             $property->incra_number = $model->iptu_number;
@@ -189,12 +189,13 @@ class PropertyParser extends OldParser implements ParserInterface
         $property->sales_authorization      = $model->sales_authorization == 0 ? true : false;
         $property->selling_exclusivity      = $model->sales_authorization == 1 ? true : false;
         $property->authorization_start_date = $this->formatDate($model->authorization_start_date);
-        $property->authorization_end_date   = date('Y-m-d', strtotime("+ ". $model->authorization_end_date ." days", strtotime($property->authorization_start_date)));
+        $property->authorization_end_date   = date('Y-m-d', strtotime("+ " . $model->authorization_end_date . " days", strtotime($property->authorization_start_date)));
         $property->lease_price              = $model->lease_price;
+        $property->building_id              = $model->building_id > 0 ? $model->building_id : null;
 
         if ($model->type == 2) {
-            $property->ground_type = ($model->definition_02 != "") ? $model->definition_02 + 1 : '';
-            $property->allotment = $model->allotment;
+            $property->ground_type   = ($model->definition_02 != "") ? $model->definition_02 + 1 : '';
+            $property->allotment     = $model->allotment;
             $property->address_block = $model->address_block;
         }
 
@@ -209,14 +210,15 @@ class PropertyParser extends OldParser implements ParserInterface
         $roomsCount->housekeeper_room = (int)$model->dependence_maid;
         $roomsCount->lavatory         = (int)$model->lavatory;
         $roomsCount->car_garage       = (int)$model->parking_lots;
-        $property->roomsCount         = $roomsCount;
-        $property->videos             = !empty($model->video_url) ? [$model->video_url] : [];
 
-        $allFeatures                  = $typeInstance->getFeatures($model);
+        $property->roomsCount = $roomsCount;
+        $property->videos     = !empty($model->video_url) ? [$model->video_url] : [];
+
+        $allFeatures = $typeInstance->getFeatures($model);
 
         if (isset($allFeatures->rooms['others'])) {
-            $tmp = json_decode($property->migration_obs, true);
-            $tmp['others'] = $allFeatures->rooms['others'];
+            $tmp                     = json_decode($property->migration_obs, true);
+            $tmp['others']           = $allFeatures->rooms['others'];
             $property->migration_obs = $tmp;
             unset($allFeatures->rooms['others']);
         }
@@ -253,15 +255,15 @@ class PropertyParser extends OldParser implements ParserInterface
 
         }
 
-        $property->proximities        = $allFeatures->proximities;
-        $property->features           = $allFeatures->features;
-        $property->roomFeatures       = (object)$allFeatures->rooms;
+        $property->proximities  = $allFeatures->proximities;
+        $property->features     = $allFeatures->features;
+        $property->roomFeatures = (object)$allFeatures->rooms;
 
-        $property->created_at         = $this->formatDate($model->created_at);
-        $property->updated_at         = $this->formatDate($model->updated_at);
-        $property->deleted_at         = ($model->deleted == true) ? date('Y-m-d H:i:s') : null;
-        $property->publish            = $model->publish;
-        $property->portals            = [];
+        $property->created_at = $this->formatDate($model->created_at);
+        $property->updated_at = $this->formatDate($model->updated_at);
+        $property->deleted_at = ($model->deleted == true) ? date('Y-m-d H:i:s') : null;
+        $property->publish    = $model->publish;
+        $property->portals    = [];
 
         /*var_dump($property->features);
         echo '02: ' . $model->definition_02 .PHP_EOL.
@@ -272,7 +274,7 @@ class PropertyParser extends OldParser implements ParserInterface
             'code: ' . $model->code . PHP_EOL.
             'type: ' . $model->type . PHP_EOL;*/
 
-        if(isset($model->vacations)){
+        if (isset($model->vacations)) {
             $property->vacations = $this->parseVacations($model->vacations);
         }
 
@@ -291,6 +293,38 @@ class PropertyParser extends OldParser implements ParserInterface
         return $encodedProperty;
     }
 
+    private function getInstanceByType($model)
+    {
+        switch ($model->type) {
+            case 0:
+                $instance = new House();
+                break;
+            case 1:
+                $instance = new Apartment();
+                break;
+            case 2:
+                $instance = new Land();
+                break;
+            case 4:
+                $instance = new Commercial();
+                break;
+            case 5:
+                $instance = new Rural();
+                break;
+        }
+
+        return $instance;
+    }
+
+    public function getFlag($model)
+    {
+        if (!isset($this->flag[$model->flag])) {
+            return $this->flag[8];
+        }
+
+        return $this->flag[$model->flag];
+    }
+
     private function getFinality($model)
     {
         switch ($model->type) {
@@ -299,7 +333,7 @@ class PropertyParser extends OldParser implements ParserInterface
                 return 1; //residencial
                 break;
             case 2: //terreno
-                switch ($model->definition_01){ //valor do campo
+                switch ($model->definition_01) { //valor do campo
                     case 0:
                     case 1:
                     case 5:
@@ -333,38 +367,6 @@ class PropertyParser extends OldParser implements ParserInterface
                 return 4; // rural
                 break;
         }
-    }
-
-    private function getInstanceByType($model)
-    {
-        switch ($model->type) {
-            case 0:
-                $instance = new House();
-                break;
-            case 1:
-                $instance = new Apartment();
-                break;
-            case 2:
-                $instance = new Land();
-                break;
-            case 4:
-                $instance = new Commercial();
-                break;
-            case 5:
-                $instance = new Rural();
-                break;
-        }
-
-        return $instance;
-    }
-
-    public function getFlag($model)
-    {
-        if (!isset($this->flag[$model->flag])) {
-            return $this->flag[8];
-        }
-
-        return $this->flag[$model->flag];
     }
 
 }
