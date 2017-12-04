@@ -68,6 +68,7 @@ class PropertyParser extends OldParser implements ParserInterface
         $property->age              = $model->age;
         $property->floor            = $model->floor;
         $property->reference_point  = $model->reference_point;
+        $property->construction_step  = $model->construction_step;
         //(?:((?:\d+)?(?:[\,\.]\d+)*(?:[\.\,]))(\d+)?)
         $property->sell_price                    = str_replace(',', '.', $model->sell_price);
         $property->monthly_installments          = (int)$model->monthly_qtd;
