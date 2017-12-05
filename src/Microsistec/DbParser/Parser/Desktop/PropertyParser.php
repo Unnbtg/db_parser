@@ -32,6 +32,15 @@ class PropertyParser extends OldParser implements ParserInterface
         14 => 9, //Baixado
     ];
 
+    private $general_status = [
+        0 => 2, //Pré-Lançamento
+        1 => 8, //Em Obras
+        2 => 4, //Pronto
+        3 => 9, //Novo
+        4 => 10, //Semi Novo
+        5 => 11, //Usado
+    ];
+
 
     public function parse($model, $domain = "", $account = "")
     {
@@ -68,7 +77,7 @@ class PropertyParser extends OldParser implements ParserInterface
         $property->age              = $model->age;
         $property->floor            = $model->floor;
         $property->reference_point  = $model->reference_point;
-        $property->construction_step  = $model->construction_step;
+        $property->general_status   = ($model->construction_step != '' && !empty($model->construction_step)) ? $this->getGeneralStatus($model) : null;
         //(?:((?:\d+)?(?:[\,\.]\d+)*(?:[\.\,]))(\d+)?)
         $property->sell_price                    = str_replace(',', '.', $model->sell_price);
         $property->monthly_installments          = (int)$model->monthly_qtd;
@@ -96,7 +105,6 @@ class PropertyParser extends OldParser implements ParserInterface
         $property->deposit                 = false;
         $property->requires_guarantor_deed = false;
         $property->exchange                = false;
-
 
         if ($model->payment_options != '') {
             $property->fgts                    = (bool)substr($model->payment_options, 0, 1);
@@ -292,6 +300,17 @@ class PropertyParser extends OldParser implements ParserInterface
         }
 
         return $encodedProperty;
+    }
+
+    private function getGeneralStatus($model)
+    {
+        $status = null;
+
+        if (isset($this->general_status[$model->construction_step])) {
+            $status = $this->general_status[$model->construction_step];
+        }
+
+        return $status;
     }
 
     private function getInstanceByType($model)
