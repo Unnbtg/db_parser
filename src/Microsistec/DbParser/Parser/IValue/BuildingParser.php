@@ -34,6 +34,7 @@ class BuildingParser extends AbstractParser
         'Industrial'                                                                                   => ['type' => 1, 'finality' => 3],
         'Chácaras'                                                                                     => ['type' => 1, 'finality' => 4],
         'Edifício Residencial'                                                                         => ['type' => 2, 'finality' => 1],
+        'Edifício Residencial, Edifício Comercial'                                                     => ['type' => 2, 'finality' => 1],
         'Galpões Comerciais, Industrial'                                                               => ['type' => 1, 'finality' => 2],
         'Galpões Comerciais, Industrial, Prédios comerciais'                                           => ['type' => 1, 'finality' => 2],
         'Prédios comerciais'                                                                           => ['type' => 2, 'finality' => 2],
