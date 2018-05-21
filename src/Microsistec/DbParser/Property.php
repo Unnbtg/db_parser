@@ -39,6 +39,7 @@ use phpDocumentor\Reflection\Type;
  * @property string         $complement
  * @property mixed          $neighborhood
  * @property string         $neighborhood_id
+ * @property string         $reference_point
  * @property string         $city_id
  * @property string         $zipcode
  * @property string         $condominium_name
