@@ -108,9 +108,9 @@ class PropertyParser extends AbstractParser implements ParserInterface
         $property->type    = $this->getFromComplexConfig(strtolower((string)trim($model->inf_Tipo)), $this->types);
         $property->subtype = null;
 
-        $property->for_rent     = $this->booleanValue((bool)$model->inf_Locacao);
-        $property->for_sale     = $this->booleanValue((bool)$model->inf_Venda);
-        $property->for_vacation = $this->booleanValue((bool)$model->inf_Temporada);
+        $property->for_rent     = $this->booleanValue((int)$model->inf_Locacao);
+        $property->for_sale     = $this->booleanValue((int)$model->inf_Venda);
+        $property->for_vacation = $this->booleanValue((int)$model->inf_Temporada);
 
         $property->situation                     = $this->getFromComplexConfig((string)trim($model->inf_Ocupacao), $this->situation) ? $this->getFromComplexConfig((string)trim($model->inf_Ocupacao), $this->situation) : null;
         $property->has_board                     = $this->booleanValue((int)$model->loc_PlacaLocal);
@@ -166,8 +166,8 @@ class PropertyParser extends AbstractParser implements ParserInterface
         $property->area_width                    = floatval($area['width']);
         $property->area_height                   = floatval($area['height']);
         $property->total_area                    = floatval($model->det_AreaTotal);
-        $property->total_useful_area             = floatval($model->det_AreaConst);
-        $property->total_built_area              = floatval($model->det_AreaUtil);
+        $property->total_useful_area             = floatval($model->det_AreaUtil);
+        $property->total_built_area              = floatval($model->det_AreaConst);
         $property->built_area_price              = null;
         $property->total_area_price              = null;
         $property->relative_distance             = null;
