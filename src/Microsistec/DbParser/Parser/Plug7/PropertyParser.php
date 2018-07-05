@@ -103,9 +103,7 @@ class PropertyParser extends AbstractParser implements ParserInterface
         $property->alternative_code = (string)trim($model->minha_referencia) ?: null;
         $property->old_type         = (string)trim($model->tipo_imovel_id);
         $property->finality         = $this->finalities[(int)trim($model->proposito_id)];
-        /*if (!in_array((int)trim($model->tipo_imovel_id), $this->types)) {
-            throw new ParserException('Tipo de imóvel não encontrado ' . (int)trim($model->tipo_imovel_id), 400);
-        }*/
+
         $property->type             = $this->types[(int)trim($model->tipo_imovel_id)];
         $property->status           = $this->flag[(int)trim($model->status_imovel_id)];
         $property->subtype          = null;
@@ -128,7 +126,7 @@ class PropertyParser extends AbstractParser implements ParserInterface
         $property->neighborhood                  = trim((string)$model->bairro);
         $property->neighborhood_commercial       = trim((string)$model->bairro);
         $property->state                         = trim((string)$model->estado);
-        $property->condominium_name              = (string)$model->nome;
+        $property->condominium_name              = (string)$model->nome != '' ? (string)$model->nome : null;
         $property->age                           = (int)$model->ano_construcao > 0 ? (string)(date('Y') - (int)$model->ano_construcao) : null;
         $property->floor                         = (string)$model->andar_numero;
         $property->level                         = null;
@@ -181,7 +179,7 @@ class PropertyParser extends AbstractParser implements ParserInterface
         $property->website_home_highlight        = false;
         $property->website_rotative_banner       = false;
         $property->website_notes                 = strip_tags(html_entity_decode(html_entity_decode(trim((string)$model->descricao))));
-        $property->website_title                 = trim((string)$model->titulo_web);
+        $property->website_title                 = trim((string)$model->titulo_web) ? trim((string)$model->titulo_web) : null;
         $property->website_keywords              = null;
         $property->website_description           = strip_tags(html_entity_decode(html_entity_decode(trim((string)$model->descricao))));
         $property->notes                         = strip_tags(html_entity_decode(html_entity_decode(trim((string)$model->observacao))));

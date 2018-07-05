@@ -177,7 +177,7 @@ class PropertyParser extends AbstractParser implements ParserInterface
         $property->website_home_highlight        = $this->booleanValue((int)$model->int_PubSite);
         $property->website_rotative_banner       = false;
         $property->website_notes                 = trim((string)$model->int_AnuncioInternet);
-        $property->website_title                 = trim((string)$model->int_title);
+        $property->website_title                 = trim((string)$model->int_title) ? trim((string)$model->int_title) : null;
         $property->website_keywords              = trim((string)$model->int_metatag);
         $property->website_description           = trim((string)$model->int_metadescription);
         $property->notes                         = trim((string)$model->inf_Descricao);
