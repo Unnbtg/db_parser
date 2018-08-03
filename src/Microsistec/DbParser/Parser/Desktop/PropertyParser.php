@@ -132,10 +132,7 @@ class PropertyParser extends OldParser implements ParserInterface
         $property->energy_number       = $model->energy_number;
         $property->water_number        = $model->water_number;
         $property->registration_number = $model->registration_number;
-        $property->deed_status         = (int)$model->deed_status + 1;
-        if ($model->deed_status == "-1") {
-            $property->deed_status = null;
-        }
+        $property->deed_status         = !is_null($model->deed_status) ? (int)$model->deed_status + 1 : null;
         if ((int)$model->deed_status == 9) {
             (int)$property->deed_status = 9;
         }
