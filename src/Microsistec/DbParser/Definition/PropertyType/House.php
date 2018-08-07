@@ -110,7 +110,7 @@
 
             $options = $this->getCharacteristicsOptions();
 
-            $characteristcs['bedroom'] = $this->extractLabelsFlagsSci(substr($definition, 0, 34), $options);
+            $characteristcs['dorm'] = $this->extractLabelsFlagsSci(substr($definition, 0, 34), $options);
             $characteristcs['room'] = $this->extractLabelsFlagsSci(substr($definition, 34, 34), $options);
             $characteristcs['kitchen'] = $this->extractLabelsFlagsSci(substr($definition, 68, 34), $options);
             $characteristcs['bathroom'] = $this->extractLabelsFlagsSci(substr($definition, 102, 34), $options);
