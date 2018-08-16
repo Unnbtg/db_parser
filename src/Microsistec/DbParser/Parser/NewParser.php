@@ -62,7 +62,7 @@ class NewParser extends ParserAbstract
         $property->total_area               = $model->total_area;
         $property->web_obs                  = $model->website_notes;
         $property->photos                   = $this->getPicture($model->photos);
-        $property->obs                      = $model->notes;
+        $property->obs                      = $model->website_notes;
         $property->condominium_price        = $model->condominium_price;
         $property->build_name               = $model->condominium_name;
         $property->latitude                 = $model->latitude;
@@ -75,9 +75,11 @@ class NewParser extends ParserAbstract
         $property->created_at               = $model->created_at;
         $property->updated_at               = $model->updated_at;
         $property->finality_info            = $model->finality_info;
+        $property->finality                 = $model->finality;
         $property->situation_info           = $model->situation_info;
         $property->orientation_info         = $model->orientation_info;
         $property->seller_contact           = $this->getContact($model->user);
+        $property->receiver_contact         = $this->getContact($model->receiver1);
         $property->measure_unit_info        = $model->measure_unit_info;
         $property->measure_unit             = $model->measure_unit;
         $property->selling_exclusivity      = $model->selling_exclusivity;
@@ -85,15 +87,21 @@ class NewParser extends ParserAbstract
         $property->advance_payment          = $model->advance_payment;
         $property->exchange                 = $model->exchange;
         $property->monthly_installments_value = $model->monthly_installments_value;
-        $property->status = $model->status;
+        $property->status                     = $model->status;
+        $property->general_status             = $model->general_status;
+        $property->fgts                       = $model->fgts;
 
         return $property;
-
     }
 
     public function getContact($model)
     {
+        if (is_null($model)) {
+            return null;
+        }
+
         $owner = [
+            'id'  => $model->id,
             'name'  => $model->name,
             'email' => $model->email,
         ];
@@ -166,7 +174,6 @@ class NewParser extends ParserAbstract
 
     protected function getDisponibility($model)
     {
-
         $disponibility = [];
 
         if ($model->for_sale) {
