@@ -93,7 +93,9 @@ class CustomerParser extends AbstractParser implements ParserInterface
         $contact = $query->where('customer_id', $customer->id)->first();
 
         if (!is_null($contact)) {
-            $customer->phones[] = $this->unMask(trim($contact['phone']));
+            $phone        = new \stdClass();
+            $phone->phone = $this->unMask(trim($contact['phone']));
+            $customer->phones[] = $phone;
         }
 
         return $customer;
