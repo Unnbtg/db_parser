@@ -88,7 +88,7 @@ abstract class ParserAbstract
 
     public function unMask($data)
     {
-        return preg_replace("/[^0-9]/", "", $data);
+        return ltrim(preg_replace("/[^0-9]/", "", $data), '0');
     }
 
     protected function formatDate($date)

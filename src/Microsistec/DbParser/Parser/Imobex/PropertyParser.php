@@ -67,7 +67,7 @@ class PropertyParser extends AbstractParser implements ParserInterface
         $property->for_vacation     = $this->booleanValue((int)$model->negocio_imovel->linha->cd_tipo_aluguel);
 
         $property->situation                     = trim((string)trim($model->imovel->linha->ocupacao)) ? $this->situation[(string)trim($model->imovel->linha->ocupacao)] : null;
-        $property->has_board                     = null;
+        $property->has_board                     = false;
         $property->zipcode                       = $this->unMask((string)trim($model->imovel->linha->cep));
         $property->state_id                      = null;
         $property->city_id                       = null;
@@ -138,7 +138,7 @@ class PropertyParser extends AbstractParser implements ParserInterface
         $property->website_keywords              = null;
         $property->website_description           = null;
         $property->notes                         = trim((string)$model->imovel->linha->obs);
-        $property->user_id                       = null;
+        $property->user_id                       = -1;
         $property->branch_id                     = null;
 
         $property->website_showcase         = false;
@@ -381,6 +381,15 @@ class PropertyParser extends AbstractParser implements ParserInterface
         $roomsCount->kitchen          = 0;
         $roomsCount->parking_lot      = 0;
         $roomsCount->housekeeper_room = 0;
+
+        if ($model->imovel_caracteristica) {
+            foreach ($model->imovel_caracteristica->linha as $char) {
+                if((string)$char->caracteristica->linha->cd_caracteristica == '43') {
+                    $roomsCount->housekeeper_room = 1;
+                }
+            }
+        }
+
         $roomsCount->lavatory         = 0;
         $roomsCount->car_garage       = (int)$model->imovel->linha->num_vagas;
 

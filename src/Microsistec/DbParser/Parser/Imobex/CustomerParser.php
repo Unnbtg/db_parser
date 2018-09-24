@@ -32,15 +32,15 @@ class CustomerParser extends AbstractParser implements ParserInterface
         }
         $customer->maintence_id  = (int)trim($model->imovel_proprietario->linha->proprietario->linha->cd_proprietario);
         $customer->name          = title_case((string)trim($model->imovel_proprietario->linha->proprietario->linha->nome));
-        $customer->user_id       = null;
-        $customer->broker_id     = null;
+        $customer->user_id       = -1;
+        $customer->broker_id     = -1;
         $customer->cpf           = (string)trim($model->imovel_proprietario->linha->proprietario->linha->cpf_cnpj) ?: null;
         $customer->street        = title_case((string)trim($model->imovel_proprietario->linha->proprietario->linha->endereco)) ?: null;
         $customer->street_number = title_case((string)trim($model->imovel_proprietario->linha->proprietario->linha->numero)) ?: null;
         $customer->complementary = title_case((string)trim($model->imovel_proprietario->linha->proprietario->linha->complemento)) ?: null;
 
         $bairro = null;
-        if($model->imovel_proprietario->linha->proprietario->linha->bairro[1] && (string)$model->imovel_proprietario->linha->proprietario->linha->cd_proprietario == 12095591) {
+        if ($model->imovel_proprietario->linha->proprietario->linha->bairro[1]) {
             $bairro = title_case((string)trim($model->imovel_proprietario->linha->proprietario->linha->bairro[1]->linha->nm_bairro));
         }
         $cidade = null;
@@ -125,7 +125,7 @@ class CustomerParser extends AbstractParser implements ParserInterface
 
         $customer->emails = [];
         if (!empty(trim((string)$model->imovel_proprietario->linha->proprietario->linha->email))) {
-            $customer->emails[] = trim((string)$model->imovel_proprietario->linha->proprietario->linha->email);
+            $customer->emails[] = strtolower(trim((string)$model->imovel_proprietario->linha->proprietario->linha->email));
         }
 
         return $customer;
@@ -138,8 +138,14 @@ class CustomerParser extends AbstractParser implements ParserInterface
 
         if (JSON_ERROR_NONE == 0 && !empty($telefones)) {
             foreach ($telefones as $telefone) {
+
                 $phone        = new \stdClass();
-                $phone->phone = $this->unMask(trim($telefone->ds_contato));
+                if (strpos(trim($telefone->ds_contato), '*') === false) {
+                    $phone->phone = $this->unMask(trim($telefone->ds_contato));
+                } else {
+                    $phone->phone = trim($telefone->ds_contato);
+                }
+
                 $phones[]     = $phone;
             }
         }
