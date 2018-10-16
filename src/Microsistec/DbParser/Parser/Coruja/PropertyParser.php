@@ -65,10 +65,10 @@ class PropertyParser extends AbstractParser implements ParserInterface
         $property->neighborhood_id             = null;
         $property->alternative_neighborhood_id = null;
         $property->zone                        = null;
-        $property->street                      = $model['RUA'];
+        $property->street                      = $model['LOGRADOURO'];
         $property->block                       = $model['BLOCO'];
         $property->street_number               = $model['NUMERO'];
-        $property->complementary               = $model['COMPLEMENTO'];
+        $property->complementary               = $model['APTO'];
         $property->condominium_name            = $model['EDIFICIO'];
         $property->neighborhood                = $model['BAIRRO'];
         $property->city                        = $model['CIDADE'];
@@ -113,15 +113,15 @@ class PropertyParser extends AbstractParser implements ParserInterface
         $property->area_height                   = $model['DIMENSAO_LADO_2'];
         $property->total_useful_area             = str_replace(',', '.', $model['AREA_UTIL']);
         $property->total_area                    = str_replace(',', '.', $model['AREA_TOTAL']);
-        $property->relative_distance             = (int)$model['DISTANCIA_PRAIA'];
+        $property->relative_distance             = null;
         $property->fgts                          = false;
         $property->letter_of_credit              = false;
-        $property->bank_financing                = (bool)$model['FINANCIAMENTO_BANCARIO'];
-        $property->direct_financing              = (bool)$model['FINANCIAMENTO_DIRETO'];
+        $property->bank_financing                = false;
+        $property->direct_financing              = false;
         $property->lessor_bail                   = false;
         $property->guarantor                     = false;
         $property->deposit                       = false;
-        $property->mcmv                          = (bool)$model['MCMV'];
+        $property->mcmv                          = false;
         $property->requires_guarantor_deed       = false;
         $property->keys_available                = strlen($model['LOCAL_CHAVES']) > 0 ? true : false;
         $property->website_home_highlight        = false;
@@ -129,8 +129,8 @@ class PropertyParser extends AbstractParser implements ParserInterface
         $property->website_showcase              = false;
         $property->sales_authorization           = false;
         $property->opportunity                   = false;
-        $property->exchange                      = (bool)$model['ACEITA_PERMUTA'];
-        $property->advance_payment               = str_replace(',', '.', $model['VALOR_ENTRADA']);
+        $property->exchange                      = false;
+        /*$property->advance_payment               = str_replace(',', '.', $model['VALOR_ENTRADA']);
         $property->monthly_installments          = $model['QTD_MENSAIS'];
         $property->monthly_installments_value    = str_replace(',', '.', $model['VALOR_MENSAIS']);
         $property->keys_installments_value       = str_replace(',', '.', $model['VALOR_CHAVES']);
@@ -142,7 +142,7 @@ class PropertyParser extends AbstractParser implements ParserInterface
         $property->annual_installments_value     = str_replace(',', '.', $model['VALOR_ANUAIS']);
         $property->website_title                 = $model['TITULO_PAGINA'];
         $property->website_keywords              = $model['PALAVRAS_CHAVES'];
-        $property->website_description           = $model['META_DESCRIPTION'];
+        $property->website_description           = $model['META_DESCRIPTION'];*/
         $property->website_notes                 = $model['DESCRICAO_NO_SITE'];
         $property->notes                         = $model['DESCRICAO_INTERNA'];
         $property->owners                        = [];
@@ -156,8 +156,8 @@ class PropertyParser extends AbstractParser implements ParserInterface
         $property->videos                        = [];
         $property->roomsCount                    = $this->getRoomsCount($model);
         $property->roomFeatures                  = [];
-        $property->created_at                    = $this->formatDate($model['DATA_CADASTRO']);
-        $property->updated_at                    = $this->formatDate($model['ALTERADO']);
+        $property->created_at                    = $this->formatDate($model['DATA_CADASTRO_2'], true);
+        $property->updated_at                    = $this->formatDate($model['ALTERADO'], true);
         $property->juridical_owners              = [];
 
         return $property;

@@ -114,10 +114,11 @@ abstract class AbstractParser extends ParserAbstract implements ParserInterface
         return false;
     }
 
-    protected function formatDate($date)
+    protected function formatDate($date, $pogCoruja = false)
     {
+
         if (empty($date)) {
-            return "";
+            return date('Y-m-d H:i:s');
         }
 
         $date = explode(' ', $date);
@@ -131,7 +132,9 @@ abstract class AbstractParser extends ParserAbstract implements ParserInterface
             if(strlen($tmp[1]) == 1) {
                 $tmp[1] = '0' . $tmp[1];
             }
-
+            if ($pogCoruja) {
+                return $tmp[2] . '-' . $tmp[1] . '-' . $tmp[0] . ' 02:00:00';
+            }
             return $tmp[2] . '-' . $tmp[0] . '-' . $tmp[1];
 
         }
@@ -141,6 +144,8 @@ abstract class AbstractParser extends ParserAbstract implements ParserInterface
         if ($date[2] == "PM") {
             return date('Y-m-d H:i:s', strtotime("+ 12 hours", $time));
         }
+
+
 
         return date('Y-m-d H:i:s', $time);
     }

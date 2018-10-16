@@ -21,7 +21,7 @@ class PropertyPhotoParser extends AbstractParser implements ParserInterface
         $propertyPhoto = new PropertyPhoto();
 
         $propertyPhoto->property_id = $model['COD_IMOVEL'];
-        $propertyPhoto->path        = $model['url'];
+        $propertyPhoto->path        = $model['URL'];
 
         return $propertyPhoto;
     }

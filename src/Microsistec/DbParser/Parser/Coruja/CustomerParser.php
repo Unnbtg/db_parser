@@ -37,7 +37,7 @@ class CustomerParser extends AbstractParser implements ParserInterface
 
         $emails           = [
             $model['EMAIL'],
-            $model['EMAIL2'],
+            //$model['EMAIL2'],
         ];
         $customer->emails = $this->parseEmails($emails);
 
@@ -91,8 +91,8 @@ class CustomerParser extends AbstractParser implements ParserInterface
             $model['TELEFONE'] .
             $model['CELULAR'] .
             $model['TEL_COMERCIAL'] .
-            $model['EMAIL'],
-            $model['EMAIL2']
+            $model['EMAIL']
+            //$model['EMAIL2']
         );
     }
 

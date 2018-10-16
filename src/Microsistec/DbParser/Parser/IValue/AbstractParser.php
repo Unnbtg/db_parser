@@ -117,7 +117,7 @@ abstract class AbstractParser extends ParserAbstract implements ParserInterface
     protected function formatDate($date)
     {
         if (empty($date)) {
-            return "";
+            return null;
         }
 
         $date = explode(' ', $date);
@@ -134,6 +134,10 @@ abstract class AbstractParser extends ParserAbstract implements ParserInterface
             return date('Y-m-d H:i:s', strtotime("+ 12 hours", $time));
         }
 
+        if (date('Y-m-d H:i:s', $time) == '1899-12-30 12:00:00') {
+            return null;
+        }
+        
         return date('Y-m-d H:i:s', $time);
     }
 

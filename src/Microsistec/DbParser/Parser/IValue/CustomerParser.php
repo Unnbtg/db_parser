@@ -39,8 +39,8 @@ class CustomerParser extends AbstractParser
     ];
 
     protected $maritalStatus = [
-        ['id' => 1, 'name' => 'casado'],
-        ['id' => 2, 'name' => 'solteiro'],
+        ['id' => 1, 'name' => 'casado(a)'],
+        ['id' => 2, 'name' => 'solteiro(a)'],
         ['id' => 3, 'name' => 'divorciado'],
         ['id' => 4, 'name' => 'viúvo'],
         ['id' => 5, 'name' => 'separado'],
@@ -50,7 +50,7 @@ class CustomerParser extends AbstractParser
 
     protected $status = [
         ['id' => 1, 'name' => 'sim'],
-        ['id' => 2, 'name' => 'nao'],
+        ['id' => 2, 'name' => 'não'],
     ];
 
     protected $attorney = [
@@ -95,7 +95,7 @@ class CustomerParser extends AbstractParser
         $customer->name                      = $model['nome'];
         $customer->user_id                   = 1;
         $customer->broker_id                 = 1;
-        $customer->cpf                       = $model['cpf'];
+        $customer->cpf                       = $this->unMask($model['cpf']);
         $customer->street                    = $model['tipo logradouro'] . ' ' . $model['logradouro'];
         $customer->street_number             = $model['número'];
         $customer->complementary             = $model['complemento'];
@@ -106,7 +106,7 @@ class CustomerParser extends AbstractParser
         $customer->rg                        = $model['rg'];
         $customer->rg_issuer                 = null;
         $customer->rg_issued_at              = null;
-        $customer->birthdate                 = $model['data nascimento'] ?: null;
+        $customer->birthdate                 = $this->formatDate($model['data nascimento']);
         $customer->marital_status            = $this->parseMaritalStatus($model['estado civil']);
         $customer->occupation                = $model['profissão'];
         $customer->nationality               = $model['nacionalidade'];
@@ -127,7 +127,7 @@ class CustomerParser extends AbstractParser
         $customer->spouse_maternal_filiation = null;
         $customer->union_date                = null;
         $customer->union_security            = null;
-        $customer->income                    = $model['renda'];
+        $customer->income                    = $model['renda'] ? $model['renda'] : null;
         $customer->bank_name                 = null;
         $customer->bank_agency               = null;
         $customer->bank_account              = null;

@@ -131,7 +131,7 @@ class PropertyParser extends AbstractParser
         }
 
         $property->for_vacation                  = false;
-        $property->situation                     = $this->getFromComplexConfig($model['ocupacao'], $this->situation);
+        $property->situation                     = $this->getFromComplexConfig($model['ocupacao'], $this->situation) ? $this->getFromComplexConfig($model['ocupacao'], $this->situation) : null;
         $property->has_board                     = $this->booleanValue($model['placa']);
         $property->zipcode                       = $this->unMask($model['cep']);
         $property->state_id                      = null;
