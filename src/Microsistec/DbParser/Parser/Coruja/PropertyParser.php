@@ -37,11 +37,11 @@ class PropertyParser extends AbstractParser implements ParserInterface
         'terreno'     => 1,
         'rural'       => 4,
         'kitnet'      => 1,
-        'Casa de Condomínio' => 1, 
-        'Cobertura' => 1, 
-        'Sala' => 1,
-        'Sobrado' => 1,
-        'Flat' => 1,
+        'casa de condomínio' => 1, 
+        'cobertura' => 1, 
+        'sala' => 1,
+        'sobrado' => 1,
+        'flat' => 1,
     ];
 
     public function parse($model, $domain = "", $account = "")
