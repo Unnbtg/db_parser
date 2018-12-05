@@ -21,6 +21,13 @@ class PropertyParser extends AbstractParser implements ParserInterface
         ["id" => 11, "name" => "terreno", "prefix" => "TE", "finality" => [1, 2, 3, 4]],
         ["id" => 36, "name" => "comercial", "prefix" => "FU", "finality" => [2]], //Fundo de comercio no SCI
         ["id" => 12, "name" => "rural", "prefix" => "CH", "finality" => [4]],
+        
+        ["id" => 4, "name" => "Kitnet", "prefix" => "KI", "finality" => [1]],
+        ["id" => 38, "name" => "Casa de Condomínio", "prefix" => "CAC", "finality" => [1]],
+        ["id" => 2, "name" => "Cobertura", "prefix" => "CO", "finality" => [1]],
+        ["id" => 23, "name" => "Sala", "prefix" => "SA", "finality" => [2]],
+        ["id" => 9, "name" => "Sobrado", "prefix" => "SB", "finality" => [1, 2]],
+        ["id" => 3, "name" => "Flat", "prefix" => "FL", "finality" => [1]],
     ];
 
     private $finalities = [
@@ -29,6 +36,12 @@ class PropertyParser extends AbstractParser implements ParserInterface
         'comercial'   => 2,
         'terreno'     => 1,
         'rural'       => 4,
+        'kitnet'      => 1,
+        'Casa de Condomínio' => 1, 
+        'Cobertura' => 1, 
+        'Sala' => 1,
+        'Sobrado' => 1,
+        'Flat' => 1,
     ];
 
     public function parse($model, $domain = "", $account = "")
@@ -44,7 +57,12 @@ class PropertyParser extends AbstractParser implements ParserInterface
         $property->old_type     = $model['TIPO'];
         $property->code         = $model['CODIGO'];
         $property->type         = $this->getFromComplexConfig(strtolower($model['TIPO']), $this->types);
-        $property->finality     = $this->finalities[strtolower($model['TIPO'])];
+        try{
+            $property->finality     = $this->finalities[strtolower($model['TIPO'])];
+        } catch (\Exception $e) {
+            dd($model);
+        }
+
 
         $property->for_rent = false;
         if (strpos(strtolower($model['FINALIDADE']), 'locação') !== false) {
@@ -65,16 +83,16 @@ class PropertyParser extends AbstractParser implements ParserInterface
         $property->neighborhood_id             = null;
         $property->alternative_neighborhood_id = null;
         $property->zone                        = null;
-        $property->street                      = $model['LOGRADOURO'];
-        $property->block                       = $model['BLOCO'];
-        $property->street_number               = $model['NUMERO'];
+        $property->street                      = (string)$model['LOGRADOURO'];
+        $property->block                       = (string)$model['BLOCO'];
+        $property->street_number               = (string)$model['NUMERO'];
         $property->complementary               = $model['APTO'];
         $property->condominium_name            = $model['EDIFICIO'];
         $property->neighborhood                = $model['BAIRRO'];
         $property->city                        = $model['CIDADE'];
         $property->state                       = $model['UF'];
-        $property->floor                       = $model['PAVIMENTO'];
-        $property->reference_point             = $model['PONTO_REFERENCIA'];
+        $property->floor                       = (string)$model['PAVIMENTO'];
+        $property->reference_point             = (string)$model['PONTO_REFERENCIA'];
         $property->sell_price                  = str_replace(',', '.', $model['VALOR_VENDA']);
         $property->rent_price                  = str_replace(',', '.', $model['VALOR_LOCACAO']);
         $property->iptu_price                  = str_replace(',', '.', $model['VALOR_IPTU']);
