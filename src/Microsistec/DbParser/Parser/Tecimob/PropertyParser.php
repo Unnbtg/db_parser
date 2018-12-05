@@ -23,6 +23,9 @@ class PropertyParser extends AbstractParser implements ParserInterface
         'terreno'     => 11, //Terreno
         'sobrado'     => 9, //Sobrado
         'predio'      => 30, //Prédio
+        'chacara'     => null, 
+        'sala_comercial' => 23, //Sala
+        
     ];
 
     private $flag = [
@@ -36,6 +39,8 @@ class PropertyParser extends AbstractParser implements ParserInterface
         'cobertura_duplex' => 8,
         'comercial'        => null,
         'em_condominio'    => null,
+        'em_edificio'      => null,
+        'chacara'          => null,
         'flat'             => null,
         'geminada'         => null,
         'geminado'         => null,
@@ -54,6 +59,7 @@ class PropertyParser extends AbstractParser implements ParserInterface
         'residencial' => 1,
         'comercial'   => 2,
         'rural'       => 4,
+        'residencial/comercial' => 1, 
     ];
 
     private $general_status = [
