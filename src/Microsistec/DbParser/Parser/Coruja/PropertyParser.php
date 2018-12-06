@@ -22,12 +22,12 @@ class PropertyParser extends AbstractParser implements ParserInterface
         ["id" => 36, "name" => "comercial", "prefix" => "FU", "finality" => [2]], //Fundo de comercio no SCI
         ["id" => 12, "name" => "rural", "prefix" => "CH", "finality" => [4]],
         
-        ["id" => 4, "name" => "Kitnet", "prefix" => "KI", "finality" => [1]],
-        ["id" => 38, "name" => "Casa de Condomínio", "prefix" => "CAC", "finality" => [1]],
-        ["id" => 2, "name" => "Cobertura", "prefix" => "CO", "finality" => [1]],
-        ["id" => 23, "name" => "Sala", "prefix" => "SA", "finality" => [2]],
-        ["id" => 9, "name" => "Sobrado", "prefix" => "SB", "finality" => [1, 2]],
-        ["id" => 3, "name" => "Flat", "prefix" => "FL", "finality" => [1]],
+        ["id" => 4, "name" => "kitnet", "prefix" => "KI", "finality" => [1]],
+        ["id" => 38, "name" => "casa de condomínio", "prefix" => "CAC", "finality" => [1]],
+        ["id" => 2, "name" => "cobertura", "prefix" => "CO", "finality" => [1]],
+        ["id" => 23, "name" => "sala", "prefix" => "SA", "finality" => [2]],
+        ["id" => 9, "name" => "sobrado", "prefix" => "SB", "finality" => [1, 2]],
+        ["id" => 3, "name" => "flat", "prefix" => "FL", "finality" => [1]],
     ];
 
     private $finalities = [
@@ -54,6 +54,9 @@ class PropertyParser extends AbstractParser implements ParserInterface
         $property->maintence_id = $model['CODIGO'];
         $property->id           = $model['CODIGO'];
         $property->user_code    = $model['CODIGO'];
+        if (!empty($model['CODIGO_ALTERNATIVO'])) {
+            $property->alternative_code = (string)$model['CODIGO_ALTERNATIVO'];
+        }
         $property->old_type     = $model['TIPO'];
         $property->code         = $model['CODIGO'];
         $property->type         = $this->getFromComplexConfig(strtolower($model['TIPO']), $this->types);
