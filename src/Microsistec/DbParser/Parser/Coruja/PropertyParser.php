@@ -21,13 +21,18 @@ class PropertyParser extends AbstractParser implements ParserInterface
         ["id" => 11, "name" => "terreno", "prefix" => "TE", "finality" => [1, 2, 3, 4]],
         ["id" => 36, "name" => "comercial", "prefix" => "FU", "finality" => [2]], //Fundo de comercio no SCI
         ["id" => 12, "name" => "rural", "prefix" => "CH", "finality" => [4]],
-        
+        ["id" => 12, "name" => "rural", "prefix" => "CH", "finality" => [4]],
+
         ["id" => 4, "name" => "kitnet", "prefix" => "KI", "finality" => [1]],
         ["id" => 38, "name" => "casa de condomínio", "prefix" => "CAC", "finality" => [1]],
         ["id" => 2, "name" => "cobertura", "prefix" => "CO", "finality" => [1]],
         ["id" => 23, "name" => "sala", "prefix" => "SA", "finality" => [2]],
         ["id" => 9, "name" => "sobrado", "prefix" => "SB", "finality" => [1, 2]],
         ["id" => 3, "name" => "flat", "prefix" => "FL", "finality" => [1]],
+
+        ["id" => 27, 'name' => "industrial", 'prefix' => "IN", 'finality' => [3]],
+
+
     ];
 
     private $finalities = [
@@ -37,11 +42,13 @@ class PropertyParser extends AbstractParser implements ParserInterface
         'terreno'     => 1,
         'rural'       => 4,
         'kitnet'      => 1,
+        'industrial'  => 3,
         'casa de condomínio' => 1, 
         'cobertura' => 1, 
         'sala' => 1,
         'sobrado' => 1,
         'flat' => 1,
+        "terrenos" => 1
     ];
 
     public function parse($model, $domain = "", $account = "")
@@ -63,7 +70,7 @@ class PropertyParser extends AbstractParser implements ParserInterface
         try{
             $property->finality     = $this->finalities[strtolower($model['TIPO'])];
         } catch (\Exception $e) {
-            dd($model);
+            dd($model, $e->getMessage());
         }
 
 
@@ -96,10 +103,10 @@ class PropertyParser extends AbstractParser implements ParserInterface
         $property->state                       = $model['UF'];
         $property->floor                       = (string)$model['PAVIMENTO'];
         $property->reference_point             = (string)$model['PONTO_REFERENCIA'];
-        $property->sell_price                  = str_replace(',', '.', $model['VALOR_VENDA']);
-        $property->rent_price                  = str_replace(',', '.', $model['VALOR_LOCACAO']);
-        $property->iptu_price                  = str_replace(',', '.', $model['VALOR_IPTU']);
-        $property->condominium_price           = str_replace(',', '.', $model['VALOR_CONDOMINIO']);
+        $property->sell_price                  = (float)str_replace(',', '.', $model['VALOR_VENDA']);
+        $property->rent_price                  = (float)str_replace(',', '.', $model['VALOR_LOCACAO']);
+        $property->iptu_price                  = (float)str_replace(',', '.', $model['VALOR_IPTU']);
+        $property->condominium_price           = (float)str_replace(',', '.', $model['VALOR_CONDOMINIO']);
         $property->keys                        = $model['LOCAL_CHAVES'];
         $property->status                      = 1;
 
@@ -130,10 +137,10 @@ class PropertyParser extends AbstractParser implements ParserInterface
             $property->registry = 'Possui Registro';
         }
 
-        $property->area_width                    = $model['DIMENSAO_LADO_1'];
-        $property->area_height                   = $model['DIMENSAO_LADO_2'];
-        $property->total_useful_area             = str_replace(',', '.', $model['AREA_UTIL']);
-        $property->total_area                    = str_replace(',', '.', $model['AREA_TOTAL']);
+        $property->area_width                    = (float)$model['DIMENSAO_LADO_1'];
+        $property->area_height                   = (float)$model['DIMENSAO_LADO_2'];
+        $property->total_useful_area             = (float)str_replace(',', '.', $model['AREA_UTIL']);
+        $property->total_area                    = (float)str_replace(',', '.', $model['AREA_TOTAL']);
         $property->relative_distance             = null;
         $property->fgts                          = false;
         $property->letter_of_credit              = false;
