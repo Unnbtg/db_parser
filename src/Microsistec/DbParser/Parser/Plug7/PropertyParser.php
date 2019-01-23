@@ -99,8 +99,8 @@ class PropertyParser extends AbstractParser implements ParserInterface
         $property                   = new Property();
         $property->maintence_id     = (int)trim($model->id);
         $property->id               = (int)trim($model->id);
-        $property->code             = (int)trim($model->minha_referencia);
-        $property->alternative_code = (string)trim($model->minha_referencia) ?: null;
+        $property->code             = (int)trim($model->id);
+        $property->alternative_code = (string)trim($model->minha_referencia) ?: (int)trim($model->id);
         $property->old_type         = (string)trim($model->tipo_imovel_id);
         $property->finality         = $this->finalities[(int)trim($model->proposito_id)];
 
