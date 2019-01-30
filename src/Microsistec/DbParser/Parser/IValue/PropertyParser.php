@@ -22,7 +22,9 @@ class PropertyParser extends AbstractParser
         ["id" => 3, "name" => "Industrial"],
         ["id" => 4, "name" => "Rural"],
     ];
-
+    protected $additionaltypes = [
+        'Hotel' => ['type' => 36, 'subtype' => 70, 'finality' => 2]
+    ];
     private $types = [
         ["id" => 1, "name" => "Apartamento", "prefix" => "AP", "finality" => [1]],
         ["id" => 1, "name" => "Apartamento Duplex", "prefix" => "AP", "finality" => [1]],  //Apartamento duplex no ivalue, vira apto no sci
@@ -119,6 +121,14 @@ class PropertyParser extends AbstractParser
         $property->finality         = $this->getFromComplexConfig($model['finalidade'], $this->finalities);
         $property->type             = $this->getFromComplexConfig($model['tipo'], $this->types);
         $property->subtype          = null;
+
+        $types = data_get($this->additionaltypes, $model['tipo']);
+
+        if (empty($property->type) && $types) {
+            $property->type = $types['type'];
+            $property->subtype = $types['subtype'];
+            $property->finality = $types['finality'];
+        }
 
         $property->for_rent = false;
         if ($model['valor locacao'] > 0) {
