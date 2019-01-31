@@ -23,7 +23,10 @@ class PropertyParser extends AbstractParser
         ["id" => 4, "name" => "Rural"],
     ];
     protected $additionaltypes = [
-        'Hotel' => ['type' => 36, 'subtype' => 70, 'finality' => 2]
+        'Hotel' => ['type' => 36, 'subtype' => 70, 'finality' => 2],
+        'Bangalô' => ['type' => 8, 'subtype' => 10, 'finality' => 1],
+        'Edícula' => ['type' => 8, 'subtype' => 13, 'finality' => 1],
+
     ];
     private $types = [
         ["id" => 1, "name" => "Apartamento", "prefix" => "AP", "finality" => [1]],
