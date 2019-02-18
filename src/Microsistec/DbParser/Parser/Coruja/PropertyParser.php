@@ -22,16 +22,18 @@ class PropertyParser extends AbstractParser implements ParserInterface
         ["id" => 36, "name" => "comercial", "prefix" => "FU", "finality" => [2]], //Fundo de comercio no SCI
         ["id" => 12, "name" => "rural", "prefix" => "CH", "finality" => [4]],
         ["id" => 12, "name" => "rural", "prefix" => "CH", "finality" => [4]],
-
+        ["id" => 22, "name" => "galpão", "prefix" => "GP", "finality" => [2, 3]],
         ["id" => 4, "name" => "kitnet", "prefix" => "KI", "finality" => [1]],
         ["id" => 38, "name" => "casa de condomínio", "prefix" => "CAC", "finality" => [1]],
         ["id" => 2, "name" => "cobertura", "prefix" => "CO", "finality" => [1]],
         ["id" => 23, "name" => "sala", "prefix" => "SA", "finality" => [2]],
         ["id" => 9, "name" => "sobrado", "prefix" => "SB", "finality" => [1, 2]],
         ["id" => 3, "name" => "flat", "prefix" => "FL", "finality" => [1]],
-
+        ["id" => 24, "name" => "salão", "prefix" => "FL", "finality" => [2]],
+        ["id" => 30, "name" => "prédio", "prefix" => "PR", "finality" => [2, 3]],
+        ["id" => 19, "name" => "Conjunto Comercial", "prefix" => "CC", "finality" => [2]],
         ["id" => 27, 'name' => "industrial", 'prefix' => "IN", 'finality' => [3]],
-
+        ["id" => 12, "name" => "chácara", "prefix" => "CH", "finality" => [1, 4]],
 
     ];
 
@@ -44,15 +46,24 @@ class PropertyParser extends AbstractParser implements ParserInterface
         'kitnet'      => 1,
         'industrial'  => 3,
         'casa de condomínio' => 1, 
-        'cobertura' => 1, 
-        'sala' => 1,
+        'conjunto comercial' => 2,
+        'cobertura' => 1,
+        'sala' => 2,
+        'salão' => 2,
         'sobrado' => 1,
         'flat' => 1,
-        "terrenos" => 1
+        "terrenos" => 1,
+        "prédio" => 2,
+        'galpão' => 2,
+        'chácara' => 4
     ];
 
     public function parse($model, $domain = "", $account = "")
     {
+        if (empty($model['TIPO'])) {
+            return;
+        }
+
         if($model['TIPO'] == 3) {
             return;
         }
