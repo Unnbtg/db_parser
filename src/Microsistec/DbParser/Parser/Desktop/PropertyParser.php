@@ -51,7 +51,7 @@ class PropertyParser extends OldParser implements ParserInterface
         $property                   = new Property();
         $property->maintence_id     = (int)$model->id;
         $property->id               = (int)$model->id;
-        $property->code             = (int)$model->code;
+        $property->code             = (int)$model->id;
         $property->alternative_code = $model->alternative_code;
         $property->user_code        = (int)$model->code;
         $property->old_type         = $model->type;
