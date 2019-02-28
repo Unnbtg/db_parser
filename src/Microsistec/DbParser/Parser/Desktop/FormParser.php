@@ -26,6 +26,11 @@ class FormParser extends ParserAbstract implements ParserInterface
         $types = null;
 
         if(!is_null($model->property_type)) {
+
+            if (!property_exists($model, 'definition_01')) {
+                $model->definition_01 = null;
+            }
+
             $typeInstance = $this->getInstanceByType($model);
             if (!is_null($typeInstance)) {
                 $types = $typeInstance->getTypeSubtype($model);
