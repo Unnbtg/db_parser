@@ -42,6 +42,7 @@ class CustomerParser extends AbstractParser
         ['id' => 1, 'name' => 'casado(a)'],
         ['id' => 2, 'name' => 'solteiro(a)'],
         ['id' => 3, 'name' => 'divorciado'],
+        ['id' => 3, 'name' => 'divorciado(a)'],
         ['id' => 4, 'name' => 'viúvo'],
         ['id' => 4, 'name' => 'viúvo(a)'],
         ['id' => 5, 'name' => 'separado'],
